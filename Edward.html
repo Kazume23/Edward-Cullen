@@ -1,11 +1,13 @@
 <!doctype html>
 <html lang="pl">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Habit tracker</title>
   <link rel="stylesheet" href="style/style.css">
 </head>
+
 <body>
   <div class="app">
     <div class="sidebar">
@@ -29,16 +31,523 @@
       </div>
 
       <div class="content">
-        <div class="box topA"></div>
-        <div class="box topB"></div>
+        <div class="box topA">
+          <div class="panelTitle">Wykres (placeholder)</div>
+          <div class="panelBody"></div>
+        </div>
 
-        <div class="tableBox"></div>
+        <div class="box topB">
+          <div class="cal">
+            <div class="calHeader">
+              <button class="calBtn" id="calPrev" type="button">‹</button>
+              <div class="calTitle" id="calTitle">Miesiąc 2026</div>
+              <div class="calRight">
+                <button class="calBtn" id="calToday" type="button">Dziś</button>
+                <button class="calBtn" id="calNext" type="button">›</button>
+              </div>
+            </div>
 
-        <div class="sideBox"></div>
+            <div class="calWeekdays">
+              <div>PN</div>
+              <div>WT</div>
+              <div>ŚR</div>
+              <div>CZ</div>
+              <div>PT</div>
+              <div>SB</div>
+              <div>ND</div>
+            </div>
 
-        <div class="bottomBox"></div>
+            <div class="calGrid" id="calGrid"></div>
+          </div>
+        </div>
+
+        <div class="tableBox">
+          <div class="habHeader">
+            <div class="habHeaderLeft">
+              <div class="habTitle">Habit tracker</div>
+              <div class="habRange" id="habRange"></div>
+            </div>
+
+            <div class="habAdd">
+              <input class="habInput" id="habitName" placeholder="Dodaj nawyk..." autocomplete="off">
+              <button class="habBtn" id="addHabit" type="button">Dodaj</button>
+            </div>
+          </div>
+
+          <div class="habTableWrap">
+            <table class="habTable" id="habTable">
+              <thead id="habThead"></thead>
+              <tbody id="habTbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="sideBox">
+          <div class="panelTitle">ToDo</div>
+          <div class="panelBody">
+            <div id="todoEmpty" class="todoEmpty">Brak ToDo. Dwuklik w kalendarzu aby dodać.</div>
+            <div id="todoList" class="todoList"></div>
+          </div>
+        </div>
+
+
+        <div class="bottomBox">
+          <div class="panelTitle">Dół (placeholder)</div>
+          <div class="panelBody"></div>
+        </div>
       </div>
     </div>
   </div>
+  <div class="modalOverlay" id="todoOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="todoModalTitle">
+      <div class="modalTop">
+        <div class="modalTitle" id="todoModalTitle">Dodaj ToDo</div>
+        <button class="modalClose" id="todoClose" type="button" aria-label="Zamknij">×</button>
+      </div>
+
+      <div class="modalBody">
+        <label class="modalLabel" for="todoDate">Data</label>
+        <input class="modalInput" id="todoDate" type="date">
+
+        <label class="modalLabel" for="todoText">Treść</label>
+        <textarea class="modalTextarea" id="todoText" placeholder="Wpisz ToDo..." rows="4"></textarea>
+
+        <div class="modalActions">
+          <button class="calBtn" id="todoCancel" type="button">Anuluj</button>
+          <button class="habBtn" id="todoSave" type="button">Zapisz</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const LS_KEY = "habit_app_v1";
+
+    const $ = (id) => document.getElementById(id);
+
+    const calTitle = $("calTitle");
+    const calGrid = $("calGrid");
+    const btnPrev = $("calPrev");
+    const btnNext = $("calNext");
+    const btnToday = $("calToday");
+
+    const habRange = $("habRange");
+    const habThead = $("habThead");
+    const habTbody = $("habTbody");
+    const habitName = $("habitName");
+    const addHabitBtn = $("addHabit");
+
+    const todoEmpty = $("todoEmpty");
+    const todoList = $("todoList");
+
+    const todoOverlay = $("todoOverlay");
+    const todoDateInput = $("todoDate");
+    const todoText = $("todoText");
+    const todoSave = $("todoSave");
+    const todoClose = $("todoClose");
+    const todoCancel = $("todoCancel");
+
+    function pad2(n) { return String(n).padStart(2, "0"); }
+    function toISO(d) { return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`; }
+    function fromISO(iso) {
+      const [y, m, d] = iso.split("-").map(Number);
+      return new Date(y, m - 1, d);
+    }
+    function startOfDay(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+    function addDays(d, n) { const x = new Date(d); x.setDate(x.getDate() + n); return x; }
+    function sameDay(a, b) {
+      return a.getFullYear() === b.getFullYear() &&
+        a.getMonth() === b.getMonth() &&
+        a.getDate() === b.getDate();
+    }
+    function startOfWeekMonday(d) {
+      const x = startOfDay(d);
+      const day = x.getDay(); // 0 ND, 1 PN
+      const diff = (day === 0 ? -6 : 1) - day;
+      return addDays(x, diff);
+    }
+    function monthNamePL(m) {
+      return ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"][m];
+    }
+    function fmtPL(d) { return `${pad2(d.getDate())}.${pad2(d.getMonth() + 1)}.${d.getFullYear()}`; }
+
+    function loadState() {
+      const raw = localStorage.getItem(LS_KEY);
+      if (!raw) {
+        const today = startOfDay(new Date());
+        return {
+          habits: [
+            { id: crypto.randomUUID(), name: "Wstać o 6:00" },
+            { id: crypto.randomUUID(), name: "Trening" },
+            { id: crypto.randomUUID(), name: "Czytanie" }
+          ],
+          entries: {},
+          todos: [],
+          selectedDate: toISO(today),
+          viewMonth: today.getMonth(),
+          viewYear: today.getFullYear()
+        };
+      }
+      try {
+        const s = JSON.parse(raw);
+        if (!s.habits) s.habits = [];
+        if (!s.entries) s.entries = {};
+        if (!s.todos) s.todos = [];
+        if (!s.selectedDate) s.selectedDate = toISO(startOfDay(new Date()));
+        if (typeof s.viewMonth !== "number") s.viewMonth = new Date().getMonth();
+        if (typeof s.viewYear !== "number") s.viewYear = new Date().getFullYear();
+        return s;
+      } catch {
+        localStorage.removeItem(LS_KEY);
+        return loadState();
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(LS_KEY, JSON.stringify(state));
+    }
+
+    let state = loadState();
+
+    function getSelectedDateObj() { return fromISO(state.selectedDate); }
+
+    function setSelectedDate(d) {
+      const x = startOfDay(d);
+      state.selectedDate = toISO(x);
+      state.viewMonth = x.getMonth();
+      state.viewYear = x.getFullYear();
+      saveState();
+      renderAll();
+    }
+
+    function setViewMonthYear(y, m) {
+      state.viewYear = y;
+      state.viewMonth = m;
+      saveState();
+      renderCalendar();
+    }
+
+    function buildMonthGrid(y, m) {
+      const first = new Date(y, m, 1);
+      const start = startOfWeekMonday(first);
+      const days = [];
+      for (let i = 0; i < 42; i++) days.push(addDays(start, i));
+      return days;
+    }
+
+    function openTodoModal(dateObj) {
+      todoDateInput.value = toISO(dateObj);
+      todoText.value = "";
+      todoOverlay.classList.add("isOpen");
+      todoOverlay.setAttribute("aria-hidden", "false");
+      setTimeout(() => todoText.focus(), 0);
+    }
+
+    function closeTodoModal() {
+      todoOverlay.classList.remove("isOpen");
+      todoOverlay.setAttribute("aria-hidden", "true");
+    }
+
+    function addTodo(dateISO, text) {
+      const t = String(text || "").trim();
+      if (!t) return;
+
+      state.todos.push({
+        id: crypto.randomUUID(),
+        dateISO,
+        text: t,
+        done: false,
+        createdAt: Date.now()
+      });
+
+      saveState();
+      renderTodos();
+    }
+
+    function toggleTodo(id) {
+      const it = state.todos.find(x => x.id === id);
+      if (!it) return;
+      it.done = !it.done;
+      saveState();
+      renderTodos();
+    }
+
+    function deleteTodo(id) {
+      state.todos = state.todos.filter(x => x.id !== id);
+      saveState();
+      renderTodos();
+    }
+
+    function renderTodos() {
+      todoList.innerHTML = "";
+
+      const items = [...state.todos].sort((a, b) => {
+        if (a.dateISO !== b.dateISO) return a.dateISO.localeCompare(b.dateISO);
+        return (a.createdAt || 0) - (b.createdAt || 0);
+      });
+
+      if (!items.length) {
+        todoEmpty.style.display = "block";
+        return;
+      }
+      todoEmpty.style.display = "none";
+
+      for (const it of items) {
+        const row = document.createElement("div");
+        row.className = "todoItem";
+        if (it.done) row.classList.add("todoDone");
+
+        const left = document.createElement("div");
+        left.className = "todoLeft";
+
+        const cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.className = "todoCheck";
+        cb.checked = !!it.done;
+        cb.addEventListener("change", () => toggleTodo(it.id));
+
+        const textBox = document.createElement("div");
+
+        const txt = document.createElement("div");
+        txt.className = "todoText";
+        txt.textContent = it.text;
+
+        const meta = document.createElement("div");
+        meta.className = "todoMeta";
+        meta.textContent = fmtPL(fromISO(it.dateISO));
+
+        textBox.appendChild(txt);
+        textBox.appendChild(meta);
+
+        left.appendChild(cb);
+        left.appendChild(textBox);
+
+        const del = document.createElement("button");
+        del.type = "button";
+        del.className = "todoDel";
+        del.textContent = "×";
+        del.title = "Usuń";
+        del.addEventListener("click", () => deleteTodo(it.id));
+
+        row.appendChild(left);
+        row.appendChild(del);
+
+        todoList.appendChild(row);
+      }
+    }
+
+    function renderCalendar() {
+      calTitle.textContent = `${monthNamePL(state.viewMonth)} ${state.viewYear}`;
+      calGrid.innerHTML = "";
+
+      const days = buildMonthGrid(state.viewYear, state.viewMonth);
+      const selected = getSelectedDateObj();
+      const weekStart = startOfWeekMonday(selected);
+      const weekEnd = addDays(weekStart, 6);
+
+      for (const d of days) {
+        const cell = document.createElement("button");
+        cell.type = "button";
+        cell.className = "calDay";
+
+        const inMonth = d.getMonth() === state.viewMonth;
+        if (!inMonth) cell.classList.add("calMuted");
+
+        if (sameDay(d, selected)) cell.classList.add("calSelected");
+        if (d >= weekStart && d <= weekEnd) cell.classList.add("calWeek");
+
+        cell.textContent = String(d.getDate());
+
+        cell.addEventListener("click", () => setSelectedDate(d));
+        cell.addEventListener("dblclick", (e) => {
+          e.preventDefault();
+          setSelectedDate(d);
+          openTodoModal(d);
+        });
+
+        calGrid.appendChild(cell);
+      }
+    }
+
+    function cycleEntry(habitId, dateISO) {
+      const key = `${habitId}|${dateISO}`;
+      const cur = state.entries[key] ?? 0;
+
+      let next = 0;
+      if (cur === 0) next = 1;
+      else if (cur === 1) next = -1;
+      else next = 0;
+
+      if (next === 0) delete state.entries[key];
+      else state.entries[key] = next;
+
+      saveState();
+      renderHabits();
+    }
+
+    function deleteHabit(habitId) {
+      state.habits = state.habits.filter(h => h.id !== habitId);
+      for (const k of Object.keys(state.entries)) {
+        if (k.startsWith(habitId + "|")) delete state.entries[k];
+      }
+      saveState();
+      renderHabits();
+    }
+
+    function renderHabits() {
+      const selected = getSelectedDateObj();
+      const weekStart = startOfWeekMonday(selected);
+      const weekDates = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
+
+      habRange.textContent = `${fmtPL(weekStart)} do ${fmtPL(addDays(weekStart, 6))}`;
+
+      const trHead = document.createElement("tr");
+
+      const thHabit = document.createElement("th");
+      thHabit.textContent = "Nawyk";
+      thHabit.className = "thHabit";
+      trHead.appendChild(thHabit);
+
+      const thDel = document.createElement("th");
+      thDel.textContent = "";
+      thDel.style.width = "44px";
+      trHead.appendChild(thDel);
+
+      for (const d of weekDates) {
+        const th = document.createElement("th");
+        th.className = "thDay";
+        th.textContent = `${pad2(d.getDate())}.${pad2(d.getMonth() + 1)}`;
+        if (sameDay(d, selected)) th.classList.add("thToday");
+        trHead.appendChild(th);
+      }
+
+      habThead.innerHTML = "";
+      habThead.appendChild(trHead);
+
+      habTbody.innerHTML = "";
+      for (const h of state.habits) {
+        const tr = document.createElement("tr");
+
+        const tdName = document.createElement("td");
+        tdName.className = "tdHabit";
+
+        const name = document.createElement("div");
+        name.className = "habitName";
+        name.contentEditable = "true";
+        name.spellcheck = false;
+        name.textContent = h.name;
+
+        name.addEventListener("blur", () => {
+          const v = name.textContent.trim();
+          h.name = v.length ? v : "Nawyk";
+          saveState();
+        });
+        name.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") { e.preventDefault(); name.blur(); }
+        });
+
+        tdName.appendChild(name);
+        tr.appendChild(tdName);
+
+        const tdDel = document.createElement("td");
+        tdDel.className = "tdCell";
+
+        const delBtn = document.createElement("button");
+        delBtn.type = "button";
+        delBtn.className = "habitDel";
+        delBtn.textContent = "×";
+        delBtn.title = "Usuń nawyk";
+        delBtn.addEventListener("click", () => deleteHabit(h.id));
+
+        tdDel.appendChild(delBtn);
+        tr.appendChild(tdDel);
+
+        for (const d of weekDates) {
+          const dateISO = toISO(d);
+          const key = `${h.id}|${dateISO}`;
+          const val = state.entries[key] ?? 0;
+
+          const td = document.createElement("td");
+          td.className = "tdCell";
+
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "cellBtn";
+          if (val === 1) btn.classList.add("cellDone");
+          if (val === -1) btn.classList.add("cellFail");
+
+          btn.addEventListener("click", () => cycleEntry(h.id, dateISO));
+          td.appendChild(btn);
+          tr.appendChild(td);
+        }
+
+        habTbody.appendChild(tr);
+      }
+    }
+
+    function addHabit() {
+      const name = habitName.value.trim();
+      if (!name) return;
+      state.habits.push({ id: crypto.randomUUID(), name });
+      habitName.value = "";
+      saveState();
+      renderHabits();
+    }
+
+    addHabitBtn.addEventListener("click", addHabit);
+    habitName.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") addHabit();
+    });
+
+    btnPrev.addEventListener("click", () => {
+      let y = state.viewYear;
+      let m = state.viewMonth - 1;
+      if (m < 0) { m = 11; y -= 1; }
+      setViewMonthYear(y, m);
+    });
+
+    btnNext.addEventListener("click", () => {
+      let y = state.viewYear;
+      let m = state.viewMonth + 1;
+      if (m > 11) { m = 0; y += 1; }
+      setViewMonthYear(y, m);
+    });
+
+    btnToday.addEventListener("click", () => {
+      setSelectedDate(new Date());
+    });
+
+    todoClose.addEventListener("click", closeTodoModal);
+    todoCancel.addEventListener("click", closeTodoModal);
+
+    todoOverlay.addEventListener("click", (e) => {
+      if (e.target === todoOverlay) closeTodoModal();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (todoOverlay.classList.contains("isOpen") && e.key === "Escape") closeTodoModal();
+    });
+
+    todoSave.addEventListener("click", () => {
+      addTodo(todoDateInput.value, todoText.value);
+      closeTodoModal();
+    });
+
+    function renderAll() {
+      renderCalendar();
+      renderHabits();
+      renderTodos();
+    }
+
+
+
+
+
+    renderAll();
+  </script>
+
+
+
 </body>
+
 </html>
