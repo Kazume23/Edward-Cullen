@@ -638,3 +638,120 @@ body {
   opacity: 0.7;
   margin-top: 4px;
 }
+
+.expHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px 2px 12px 2px;
+}
+
+.expSummary {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.expOnlyDay {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  opacity: 0.8;
+  user-select: none;
+}
+
+.expForm {
+  display: grid;
+  grid-template-columns:
+    120px      /* kwota */
+    1.2fr      /* co kupione */
+    140px      /* kategoria */
+    220px      /* A/B/C/D */
+    150px      /* okres */
+    150px      /* data */
+    90px;      /* dodaj */
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.expItem {
+  margin: 0 0 8px 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #1f1f1f;
+  border: 1px solid #333;
+
+  display: grid;
+  grid-template-columns:
+    110px      /* kwota */
+    1.5fr      /* opis */
+    130px      /* kategoria */
+    210px      /* A/B/C/D */
+    120px      /* okres */
+    34px;      /* delete */
+  gap: 10px;
+  align-items: center;
+}
+
+.expItem {
+  margin: 0 0 8px 0;
+  padding: 10px 10px;
+  border-radius: 10px;
+  background: #1f1f1f;
+  border: 1px solid #333;
+
+  display: grid;
+  grid-template-columns: 120px 1fr 160px 260px 90px 34px;
+  gap: 10px;
+  align-items: start;
+}
+
+.expAmt {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.expMeta {
+  font-size: 11px;
+  opacity: 0.65;
+  margin-top: 2px;
+}
+
+.expTag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  height: 28px;
+  padding: 0 12px;
+
+  border-radius: 999px;
+  border: 1px solid #3a3a3a;
+  background: #1b1b1b;
+
+  font-size: 12px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.expDel {
+  width: 34px;
+  height: 30px;
+  border-radius: 8px;
+  background: #1f1f1f;
+  color: #e7e7e7;
+  border: 1px solid #3a3a3a;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+}
+
+.expDel:hover {
+  border-color: #ff2f5d;
+}

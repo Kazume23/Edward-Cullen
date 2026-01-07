@@ -92,9 +92,57 @@
 
 
         <div class="bottomBox">
-          <div class="panelTitle">Dół (placeholder)</div>
-          <div class="panelBody"></div>
+          <div class="panelTitle">Dziennik wydatków</div>
+          <div class="panelBody">
+            <div class="expHeader">
+              <div class="expSummary" id="expSummary">Suma: 0,00 zł</div>
+
+            </div>
+
+            <div class="expForm">
+              <input
+                class="modalInput"
+                id="expAmount"
+                type="text"
+                inputmode="numeric"
+                placeholder="Kwota"
+              />
+              <input class="modalInput" id="expWhat" type="text" placeholder="Co kupione">
+
+              <select class="modalInput" id="expCategory">
+                <option value="Jedzenie">Jedzenie</option>
+                <option value="Transport">Transport</option>
+                <option value="Rozrywka">Rozrywka</option>
+                <option value="Zdrowie">Zdrowie</option>
+                <option value="Edukacja">Edukacja</option>
+                <option value="Sprzęt">Sprzęt</option>
+                <option value="Subskrypcje">Subskrypcje</option>
+                <option value="Inne">Inne</option>
+              </select>
+
+              <select class="modalInput" id="expScore">
+                <option value="A">A — Wysoki priorytet</option>
+                <option value="B">B — Konieczny</option>
+                <option value="C">C — Opcjonalny</option>
+                <option value="D">D — Zbędny</option>
+              </select>
+
+              <select class="modalInput" id="expPeriod">
+                <option value="once">Jednorazowe</option>
+                <option value="weekly">Tygodniowe</option>
+                <option value="monthly">Miesięczne</option>
+                <option value="yearly">Roczne</option>
+              </select>
+
+              <input class="modalInput" id="expDate" type="date">
+
+              <button class="habBtn" id="expAdd" type="button">Dodaj</button>
+            </div>
+
+            <div class="expList" id="expList"></div>
+          </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -193,6 +241,7 @@
         if (!s.habits) s.habits = [];
         if (!s.entries) s.entries = {};
         if (!s.todos) s.todos = [];
+        if (!s.expenses) s.expenses = [];
         if (!s.selectedDate) s.selectedDate = toISO(startOfDay(new Date()));
         if (typeof s.viewMonth !== "number") s.viewMonth = new Date().getMonth();
         if (typeof s.viewYear !== "number") s.viewYear = new Date().getFullYear();
@@ -533,10 +582,191 @@
       closeTodoModal();
     });
 
+    const expOnlySelected = $("expOnlySelected");
+    const expAmount = $("expAmount");
+    const expWhat = $("expWhat");
+    const expCategory = $("expCategory");
+    const expScore = $("expScore");
+    const expPeriod = $("expPeriod");
+    const expDate = $("expDate");
+    const expAdd = $("expAdd");
+    const expList = $("expList");
+    const expSummary = $("expSummary");
+
+    
+    expAmount.addEventListener("input", () => {
+     let v = expAmount.value;
+     v = v.replace(/[^0-9.,]/g, "");
+
+     const parts = v.split(/[.,]/);
+     if (parts[0].length > 9) {
+       parts[0] = parts[0].slice(0, 9);
+     }
+
+     expAmount.value = parts.length > 1
+       ? parts[0] + "," + parts[1].slice(0, 2)
+       : parts[0];
+    });
+    
+    function moneyPL(n) {
+      const x = Number(n);
+      if (!Number.isFinite(x)) return "0,00 zł";
+      return x.toFixed(2).replace(".", ",") + " zł";
+    }
+
+    function ensureExpenses() {
+      if (!state.expenses) state.expenses = [];
+    }
+
+    function getExpenseFilterISO() {
+      return state.selectedDate;
+    }
+
+    function addExpense() {
+      ensureExpenses();
+
+      const amt = Number(String(expAmount.value || "").replace(",", "."));
+      const what = String(expWhat.value || "").trim();
+      const dateISO = expDate.value || getExpenseFilterISO();
+      
+      if (!Number.isFinite(amt) || amt <= 0) return;
+      if (String(Math.floor(amt)).length > 10) return;
+      if (!what) return;
+
+      state.expenses.push({
+        id: crypto.randomUUID(),
+        dateISO,
+        amount: amt,
+        what,
+        category: expCategory.value,
+        score: expScore.value,
+        period: expPeriod.value,
+        createdAt: Date.now()
+      });
+
+      expAmount.value = "";
+      expWhat.value = "";
+      expPeriod.value = "once";
+
+      saveState();
+      renderExpenses();
+      renderCalendar();
+    }
+
+    function deleteExpense(id) {
+      ensureExpenses();
+      state.expenses = state.expenses.filter(x => x.id !== id);
+      saveState();
+      renderExpenses();
+      renderCalendar();
+    }
+
+    function renderExpenses() {
+      ensureExpenses();
+
+      const filterISO = getExpenseFilterISO();
+      expDate.value = filterISO;
+
+      const items = [...state.expenses];
+
+      items.sort((a, b) => {
+        if (a.dateISO !== b.dateISO) return b.dateISO.localeCompare(a.dateISO);
+        return (b.createdAt || 0) - (a.createdAt || 0);
+      });
+
+      const sum = items_slice_sum(items);
+      expSummary.textContent = "Suma: " + moneyPL(sum);
+
+      expList.innerHTML = "";
+
+      if (!items.length) {
+        const empty = document.createElement("div");
+        empty.className = "todoEmpty";
+        empty.textContent = "Brak wpisów.";
+        expList.appendChild(empty);
+        return;
+      }
+
+      for (const it of items) {
+        const row = document.createElement("div");
+        row.className = "expItem";
+
+        const amt = document.createElement("div");
+        amt.className = "expAmt";
+        amt.textContent = moneyPL(it.amount);
+
+        const whatBox = document.createElement("div");
+        const what = document.createElement("div");
+        what.textContent = it.what;
+        const meta = document.createElement("div");
+        meta.className = "expMeta";
+        meta.textContent = fmtPL(fromISO(it.dateISO));
+        whatBox.appendChild(what);
+        whatBox.appendChild(meta);
+
+        const cat = document.createElement("div");
+        cat.className = "expTag";
+        cat.textContent = it.category;
+
+        const score = document.createElement("div");
+        score.className = "expTag";
+        score.textContent = scoreLabel(it.score);
+
+        const per = document.createElement("div");
+        per.className = "expTag";
+        per.textContent = periodLabel(it.period);
+
+        const del = document.createElement("button");
+        del.type = "button";
+        del.className = "expDel";
+        del.textContent = "×";
+        del.title = "Usuń";
+        del.addEventListener("click", () => deleteExpense(it.id));
+
+        row.appendChild(amt);
+        row.appendChild(whatBox);
+        row.appendChild(cat);
+        row.appendChild(score);
+        row.appendChild(per);
+        row.appendChild(del);
+
+        expList.appendChild(row);
+      }
+    }
+
+    function items_slice_sum(items) {
+      let s = 0;
+      for (const it of items) s += Number(it.amount) || 0;
+      return s;
+    }
+
+    function scoreLabel(v) {
+      if (v === "A") return "A — Wysoki priorytet";
+      if (v === "B") return "B — Konieczny";
+      if (v === "C") return "C — Opcjonalny";
+      return "D — Zbędny";
+    }
+
+    function periodLabel(v) {
+      if (v === "weekly") return "Tygodniowe";
+      if (v === "monthly") return "Miesięczne";
+      if (v === "yearly") return "Roczne";
+      return "Jednorazowe";
+    }
+
+    expAdd.addEventListener("click", addExpense);
+
+    expWhat.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") addExpense();
+    });
+
+
+
     function renderAll() {
       renderCalendar();
       renderHabits();
       renderTodos();
+      renderExpenses();
     }
 
 
