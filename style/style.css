@@ -1,8 +1,8 @@
-
+/*
 div {
   outline: 1px solid red;
 }
-
+*/
 
 body {
   margin: 0;
@@ -755,3 +755,100 @@ body {
 .expDel:hover {
   border-color: #ff2f5d;
 }
+
+.chartHeader{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 12px 0 12px;
+  gap:10px;
+}
+
+.topA .panelTitle{
+  padding:0;
+}
+
+.chartToggle{
+  display:flex;
+  gap:6px;
+  padding:4px;
+  border:1px solid #3a3a3a;
+  background:#1f1f1f;
+  border-radius:10px;
+}
+
+.chartTab{
+  border:1px solid transparent;
+  background:transparent;
+  color:#e7e7e7;
+  padding:6px 10px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:12px;
+  opacity:0.9;
+}
+
+.chartTab:hover{
+  border-color:#4a4a4a;
+}
+
+.chartTab.isActive{
+  background:#2a2a2a;
+  border-color:#3a3a3a;
+  opacity:1;
+}
+
+.chartWrap{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  gap:12px;
+  align-items:center;
+  min-height:0;
+}
+
+.chartSvg{
+  width:220px;
+  height:220px;
+  display:block;
+}
+
+.chartRange{
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+.chartLegend{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin-bottom:10px;
+}
+
+.legendRow{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+}
+
+.legendDot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  display:inline-block;
+  border:1px solid #333;
+}
+
+.legendDot.done{ background:#2f9dff; border-color:#2f9dff; }
+.legendDot.fail{ background:#ff2f5d; border-color:#ff2f5d; }
+.legendDot.empty{ background:#555; border-color:#555; }
+
+.chartSmall{
+  font-size:12px;
+  opacity:0.75;
+  line-height:1.35;
+}
+
+.topA .panelBody { overflow: hidden; }
+.chartWrap { grid-template-columns: 220px; }
+.chartMeta { display:none; }

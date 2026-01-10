@@ -24,17 +24,53 @@
     <div class="main">
       <div class="topbar">
         <div class="title"></div>
-        <div class="icons">
-          <div class="icon"></div>
-          <div class="icon"></div>
+          <div class="icons">
+            <button class="icon iconBtn" id="langBtn" type="button" title="Zmień język">PL</button>
+            <a class="icon iconBtn" id="ghBtn" href="https://github.com/Kazume23/Edward-Cullen" target="_blank" rel="noreferrer" title="GitHub">GH</a>
+          </div>
+      </div>
+    <div class="content">  
+      <div class="box topA">
+        <div class="chartHeader">
+          <div class="panelTitle">Bilans nawyków</div>
+        
+          <div class="chartToggle" role="tablist" aria-label="Zakres wykresu">
+            <button class="chartTab isActive" id="chartWeek" type="button">Tydzień</button>
+            <button class="chartTab" id="chartMonth" type="button">Miesiąc</button>
+          </div>
+        </div>
+      
+        <div class="panelBody">
+          <div class="chartWrap">
+            <svg id="chartSvg" class="chartSvg" viewBox="0 0 220 220" aria-label="Wykres bilansu"></svg>
+          
+            <div class="chartMeta">
+              <div class="chartRange" id="chartRangeTxt"></div>
+            
+              <div class="chartLegend">
+                <div class="legendRow">
+                  <span class="legendDot done"></span>
+                  <span>Wykonane:</span>
+                  <b id="chartDone">0</b>
+                </div>
+                <div class="legendRow">
+                  <span class="legendDot fail"></span>
+                  <span>Zawalone:</span>
+                  <b id="chartFail">0</b>
+                </div>
+                <div class="legendRow">
+                  <span class="legendDot empty"></span>
+                  <span>Puste:</span>
+                  <b id="chartEmpty">0</b>
+                </div>
+              </div>
+            
+              <div class="chartSmall" id="chartSmallTxt"></div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="content">
-        <div class="box topA">
-          <div class="panelTitle">Wykres (placeholder)</div>
-          <div class="panelBody"></div>
-        </div>
 
         <div class="box topB">
           <div class="cal">
@@ -42,19 +78,19 @@
               <button class="calBtn" id="calPrev" type="button">‹</button>
               <div class="calTitle" id="calTitle">Miesiąc 2026</div>
               <div class="calRight">
-                <button class="calBtn" id="calToday" type="button">Dziś</button>
+                <button class="calBtn" id="calToday" type="button" data-i18n="cal.today">Dziś</button>
                 <button class="calBtn" id="calNext" type="button">›</button>
               </div>
             </div>
 
             <div class="calWeekdays">
-              <div>PN</div>
-              <div>WT</div>
-              <div>ŚR</div>
-              <div>CZ</div>
-              <div>PT</div>
-              <div>SB</div>
-              <div>ND</div>
+              <div data-i18n="cal.wd.mon">PN</div>
+              <div data-i18n="cal.wd.tue">WT</div>
+              <div data-i18n="cal.wd.wed">ŚR</div>
+              <div data-i18n="cal.wd.thu">CZ</div>
+              <div data-i18n="cal.wd.fri">PT</div>
+              <div data-i18n="cal.wd.sat">SB</div>
+              <div data-i18n="cal.wd.sun">ND</div>
             </div>
 
             <div class="calGrid" id="calGrid"></div>
@@ -69,8 +105,8 @@
             </div>
 
             <div class="habAdd">
-              <input class="habInput" id="habitName" placeholder="Dodaj nawyk..." autocomplete="off">
-              <button class="habBtn" id="addHabit" type="button">Dodaj</button>
+              <input class="habInput" id="habitName" placeholder="Dodaj nawyk..." data-i18n-placeholder="hab.addPlaceholder" autocomplete="off">
+              <button class="habBtn" id="addHabit" type="button" data-i18n="common.add">Dodaj</button>
             </div>
           </div>
 
@@ -83,16 +119,16 @@
         </div>
 
         <div class="sideBox">
-          <div class="panelTitle">ToDo</div>
+          <div class="panelTitle" data-i18n="todo.title">ToDo</div>
           <div class="panelBody">
-            <div id="todoEmpty" class="todoEmpty">Brak ToDo. Dwuklik w kalendarzu aby dodać.</div>
+            <div id="todoEmpty" class="todoEmpty" data-i18n="todo.empty">Brak ToDo. Dwuklik w kalendarzu aby dodać.</div>
             <div id="todoList" class="todoList"></div>
           </div>
         </div>
 
 
         <div class="bottomBox">
-          <div class="panelTitle">Dziennik wydatków</div>
+          <div class="panelTitle" data-i18n="exp.title">Dziennik wydatków</div>
           <div class="panelBody">
             <div class="expHeader">
               <div class="expSummary" id="expSummary">Suma: 0,00 zł</div>
@@ -100,14 +136,8 @@
             </div>
 
             <div class="expForm">
-              <input
-                class="modalInput"
-                id="expAmount"
-                type="text"
-                inputmode="numeric"
-                placeholder="Kwota"
-              />
-              <input class="modalInput" id="expWhat" type="text" placeholder="Co kupione">
+              <input class="modalInput" id="expAmount" type="text" inputmode="numeric" placeholder="Kwota" data-i18n-placeholder="exp.amount" />
+              <input class="modalInput" id="expWhat" type="text" placeholder="Co kupione" data-i18n-placeholder="exp.what">
 
               <select class="modalInput" id="expCategory">
                 <option value="Jedzenie">Jedzenie</option>
@@ -136,21 +166,21 @@
 
               <input class="modalInput" id="expDate" type="date">
 
-              <button class="habBtn" id="expAdd" type="button">Dodaj</button>
+              <button class="habBtn" id="expAdd" type="button" data-i18n="common.add">Dodaj</button>
             </div>
 
             <div class="expList" id="expList"></div>
           </div>
         </div>
-
+      </div>
       </div>
     </div>
   </div>
   <div class="modalOverlay" id="todoOverlay" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="todoModalTitle">
       <div class="modalTop">
-        <div class="modalTitle" id="todoModalTitle">Dodaj ToDo</div>
-        <button class="modalClose" id="todoClose" type="button" aria-label="Zamknij">×</button>
+        <div class="modalTitle" id="todoModalTitle" data-i18n="todo.modal.title">Dodaj ToDo</div>
+        <button class="modalClose" id="todoClose" type="button" aria-label="Zamknij" data-i18n-aria="common.close">×</button>
       </div>
 
       <div class="modalBody">
@@ -195,6 +225,16 @@
     const todoClose = $("todoClose");
     const todoCancel = $("todoCancel");
 
+    const chartSvg = $("chartSvg");
+    const chartWeekBtn = $("chartWeek");
+    const chartMonthBtn = $("chartMonth");
+    const chartRangeTxt = $("chartRangeTxt");
+    const chartDoneTxt = $("chartDone");
+    const chartFailTxt = $("chartFail");
+    const chartEmptyTxt = $("chartEmpty");
+    const chartSmallTxt = $("chartSmallTxt");
+
+
     function pad2(n) { return String(n).padStart(2, "0"); }
     function toISO(d) { return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`; }
     function fromISO(iso) {
@@ -233,7 +273,8 @@
           todos: [],
           selectedDate: toISO(today),
           viewMonth: today.getMonth(),
-          viewYear: today.getFullYear()
+          viewYear: today.getFullYear(),
+          chartMode: "week"
         };
       }
       try {
@@ -245,6 +286,10 @@
         if (!s.selectedDate) s.selectedDate = toISO(startOfDay(new Date()));
         if (typeof s.viewMonth !== "number") s.viewMonth = new Date().getMonth();
         if (typeof s.viewYear !== "number") s.viewYear = new Date().getFullYear();
+        if (!s.chartMode) s.chartMode = "week";
+        if (s.chartMode !== "week" && s.chartMode !== "month") {
+          s.chartMode = "week";
+        }
         return s;
       } catch {
         localStorage.removeItem(LS_KEY);
@@ -432,6 +477,7 @@
 
       saveState();
       renderHabits();
+      renderChart();
     }
 
     function deleteHabit(habitId) {
@@ -441,6 +487,7 @@
       }
       saveState();
       renderHabits();
+      renderChart();
     }
 
     function renderHabits() {
@@ -541,6 +588,7 @@
       habitName.value = "";
       saveState();
       renderHabits();
+      renderChart();
     }
 
     addHabitBtn.addEventListener("click", addHabit);
@@ -760,18 +808,191 @@
       if (e.key === "Enter") addExpense();
     });
 
-
+    function monthRangeForSelected() {
+    const d = getSelectedDateObj();
+    const y = d.getFullYear();
+    const m = d.getMonth();
+    const start = new Date(y, m, 1);
+    const end = new Date(y, m + 1, 0);
+    return { start, end };
+  }
+  
+  function rangeForChart() {
+    const selected = getSelectedDateObj();
+  
+    if (state.chartMode === "month") {
+      const { start, end } = monthRangeForSelected();
+      return { start: startOfDay(start), end: startOfDay(end), daysCount: end.getDate() };
+    }
+  
+    const weekStart = startOfWeekMonday(selected);
+    return { start: startOfDay(weekStart), end: startOfDay(addDays(weekStart, 6)), daysCount: 7 };
+  }
+  
+  function getEntryValue(habitId, dateISO) {
+    const key = `${habitId}|${dateISO}`;
+    return state.entries[key] ?? 0;
+  }
+  
+  function computeChartStats() {
+    const { start, end, daysCount } = rangeForChart();
+    const totalCells = (state.habits?.length || 0) * daysCount;
+  
+    let done = 0;
+    let fail = 0;
+  
+    for (let i = 0; i < daysCount; i++) {
+      const d = addDays(start, i);
+      const iso = toISO(d);
+    
+      for (const h of state.habits) {
+        const v = getEntryValue(h.id, iso);
+        if (v === 1) done += 1;
+        else if (v === -1) fail += 1;
+      }
+    }
+  
+    const empty = Math.max(0, totalCells - done - fail);
+  
+    const coverage = totalCells > 0 ? Math.round(((done + fail) / totalCells) * 100) : 0;
+    const donePerDay = daysCount > 0 ? (done / daysCount).toFixed(2) : "0.00";
+    const failPerDay = daysCount > 0 ? (fail / daysCount).toFixed(2) : "0.00";
+  
+    return { start, end, daysCount, totalCells, done, fail, empty, coverage, donePerDay, failPerDay };
+  }
+  
+  function polarToCartesian(cx, cy, r, angleDeg) {
+    const a = (angleDeg - 90) * Math.PI / 180;
+    return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) };
+  }
+  
+  function arcPath(cx, cy, r, startAngle, endAngle) {
+    const start = polarToCartesian(cx, cy, r, endAngle);
+    const end = polarToCartesian(cx, cy, r, startAngle);
+    const large = (endAngle - startAngle) <= 180 ? "0" : "1";
+    return `M ${start.x} ${start.y} A ${r} ${r} 0 ${large} 0 ${end.x} ${end.y}`;
+  }
+  
+  function renderDonut(done, fail, empty) {
+    const total = done + fail + empty;
+  
+    chartSvg.innerHTML = "";
+  
+    const cx = 110;
+    const cy = 110;
+    const r = 86;
+  
+    const ring = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    ring.setAttribute("cx", cx);
+    ring.setAttribute("cy", cy);
+    ring.setAttribute("r", r);
+    ring.setAttribute("fill", "none");
+    ring.setAttribute("stroke", "#3a3a3a");
+    ring.setAttribute("stroke-width", "18");
+    chartSvg.appendChild(ring);
+  
+    if (total <= 0) {
+      const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      t.setAttribute("x", cx);
+      t.setAttribute("y", cy + 6);
+      t.setAttribute("text-anchor", "middle");
+      t.setAttribute("font-size", "14");
+      t.setAttribute("fill", "#e7e7e7");
+      t.textContent = "Brak danych";
+      chartSvg.appendChild(t);
+      return;
+    }
+  
+    const parts = [
+      { v: empty, stroke: "#555" },
+      { v: fail, stroke: "#ff2f5d" },
+      { v: done, stroke: "#2f9dff" }
+    ].filter(p => p.v > 0);
+  
+    let angle = 0;
+  
+    for (const p of parts) {
+      const span = (p.v / total) * 360;
+      const startAngle = angle;
+      const endAngle = angle + span;
+    
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("d", arcPath(cx, cy, r, startAngle, endAngle));
+      path.setAttribute("fill", "none");
+      path.setAttribute("stroke", p.stroke);
+      path.setAttribute("stroke-width", "18");
+      path.setAttribute("stroke-linecap", "round");
+    
+      chartSvg.appendChild(path);
+    
+      angle = endAngle;
+    }
+  
+    const inner = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    inner.setAttribute("cx", cx);
+    inner.setAttribute("cy", cy);
+    inner.setAttribute("r", 58);
+    inner.setAttribute("fill", "#2a2a2a");
+    chartSvg.appendChild(inner);
+  
+    const center = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    center.setAttribute("x", cx);
+    center.setAttribute("y", cy + 6);
+    center.setAttribute("text-anchor", "middle");
+    center.setAttribute("font-size", "16");
+    center.setAttribute("fill", "#e7e7e7");
+    center.textContent = `${Math.round((done / total) * 100)}%`;
+    chartSvg.appendChild(center);
+  }
+  
+  function syncChartTabs() {
+    const isWeek = state.chartMode === "week";
+    chartWeekBtn.classList.toggle("isActive", isWeek);
+    chartMonthBtn.classList.toggle("isActive", !isWeek);
+  }
+  
+  function renderChart() {
+    const s = computeChartStats();
+  
+    chartDoneTxt.textContent = String(s.done);
+    chartFailTxt.textContent = String(s.fail);
+    chartEmptyTxt.textContent = String(s.empty);
+  
+    if (state.chartMode === "month") {
+      chartRangeTxt.textContent = `${monthNamePL(getSelectedDateObj().getMonth())} ${getSelectedDateObj().getFullYear()}`;
+    } else {
+      chartRangeTxt.textContent = `${fmtPL(s.start)} do ${fmtPL(s.end)}`;
+    }
+  
+    chartSmallTxt.textContent =
+      `Aktywność: ${s.coverage}% komórek. ` +
+      `Średnio na dzień: ✔ ${s.donePerDay}, ✖ ${s.failPerDay}.`;
+  
+    syncChartTabs();
+    renderDonut(s.done, s.fail, s.empty);
+  }
+  
+  chartWeekBtn.addEventListener("click", () => {
+    state.chartMode = "week";
+    saveState();
+    renderChart();
+  });
+  
+  chartMonthBtn.addEventListener("click", () => {
+    state.chartMode = "month";
+    saveState();
+    renderChart();
+  });
 
     function renderAll() {
       renderCalendar();
       renderHabits();
       renderTodos();
       renderExpenses();
+      renderChart();
     }
 
-
-
-
+  
 
     renderAll();
   </script>
