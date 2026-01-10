@@ -66,6 +66,9 @@
               </div>
             
               <div class="chartSmall" id="chartSmallTxt"></div>
+              <div class="chartActions">
+                <button class="habBtn" id="chartDetailsBtn" type="button">Szczegóły</button>
+              </div>
             </div>
           </div>
         </div>
@@ -198,6 +201,20 @@
     </div>
   </div>
 
+  <div class="modalOverlay" id="chartOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="chartModalTitle">
+      <div class="modalTop">
+        <div class="modalTitle" id="chartModalTitle">Bilans nawyków</div>
+        <button class="modalClose" id="chartClose" type="button" aria-label="Zamknij">×</button>
+      </div>
+
+      <div class="modalBody chartModalBody">
+        <div class="chartModalRange" id="chartModalRange"></div>
+        <div class="chartModalList" id="chartModalList"></div>
+      </div>
+    </div>
+  </div>
+
   <script>
     const LS_KEY = "habit_app_v1";
 
@@ -233,6 +250,13 @@
     const chartFailTxt = $("chartFail");
     const chartEmptyTxt = $("chartEmpty");
     const chartSmallTxt = $("chartSmallTxt");
+
+    const chartDetailsBtn = $("chartDetailsBtn");
+    const chartOverlay = $("chartOverlay");
+    const chartClose = $("chartClose");
+    const chartModalRange = $("chartModalRange");
+    const chartModalList = $("chartModalList");
+
 
 
     function pad2(n) { return String(n).padStart(2, "0"); }
@@ -341,6 +365,62 @@
       todoOverlay.classList.remove("isOpen");
       todoOverlay.setAttribute("aria-hidden", "true");
     }
+
+    function openChartModal() {
+      chartOverlay.classList.add("isOpen");
+      chartOverlay.setAttribute("aria-hidden", "false");
+    }
+    
+    function closeChartModal() {
+      chartOverlay.classList.remove("isOpen");
+      chartOverlay.setAttribute("aria-hidden", "true");
+    }
+    
+    function makeChartRow(idx, name, donePct, failPct) {
+      const row = document.createElement("div");
+      row.className = "chartRow";
+    
+      const n = document.createElement("div");
+      n.className = "chartRowIdx";
+      n.textContent = String(idx);
+    
+      const nm = document.createElement("div");
+      nm.className = "chartRowName";
+      nm.textContent = name || "Nawyk";
+    
+      const badges = document.createElement("div");
+      badges.className = "chartRowBadges";
+    
+      const bDone = document.createElement("div");
+      bDone.className = "chartBadge done";
+      bDone.innerHTML = `<span class="dot"></span><span>${donePct}%</span>`;
+    
+      const bFail = document.createElement("div");
+      bFail.className = "chartBadge fail";
+      bFail.innerHTML = `<span class="dot"></span><span>${failPct}%</span>`;
+    
+      badges.appendChild(bDone);
+      badges.appendChild(bFail);
+    
+      row.appendChild(n);
+      row.appendChild(nm);
+      row.appendChild(badges);
+    
+      return row;
+    }
+    
+    function renderChartModal(stats) {
+      chartModalList.innerHTML = "";
+      chartModalRange.textContent = chartRangeTxt.textContent || "";
+    
+      const list = stats.perHabit || [];
+      list.forEach((h, i) => {
+        chartModalList.appendChild(
+          makeChartRow(i + 1, h.name, h.donePct, h.failPct)
+        );
+      });
+    }
+
 
     function addTodo(dateISO, text) {
       const t = String(text || "").trim();
@@ -629,6 +709,21 @@
       addTodo(todoDateInput.value, todoText.value);
       closeTodoModal();
     });
+    chartDetailsBtn.addEventListener("click", () => {
+      const s = computeChartStats();
+      renderChartModal(s);
+      openChartModal();
+    });
+
+    chartClose.addEventListener("click", closeChartModal);
+
+    chartOverlay.addEventListener("click", (e) => {
+      if (e.target === chartOverlay) closeChartModal();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (chartOverlay.classList.contains("isOpen") && e.key === "Escape") closeChartModal();
+    });
 
     const expOnlySelected = $("expOnlySelected");
     const expAmount = $("expAmount");
@@ -838,19 +933,41 @@
     const { start, end, daysCount } = rangeForChart();
     const totalCells = (state.habits?.length || 0) * daysCount;
   
-    let done = 0;
-    let fail = 0;
-  
-    for (let i = 0; i < daysCount; i++) {
-      const d = addDays(start, i);
-      const iso = toISO(d);
-    
-      for (const h of state.habits) {
-        const v = getEntryValue(h.id, iso);
-        if (v === 1) done += 1;
-        else if (v === -1) fail += 1;
+  let done = 0;
+  let fail = 0;
+
+  const perHabit = state.habits.map(h => ({
+    id: h.id,
+    name: h.name,
+    done: 0,
+    fail: 0,
+    donePct: 0,
+    failPct: 0
+  }));
+
+  const perMap = Object.fromEntries(perHabit.map(x => [x.id, x]));
+
+  for (let i = 0; i < daysCount; i++) {
+    const d = addDays(start, i);
+    const iso = toISO(d);
+
+    for (const h of state.habits) {
+      const v = getEntryValue(h.id, iso);
+
+      if (v === 1) {
+        done += 1;
+        perMap[h.id].done += 1;
+      } else if (v === -1) {
+        fail += 1;
+        perMap[h.id].fail += 1;
       }
     }
+  }
+
+  for (const x of perHabit) {
+    x.donePct = daysCount > 0 ? Math.round((x.done / daysCount) * 100) : 0;
+    x.failPct = daysCount > 0 ? Math.round((x.fail / daysCount) * 100) : 0;
+  }
   
     const empty = Math.max(0, totalCells - done - fail);
   
@@ -858,7 +975,7 @@
     const donePerDay = daysCount > 0 ? (done / daysCount).toFixed(2) : "0.00";
     const failPerDay = daysCount > 0 ? (fail / daysCount).toFixed(2) : "0.00";
   
-    return { start, end, daysCount, totalCells, done, fail, empty, coverage, donePerDay, failPerDay };
+    return { start, end, daysCount, totalCells, done, fail, empty, coverage, donePerDay, failPerDay, perHabit };
   }
   
   function polarToCartesian(cx, cy, r, angleDeg) {

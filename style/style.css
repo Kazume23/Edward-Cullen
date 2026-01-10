@@ -802,7 +802,7 @@ body {
   display:grid;
   grid-template-columns:220px 1fr;
   gap:12px;
-  align-items:center;
+  align-items:start;
   min-height:0;
 }
 
@@ -850,5 +850,77 @@ body {
 }
 
 .topA .panelBody { overflow: hidden; }
-.chartWrap { grid-template-columns: 220px; }
-.chartMeta { display:none; }
+
+.chartActions{
+  margin-top:10px;
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.chartModalBody{
+  max-height:60vh;
+  overflow:auto;
+}
+
+.chartModalList{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.chartRow{
+  display:grid;
+  grid-template-columns: 18px 1fr auto;
+  gap:10px;
+  align-items:center;
+  font-size:13px;
+}
+
+.chartRowIdx{
+  opacity:0.65;
+  text-align:right;
+}
+
+.chartRowName{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  opacity:0.95;
+}
+
+.chartRowBadges{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  white-space:nowrap;
+}
+
+.chartBadge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:4px 8px;
+  border-radius:999px;
+  border:1px solid #3a3a3a;
+  background:#1b1b1b;
+  font-size:12px;
+  line-height:1;
+}
+
+.chartBadge .dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  display:inline-block;
+  border:1px solid #333;
+}
+
+.chartBadge.done .dot{ background:#2f9dff; border-color:#2f9dff; }
+.chartBadge.fail .dot{ background:#ff2f5d; border-color:#ff2f5d; }
+
+.chartModalRange{
+  font-size:12px;
+  opacity:0.75;
+}
+
