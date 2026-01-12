@@ -1,8 +1,8 @@
-/*
-div {
+
+/* div {
   outline: 1px solid red;
-}
-*/
+} */
+
 
 body {
   margin: 0;
@@ -17,40 +17,176 @@ body {
 }
 
 .sidebar {
-  width: 220px;
+  width: 232px;
   background: #1e1e1e;
   padding: 12px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .logo {
-  height: 30px;
+  height: 48px;
+  background: #242424;
+  border-radius: 12px;
+  border: 1px solid #2f2f2f;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.logoMark {
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
   background: #2d2d2d;
-  margin-bottom: 12px;
-  border-radius: 6px;
+  border: 1px solid #343434;
+  flex: 0 0 auto;
 }
 
-.navItem{
-  height: 34px;
+.logoText {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: #f0f0f0;
+  line-height: 1;
+}
+
+.nav {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.navItem {
+  height: 42px;
   width: 100%;
-  background:#2d2d2d;
-  margin-bottom:10px;
-  border-radius:8px;
-  border:1px solid #3a3a3a;
-  color:#e7e7e7;
-  cursor:pointer;
-  text-align:left;
-  padding:0 10px;
+  background: #232323;
+  border-radius: 10px;
+  border: 1px solid #2f2f2f;
+  color: #e7e7e7;
+  cursor: pointer;
+  text-align: left;
+  padding: 0 12px;
+  padding-left: 18px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  transition: background 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+  position: relative;
+  flex: 1;
 }
 
-.navItem:hover{
-  border-color:#4a4a4a;
+.navItem:hover {
+  background: #262626;
+  border-color: #3a3a3a;
 }
 
-.navItem.isActive{
-  border-color:#2f9dff;
-  box-shadow: 0 0 0 2px rgba(47, 157, 255, 0.20) inset;
+.navItem.isActive {
+  border: none;
+  box-shadow: none;
 }
+
+.navItem:focus-visible {
+  outline: none;
+  border-color: #2f9dff;
+  box-shadow: 0 0 0 2px rgba(47, 157, 255, 0.28);
+}
+
+.navRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navAddBtn {
+  width: 36px;
+  height: 42px;
+  border-radius: 10px;
+  background: #1f1f1f;
+  color: #e7e7e7;
+  border: 1px solid #2f2f2f;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+  transition: background 120ms ease, border-color 120ms ease, opacity 120ms ease;
+}
+
+.navRow:hover .navAddBtn {
+  opacity: 1;
+  border-color: #3a3a3a;
+  background: #262626;
+}
+
+.navAddBtn:hover {
+  border-color: #2f9dff;
+}
+
+.navAddBtn:focus-visible {
+  outline: none;
+  border-color: #2f9dff;
+  box-shadow: 0 0 0 2px rgba(47, 157, 255, 0.28);
+}
+
+.navItem.isActive::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 99px;
+  background: #2f9dff;
+  opacity: 0.9;
+}
+
+
+.navQuickAdd:hover {
+  background: #262626;
+  border-color: #3a3a3a;
+}
+
+.navQuickAdd:focus-visible {
+  outline: none;
+  border-color: #2f9dff;
+  box-shadow: 0 0 0 2px rgba(47, 157, 255, 0.28);
+}
+
+.quickAddMenu.isOpen {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.quickAddItem {
+  height: 40px;
+  border-radius: 10px;
+  background: #1f1f1f;
+  color: #e7e7e7;
+  border: 1px solid #333;
+  cursor: pointer;
+  text-align: left;
+  padding: 0 12px;
+}
+
+.quickAddItem:hover {
+  border-color: #2f9dff;
+}
+
+.quickAddItem:focus-visible {
+  outline: none;
+  border-color: #2f9dff;
+  box-shadow: 0 0 0 2px rgba(47, 157, 255, 0.28);
+}
+
 
 .main {
   flex: 1;
@@ -96,7 +232,7 @@ body {
   flex: 1;
   min-height: 0;
   overflow: auto;
-
+  
   display: grid;
   gap: 12px;
 

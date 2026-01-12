@@ -11,12 +11,30 @@
 <body>
   <div class="app">
     <div class="sidebar">
-      <div class="logo"></div>
+      <div class="logo">
+        <span class="logoMark" aria-hidden="true"></span>
+        <span class="logoText">Edward</span>
+      </div>
+
       <div class="nav">
-        <button class="navItem" id="navDash" type="button">Dashboard</button>
-        <button class="navItem" id="navHabits" type="button">Habits</button>
-        <button class="navItem" id="navTodo" type="button">ToDo</button>
-        <button class="navItem" id="navExpenses" type="button">Wydatki</button>
+        <div class="navRow">
+          <button class="navItem" id="navDash" type="button">Dashboard</button>
+        </div>
+
+        <div class="navRow">
+          <button class="navItem" id="navTodo" type="button">ToDo</button>
+          <button class="navAddBtn" id="navAddTodo" type="button" title="Dodaj ToDo" aria-label="Dodaj ToDo">+</button>
+        </div>
+
+        <div class="navRow">
+          <button class="navItem" id="navHabits" type="button">Habits</button>
+          <button class="navAddBtn" id="navAddHabits" type="button" title="Dodaj nawyk" aria-label="Dodaj nawyk">+</button>
+        </div>
+
+        <div class="navRow">
+          <button class="navItem" id="navExpenses" type="button">Wydatki</button>
+          <button class="navAddBtn" id="navAddExpenses" type="button" title="Dodaj wydatek" aria-label="Dodaj wydatek">+</button>
+        </div>
       </div>
     </div>
 
@@ -1177,6 +1195,10 @@
     const navTodo = $("navTodo");
     const navExpenses = $("navExpenses");
 
+    const navAddHabits = $("navAddHabits");
+    const navAddTodo = $("navAddTodo");
+    const navAddExpenses = $("navAddExpenses");
+
     const boxTopA = document.querySelector(".box.topA");
     const tableBox = document.querySelector(".tableBox");
     const sideBox = document.querySelector(".sideBox");
@@ -1320,6 +1342,34 @@
     navTodo.addEventListener("click", () => { setNavActive(navTodo); scrollToEl(sideBox); });
     navExpenses.addEventListener("click", () => { setNavActive(navExpenses); scrollToEl(bottomBox); });
 
+    function closeQuickAdd(){
+      quickAddMenu.classList.remove("isOpen");
+      quickAddMenu.setAttribute("aria-hidden", "true");
+    }
+
+    function toggleQuickAdd(){
+      const open = quickAddMenu.classList.toggle("isOpen");
+      quickAddMenu.setAttribute("aria-hidden", open ? "false" : "true");
+    }
+
+    navAddHabits.addEventListener("click", (e) => {
+      e.stopPropagation();
+      setNavActive(navHabits);
+      openHabitModal();
+    });
+
+    navAddTodo.addEventListener("click", (e) => {
+      e.stopPropagation();
+      setNavActive(navTodo);
+      openTodoModal(getSelectedDateObj());
+    });
+
+    navAddExpenses.addEventListener("click", (e) => {
+      e.stopPropagation();
+      setNavActive(navExpenses);
+      openExpModal();
+    });
+
     navTodo.addEventListener("dblclick", () => {
       setNavActive(navTodo);
       openTodoModal(getSelectedDateObj());
@@ -1335,7 +1385,6 @@
       openHabitModal();
     });
 
-
     function renderAll() {
       renderCalendar();
       renderHabits();
@@ -1344,8 +1393,7 @@
       renderChart();
     }
 
-  
-
+    setNavActive(navDash);
     renderAll();
   </script>
 
