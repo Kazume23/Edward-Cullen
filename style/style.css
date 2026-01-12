@@ -244,7 +244,6 @@ body {
 
 .box,
 .tableBox,
-.sideBox,
 .bottomBox {
   background: #2a2a2a;
   border-radius: 10px;
@@ -252,11 +251,58 @@ body {
   min-height: 0;
 }
 
+.sideBox {
+  background: #26292e;
+  border: 1px solid #2f343b;
+  border-radius: 10px;
+  min-width: 0;
+  min-height: 0;
+}
 .panelTitle {
   padding: 10px 12px 0 12px;
   font-size: 14px;
   opacity: 0.9;
 }
+
+.sideBox .panelTitle.todoTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.todoTitleText {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.todoTitleSub {
+  font-size: 12px;
+  font-weight: 400;
+  opacity: 0.65;
+}
+
+.todoAddBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  border: 1px solid #3a3a3a;
+  background: #1f1f1f;
+  color: #e7e7e7;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.todoAddBtn:hover {
+  border-color: #4a4a4a;
+}
+
+.todoAddBtn:active {
+  transform: scale(0.98);
+}
+
 
 .panelBody {
   padding: 10px 12px 12px 12px;
@@ -292,7 +338,13 @@ body {
 .sideBox {
   grid-column: 3;
   grid-row: 1 / span 2;
-  background: #242424;
+
+  background: #2a2a2a;    
+  border: none;            
+  border-radius: 10px;
+
+  min-width: 0;
+  min-height: 0;
   overflow: hidden;
 }
 

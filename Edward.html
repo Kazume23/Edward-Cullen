@@ -137,13 +137,20 @@
         </div>
 
         <div class="sideBox">
-          <div class="panelTitle" data-i18n="todo.title">ToDo</div>
+          <div class="panelTitle todoTitleRow">
+            <div class="todoTitleText">
+              <span data-i18n="todo.title">ToDo</span>
+              <span class="todoTitleSub" id="todoTitleSub"></span>
+            </div>
+
+            <button type="button" class="todoAddBtn" id="todoAddBtn" aria-label="Dodaj ToDo">+</button>
+          </div>
+
           <div class="panelBody">
             <div id="todoEmpty" class="todoEmpty" data-i18n="todo.empty">Brak ToDo. Dwuklik w kalendarzu aby dodać.</div>
             <div id="todoList" class="todoList"></div>
           </div>
         </div>
-
 
         <div class="bottomBox">
           <div class="panelTitle" data-i18n="exp.title">Dziennik wydatków</div>
@@ -323,6 +330,9 @@
     const todoEmpty = $("todoEmpty");
     const todoList = $("todoList");
 
+    const todoAddBtn = $("todoAddBtn");
+    const todoTitleSub = $("todoTitleSub");
+
     const todoOverlay = $("todoOverlay");
     const todoDateInput = $("todoDate");
     const todoText = $("todoText");
@@ -345,7 +355,9 @@
     const chartModalRange = $("chartModalRange");
     const chartModalList = $("chartModalList");
 
-
+    if (todoAddBtn) {
+      todoAddBtn.addEventListener("click", () => openTodoModal(getSelectedDateObj()));
+    }
 
     function pad2(n) { return String(n).padStart(2, "0"); }
     function toISO(d) { return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`; }
@@ -547,6 +559,9 @@
     }
 
     function renderTodos() {
+      if (todoTitleSub) {
+      todoTitleSub.textContent = `• ${monthNamePL(state.viewMonth)} ${state.viewYear}`;
+    }
       todoList.innerHTML = "";
 
       const items = [...state.todos].sort((a, b) => {
