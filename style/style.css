@@ -30,11 +30,26 @@ body {
   border-radius: 6px;
 }
 
-.navItem {
-  height: 28px;
-  background: #2d2d2d;
-  margin-bottom: 10px;
-  border-radius: 6px;
+.navItem{
+  height: 34px;
+  width: 100%;
+  background:#2d2d2d;
+  margin-bottom:10px;
+  border-radius:8px;
+  border:1px solid #3a3a3a;
+  color:#e7e7e7;
+  cursor:pointer;
+  text-align:left;
+  padding:0 10px;
+}
+
+.navItem:hover{
+  border-color:#4a4a4a;
+}
+
+.navItem.isActive{
+  border-color:#2f9dff;
+  box-shadow: 0 0 0 2px rgba(47, 157, 255, 0.20) inset;
 }
 
 .main {

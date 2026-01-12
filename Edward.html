@@ -13,11 +13,10 @@
     <div class="sidebar">
       <div class="logo"></div>
       <div class="nav">
-        <div class="navItem"></div>
-        <div class="navItem"></div>
-        <div class="navItem"></div>
-        <div class="navItem"></div>
-        <div class="navItem"></div>
+        <button class="navItem" id="navDash" type="button">Dashboard</button>
+        <button class="navItem" id="navHabits" type="button">Habits</button>
+        <button class="navItem" id="navTodo" type="button">ToDo</button>
+        <button class="navItem" id="navExpenses" type="button">Wydatki</button>
       </div>
     </div>
 
@@ -211,6 +210,78 @@
       <div class="modalBody chartModalBody">
         <div class="chartModalRange" id="chartModalRange"></div>
         <div class="chartModalList" id="chartModalList"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modalOverlay" id="habitOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="habitModalTitle">
+      <div class="modalTop">
+        <div class="modalTitle" id="habitModalTitle">Dodaj nawyk</div>
+        <button class="modalClose" id="habitClose" type="button" aria-label="Zamknij">×</button>
+      </div>
+
+      <div class="modalBody">
+        <label class="modalLabel" for="habitModalName">Nazwa</label>
+        <input class="modalInput" id="habitModalName" type="text" placeholder="Np. Wstać o 6:00" autocomplete="off">
+
+        <div class="modalActions">
+          <button class="calBtn" id="habitCancel" type="button">Anuluj</button>
+          <button class="habBtn" id="habitSave" type="button">Dodaj</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modalOverlay" id="expOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="expModalTitle">
+      <div class="modalTop">
+        <div class="modalTitle" id="expModalTitle">Dodaj wydatek</div>
+        <button class="modalClose" id="expClose" type="button" aria-label="Zamknij">×</button>
+      </div>
+
+      <div class="modalBody">
+        <label class="modalLabel" for="expModalAmount">Kwota</label>
+        <input class="modalInput" id="expModalAmount" type="text" inputmode="numeric" placeholder="Np. 12,50">
+
+        <label class="modalLabel" for="expModalWhat">Co kupione</label>
+        <input class="modalInput" id="expModalWhat" type="text" placeholder="Np. Kawa">
+
+        <label class="modalLabel" for="expModalCategory">Kategoria</label>
+        <select class="modalInput" id="expModalCategory">
+          <option value="Jedzenie">Jedzenie</option>
+          <option value="Transport">Transport</option>
+          <option value="Rozrywka">Rozrywka</option>
+          <option value="Zdrowie">Zdrowie</option>
+          <option value="Edukacja">Edukacja</option>
+          <option value="Sprzęt">Sprzęt</option>
+          <option value="Subskrypcje">Subskrypcje</option>
+          <option value="Inne">Inne</option>
+        </select>
+
+        <label class="modalLabel" for="expModalScore">Ocena</label>
+        <select class="modalInput" id="expModalScore">
+          <option value="A">A  Wysoki priorytet</option>
+          <option value="B">B  Konieczny</option>
+          <option value="C">C  Opcjonalny</option>
+          <option value="D">D  Zbędny</option>
+        </select>
+
+        <label class="modalLabel" for="expModalPeriod">Okres</label>
+        <select class="modalInput" id="expModalPeriod">
+          <option value="once">Jednorazowe</option>
+          <option value="weekly">Tygodniowe</option>
+          <option value="monthly">Miesięczne</option>
+          <option value="yearly">Roczne</option>
+        </select>
+
+        <label class="modalLabel" for="expModalDate">Data</label>
+        <input class="modalInput" id="expModalDate" type="date">
+
+        <div class="modalActions">
+          <button class="calBtn" id="expCancel" type="button">Anuluj</button>
+          <button class="habBtn" id="expSave" type="button">Dodaj</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1100,6 +1171,170 @@
     saveState();
     renderChart();
   });
+
+    const navDash = $("navDash");
+    const navHabits = $("navHabits");
+    const navTodo = $("navTodo");
+    const navExpenses = $("navExpenses");
+
+    const boxTopA = document.querySelector(".box.topA");
+    const tableBox = document.querySelector(".tableBox");
+    const sideBox = document.querySelector(".sideBox");
+    const bottomBox = document.querySelector(".bottomBox");
+
+    sideBox.addEventListener("dblclick", () => {
+      openTodoModal(getSelectedDateObj());
+    });
+
+    function scrollToEl(el){
+      if (!el) return;
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function setNavActive(btn){
+      document.querySelectorAll(".navItem").forEach(x => x.classList.remove("isActive"));
+      if (btn) btn.classList.add("isActive");
+    }
+
+    const habitOverlay = $("habitOverlay");
+    const habitModalName = $("habitModalName");
+    const habitSave = $("habitSave");
+    const habitClose = $("habitClose");
+    const habitCancel = $("habitCancel");
+
+    function openHabitModal(){
+      habitModalName.value = "";
+      habitOverlay.classList.add("isOpen");
+      habitOverlay.setAttribute("aria-hidden", "false");
+      setTimeout(() => habitModalName.focus(), 0);
+    }
+
+    function closeHabitModal(){
+      habitOverlay.classList.remove("isOpen");
+      habitOverlay.setAttribute("aria-hidden", "true");
+    }
+
+    function addHabitFromModal(){
+      const name = habitModalName.value.trim();
+      if (!name) return;
+      state.habits.push({ id: crypto.randomUUID(), name });
+      saveState();
+      renderHabits();
+      renderChart();
+      closeHabitModal();
+    }
+
+    habitSave.addEventListener("click", addHabitFromModal);
+    habitClose.addEventListener("click", closeHabitModal);
+    habitCancel.addEventListener("click", closeHabitModal);
+    habitOverlay.addEventListener("click", (e) => {
+      if (e.target === habitOverlay) closeHabitModal();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (habitOverlay.classList.contains("isOpen") && e.key === "Escape") closeHabitModal();
+    });
+
+    habitModalName.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") addHabitFromModal();
+    });
+
+    const expOverlay = $("expOverlay");
+    const expModalAmount = $("expModalAmount");
+    const expModalWhat = $("expModalWhat");
+    const expModalCategory = $("expModalCategory");
+    const expModalScore = $("expModalScore");
+    const expModalPeriod = $("expModalPeriod");
+    const expModalDate = $("expModalDate");
+    const expSaveBtn = $("expSave");
+    const expCloseBtn = $("expClose");
+    const expCancelBtn = $("expCancel");
+
+    function openExpModal(){
+      expModalAmount.value = "";
+      expModalWhat.value = "";
+      expModalCategory.value = "Jedzenie";
+      expModalScore.value = "B";
+      expModalPeriod.value = "once";
+      expModalDate.value = state.selectedDate;
+
+      expOverlay.classList.add("isOpen");
+      expOverlay.setAttribute("aria-hidden", "false");
+      setTimeout(() => expModalAmount.focus(), 0);
+    }
+
+    function closeExpModal(){
+      expOverlay.classList.remove("isOpen");
+      expOverlay.setAttribute("aria-hidden", "true");
+    }
+
+    expModalAmount.addEventListener("input", () => {
+      let v = expModalAmount.value;
+      v = v.replace(/[^0-9.,]/g, "");
+      const parts = v.split(/[.,]/);
+      if (parts[0].length > 9) parts[0] = parts[0].slice(0, 9);
+      expModalAmount.value = parts.length > 1 ? parts[0] + "," + parts[1].slice(0, 2) : parts[0];
+    });
+
+    function addExpenseFromModal(){
+      ensureExpenses();
+
+      const amt = Number(String(expModalAmount.value || "").replace(",", "."));
+      const what = String(expModalWhat.value || "").trim();
+      const dateISO = expModalDate.value || state.selectedDate;
+
+      if (!Number.isFinite(amt) || amt <= 0) return;
+      if (String(Math.floor(amt)).length > 10) return;
+      if (!what) return;
+
+      state.expenses.push({
+        id: crypto.randomUUID(),
+        dateISO,
+        amount: amt,
+        what,
+        category: expModalCategory.value,
+        score: expModalScore.value,
+        period: expModalPeriod.value,
+        createdAt: Date.now()
+      });
+
+      saveState();
+      renderExpenses();
+      renderCalendar();
+      closeExpModal();
+    }
+
+    expSaveBtn.addEventListener("click", addExpenseFromModal);
+    expCloseBtn.addEventListener("click", closeExpModal);
+    expCancelBtn.addEventListener("click", closeExpModal);
+    expOverlay.addEventListener("click", (e) => {
+      if (e.target === expOverlay) closeExpModal();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (expOverlay.classList.contains("isOpen") && e.key === "Escape") closeExpModal();
+    });
+
+    navDash.addEventListener("click", () => { setNavActive(navDash); scrollToEl(boxTopA); });
+    navHabits.addEventListener("click", () => { setNavActive(navHabits); scrollToEl(tableBox); });
+    navTodo.addEventListener("click", () => { setNavActive(navTodo); scrollToEl(sideBox); });
+    navExpenses.addEventListener("click", () => { setNavActive(navExpenses); scrollToEl(bottomBox); });
+
+    navTodo.addEventListener("dblclick", () => {
+      setNavActive(navTodo);
+      openTodoModal(getSelectedDateObj());
+    });
+
+    navExpenses.addEventListener("dblclick", () => {
+      setNavActive(navExpenses);
+      openExpModal();
+    });
+
+    navHabits.addEventListener("dblclick", () => {
+      setNavActive(navHabits);
+      openHabitModal();
+    });
+
 
     function renderAll() {
       renderCalendar();
