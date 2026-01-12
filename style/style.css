@@ -1,8 +1,6 @@
-
 /* div {
   outline: 1px solid red;
 } */
-
 
 body {
   margin: 0;
@@ -957,10 +955,15 @@ body {
 
 .chartWrap{
   display:grid;
-  grid-template-columns:220px 1fr;
-  gap:12px;
-  align-items:start;
+  grid-template-columns:200px minmax(260px, 1fr);
+  gap:24px;
+  align-items:center;
   min-height:0;
+}
+
+.chartMeta{
+  align-self:center;
+  padding-left:24px;
 }
 
 .chartSvg{
@@ -1025,6 +1028,14 @@ body {
   flex-direction:column;
   gap:8px;
 }
+
+.chartModalSummary {
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: #bdbdbd;
+  line-height: 1.4;
+}
+
 
 .chartRow{
   display:grid;

@@ -81,8 +81,6 @@
                   <b id="chartEmpty">0</b>
                 </div>
               </div>
-            
-              <div class="chartSmall" id="chartSmallTxt"></div>
               <div class="chartActions">
                 <button class="habBtn" id="chartDetailsBtn" type="button">Szczegóły</button>
               </div>
@@ -227,6 +225,7 @@
 
       <div class="modalBody chartModalBody">
         <div class="chartModalRange" id="chartModalRange"></div>
+        <div class="chartModalSummary" id="chartModalSummary"></div>
         <div class="chartModalList" id="chartModalList"></div>
       </div>
     </div>
@@ -508,6 +507,12 @@
           makeChartRow(i + 1, h.name, h.donePct, h.failPct)
         );
       });
+
+      const summary = `
+        Aktywność: ${stats.coverage}% komórek<br>
+        Średnio na dzień: ✔ ${stats.donePerDay}, ✖ ${stats.failPerDay}
+        `;
+      $("chartModalSummary").innerHTML = summary;
     }
 
 
@@ -1167,13 +1172,9 @@
     if (state.chartMode === "month") {
       chartRangeTxt.textContent = `${monthNamePL(getSelectedDateObj().getMonth())} ${getSelectedDateObj().getFullYear()}`;
     } else {
-      chartRangeTxt.textContent = `${fmtPL(s.start)} do ${fmtPL(s.end)}`;
+      chartRangeTxt.textContent = `${fmtPL(s.start)} - ${fmtPL(s.end)}`;
     }
-  
-    chartSmallTxt.textContent =
-      `Aktywność: ${s.coverage}% komórek. ` +
-      `Średnio na dzień: ✔ ${s.donePerDay}, ✖ ${s.failPerDay}.`;
-  
+
     syncChartTabs();
     renderDonut(s.done, s.fail, s.empty);
   }
