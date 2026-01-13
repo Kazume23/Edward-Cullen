@@ -1,13 +1,12 @@
-/* div {
-  outline: 1px solid red;
-} */
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #111;
-  color: #e7e7e7;
-}
+  font-family: Verdana, sans-serif;
+  background-image: url('las.jpg');
+  background-size:cover;
+  background-position: center;
+  color: #E6E8EB;
+  backdrop-filter: blur(10px);}
 
 .app {
   display: flex;
@@ -1143,4 +1142,5 @@ body {
   font-size:12px;
   opacity:0.75;
 }
+
 
