@@ -2,11 +2,8 @@
 body {
   margin: 0;
   font-family: Verdana, sans-serif;
-  background-image: url('las.jpg');
-  background-size:cover;
-  background-position: center;
   color: #E6E8EB;
-  backdrop-filter: blur(10px);}
+  background-color: #060620;}
 
 .app {
   display: flex;
@@ -15,7 +12,7 @@ body {
 
 .sidebar {
   width: 232px;
-  background: #1e1e1e;
+  background: #060620;
   padding: 12px;
   box-sizing: border-box;
   display: flex;
@@ -498,7 +495,7 @@ body {
 
 .habInput {
   width: 240px;
-  background: #1f1f1f;
+  background: #060620;
   color: #e7e7e7;
   border: 1px solid #3a3a3a;
   border-radius: 8px;
@@ -507,7 +504,7 @@ body {
 }
 
 .habBtn {
-  background: #1f1f1f;
+  background: #07075298;
   color: #e7e7e7;
   border: 1px solid #3a3a3a;
   border-radius: 8px;
@@ -534,7 +531,7 @@ body {
 .habTable thead th {
   position: sticky;
   top: 0;
-  background: #2a2a2a;
+  background: #060620;
   z-index: 2;
   border-bottom: 1px solid #333;
   padding: 10px 8px;
@@ -555,7 +552,7 @@ body {
 }
 
 .habTable tbody td {
-  border-bottom: 1px solid #303030;
+  border-bottom: 1px solid #060635;
   padding: 10px 8px;
 }
 
@@ -567,14 +564,14 @@ body {
   display: inline-block;
   padding: 6px 8px;
   border-radius: 8px;
-  background: #1f1f1f;
+  background: #19191d;
   border: 1px solid transparent;
   min-width: 200px;
 }
 
 .habitName:focus {
   outline: none;
-  border-color: #3a3a3a;
+  border-color: #292828;
 }
 
 .tdCell {
