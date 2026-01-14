@@ -192,7 +192,7 @@ body {
 
 .topbar {
   height: 50px;
-  background: #1e1e1e;
+  background: #202061 ; 
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -204,7 +204,7 @@ body {
 .title {
   width: 140px;
   height: 16px;
-  background: #2d2d2d;
+  background: #4837cd;
   border-radius: 6px;
 }
 
@@ -216,7 +216,7 @@ body {
 .icon {
   width: 26px;
   height: 26px;
-  background: #2d2d2d;
+  background: #060635;
   border-radius: 6px;
 }
 
@@ -241,14 +241,14 @@ body {
 .box,
 .tableBox,
 .bottomBox {
-  background: #2a2a2a;
+  background:  #141625;
   border-radius: 10px;
   min-width: 0;
   min-height: 0;
 }
 
 .sideBox {
-  background: #26292e;
+  background: #222324;
   border: 1px solid #2f343b;
   border-radius: 10px;
   min-width: 0;
@@ -283,8 +283,8 @@ body {
   width: 32px;
   height: 32px;
   border-radius: 10px;
-  border: 1px solid #3a3a3a;
-  background: #1f1f1f;
+  border: 1px solid #51577e;
+  background: #2e377d;
   color: #e7e7e7;
   font-size: 18px;
   line-height: 1;
@@ -335,7 +335,7 @@ body {
   grid-column: 3;
   grid-row: 1 / span 2;
 
-  background: #2a2a2a;    
+  background: #171A2F;    
   border: none;            
   border-radius: 10px;
 
@@ -384,16 +384,16 @@ body {
 }
 
 .calBtn {
-  background: #1f1f1f;
-  color: #e7e7e7;
-  border: 1px solid #3a3a3a;
+  background: #4F6BFF;
+  color:#FFFFFF ;
+  border: 1px solid #212133;
   border-radius: 8px;
   padding: 6px 10px;
   cursor: pointer;
 }
 
 .calBtn:hover {
-  border-color: #4a4a4a;
+  border-color: #1d1d1d;
 }
 
 .calWeekdays {
@@ -402,7 +402,7 @@ body {
   gap: 6px;
   padding: 0 10px 10px 10px;
   margin-bottom: 6px;
-  border-bottom: 1px solid #2b2b2b;
+  border-bottom: 1px solid #E6E8F2;
 }
 
 .calWeekdays > div {
@@ -415,7 +415,7 @@ body {
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255, 255, 255, 0.688);
 }
 
 .calGrid {
@@ -433,9 +433,9 @@ body {
 }
 
 .calDay {
-  background: #1f1f1f;
+  background: #1A1D3A;
   color: #e7e7e7;
-  border: 1px solid #333;
+  border: 1px solid #4a4ada;
   border-radius: 10px;
 
   height: auto;
@@ -445,7 +445,7 @@ body {
 }
 
 .calDay:hover {
-  border-color: #4a4a4a;
+  border-color: #FFFFFF;
 }
 
 .calMuted {
@@ -453,12 +453,12 @@ body {
 }
 
 .calWeek {
-  border-color: #3f5d75;
+  border-color: #2b3165;
 }
 
 .calSelected {
-  border-color: #2f9dff;
-  box-shadow: 0 0 0 2px rgba(47, 157, 255, 0.25) inset;
+  border-color: #ff81c4;
+  box-shadow: 0 0 0 2px rgba(47, 157, 255, 0.15) inset;
 }
 
 /* Habit tracker */
@@ -468,7 +468,7 @@ body {
   grid-template-columns: 1fr auto;
   align-items: center;
   gap: 12px;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid #5454d7b0;
 }
 
 .habHeaderLeft {
@@ -495,25 +495,25 @@ body {
 
 .habInput {
   width: 240px;
-  background: #060620;
+  background: #2e377d;
   color: #e7e7e7;
-  border: 1px solid #3a3a3a;
+  border: 1px solid #34409a;
   border-radius: 8px;
   padding: 8px 10px;
   outline: none;
 }
 
 .habBtn {
-  background: #07075298;
+  background: #202061;
   color: #e7e7e7;
-  border: 1px solid #3a3a3a;
+  border: 1px solid #181825;
   border-radius: 8px;
   padding: 8px 12px;
   cursor: pointer;
 }
 
 .habBtn:hover {
-  border-color: #4a4a4a;
+  border-color: #ffffff;
 }
 
 .habTableWrap {
@@ -531,9 +531,9 @@ body {
 .habTable thead th {
   position: sticky;
   top: 0;
-  background: #060620;
+  background: #12142A;
   z-index: 2;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid #5454d756;
   padding: 10px 8px;
   font-size: 12px;
 }
@@ -548,11 +548,11 @@ body {
 }
 
 .thToday {
-  color: #2f9dff;
+  color: #5590ff;
 }
 
 .habTable tbody td {
-  border-bottom: 1px solid #060635;
+  border-bottom: 1px solid #5454d76d;
   padding: 10px 8px;
 }
 
@@ -564,14 +564,14 @@ body {
   display: inline-block;
   padding: 6px 8px;
   border-radius: 8px;
-  background: #19191d;
+  background: #1C2040;
   border: 1px solid transparent;
   min-width: 200px;
 }
 
 .habitName:focus {
   outline: none;
-  border-color: #292828;
+  border-color: #232324;
 }
 
 .tdCell {
@@ -582,13 +582,13 @@ body {
   width: 22px;
   height: 22px;
   border-radius: 6px;
-  border: 1px solid #444;
+  border: 1px solid #2d2c48;
   background: transparent;
   cursor: pointer;
 }
 
 .cellBtn:hover {
-  border-color: #666;
+  border-color: #464570;
 }
 
 .cellDone {
