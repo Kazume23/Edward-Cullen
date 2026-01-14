@@ -1144,21 +1144,64 @@ body {
   opacity:0.75;
 }
 
+.icons{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:4px;
+  border:1px solid #2f2f2f;
+  background:#1a1a1a;
+  border-radius:12px;
+}
+
+.icon{
+  width:auto;
+  height:auto;
+  background:transparent;
+  border-radius:0;
+}
+
+.iconBtn{
+  width:36px;
+  height:36px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:10px;
+  border:1px solid transparent;
+
+  background:rgba(255,255,255,.04);
+  color:#e7e7e7;
+
+  padding:0;
+  cursor:pointer;
+
+  transition: background 120ms ease, border-color 120ms ease, transform 80ms ease;
+}
+
+a.iconBtn{
+  text-decoration:none;
+}
+
+.iconBtn:hover{
+  background:rgba(255,255,255,.08);
+  border-color:#3a3a3a;
+}
+
+.iconBtn:focus-visible{
+  outline:none;
+  border-color:#2f9dff;
+  box-shadow:0 0 0 2px rgba(47, 157, 255, 0.28);
+}
+
+.iconBtn:active{
+  transform:scale(.96);
+}
+
 .iconSvg{
   width:18px;
   height:18px;
   display:block;
-}
-.iconBtn{
-  background:none;
-  border:none;
-  padding:6px;
-  border-radius:8px;
-  cursor:pointer;
-}
-.iconBtn:hover{
-  background:rgba(255,255,255,.08);
-}
-.iconBtn:active{
-  transform:scale(.96);
+  opacity:.95;
 }
