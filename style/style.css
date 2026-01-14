@@ -654,7 +654,7 @@ body {
   width: 34px;
   height: 34px;
   border-radius: 10px;
-  background: #1f1f1f;
+  background: #222222;
   border: 1px solid #3a3a3a;
   color: #e7e7e7;
   cursor: pointer;
@@ -680,7 +680,7 @@ body {
 
 .modalInput,
 .modalTextarea {
-  background: #1f1f1f;
+  background: #212127;
   color: #e7e7e7;
   border: 1px solid #3a3a3a;
   border-radius: 10px;
@@ -738,7 +738,7 @@ body {
   margin: 0 12px 8px 12px;
   padding: 10px 10px;
   border-radius: 10px;
-  background: #1f1f1f;
+  background: #232323;
   border: 1px solid #333;
 
   display: grid;
@@ -772,7 +772,7 @@ body {
   width: 34px;
   height: 30px;
   border-radius: 8px;
-  background: #1f1f1f;
+  background: #161616;
   color: #e7e7e7;
   border: 1px solid #3a3a3a;
   cursor: pointer;
@@ -793,7 +793,7 @@ body {
   width: 30px;
   height: 30px;
   border-radius: 8px;
-  background: #1f1f1f;
+  background: #171717;
   color: #e7e7e7;
   border: 1px solid #3a3a3a;
   cursor: pointer;
@@ -821,7 +821,7 @@ body {
   width: 30px;
   height: 30px;
   border-radius: 8px;
-  background: #1f1f1f;
+  background: #1b1b1b;
   color: #e7e7e7;
   border: 1px solid #3a3a3a;
   cursor: pointer;
@@ -902,7 +902,7 @@ body {
   margin: 0 0 8px 0;
   padding: 10px 10px;
   border-radius: 10px;
-  background: #1f1f1f;
+  background: #1b1b1b;
   border: 1px solid #333;
 
   display: grid;
@@ -932,7 +932,7 @@ body {
 
   border-radius: 999px;
   border: 1px solid #3a3a3a;
-  background: #1b1b1b;
+  background: #202020;
 
   font-size: 12px;
   line-height: 1;
@@ -943,7 +943,7 @@ body {
   width: 34px;
   height: 30px;
   border-radius: 8px;
-  background: #1f1f1f;
+  background: #1e1d1d;
   color: #e7e7e7;
   border: 1px solid #3a3a3a;
   cursor: pointer;
@@ -976,7 +976,7 @@ body {
   gap:6px;
   padding:4px;
   border:1px solid #3a3a3a;
-  background:#1f1f1f;
+  background:#242327;
   border-radius:10px;
 }
 
@@ -996,7 +996,7 @@ body {
 }
 
 .chartTab.isActive{
-  background:#2a2a2a;
+  background:#323338;
   border-color:#3a3a3a;
   opacity:1;
 }
@@ -1119,7 +1119,7 @@ body {
   padding:4px 8px;
   border-radius:999px;
   border:1px solid #3a3a3a;
-  background:#1b1b1b;
+  background:#262626;
   font-size:12px;
   line-height:1;
 }
