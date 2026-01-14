@@ -22,9 +22,9 @@ body {
 
 .logo {
   height: 48px;
-  background: #242424;
+  background: #040410;
   border-radius: 12px;
-  border: 1px solid #2f2f2f;
+  border: 1px solid #1c1c21;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -36,7 +36,7 @@ body {
   width: 24px;
   height: 24px;
   border-radius: 8px;
-  background: #2d2d2d;
+  background: #3b3ba9;
   border: 1px solid #343434;
   flex: 0 0 auto;
 }
@@ -59,9 +59,9 @@ body {
 .navItem {
   height: 42px;
   width: 100%;
-  background: #232323;
+  background: #040410;
   border-radius: 10px;
-  border: 1px solid #2f2f2f;
+  border: 1px solid #25254b;
   color: #e7e7e7;
   cursor: pointer;
   text-align: left;
@@ -76,8 +76,8 @@ body {
 }
 
 .navItem:hover {
-  background: #262626;
-  border-color: #3a3a3a;
+  background: #252ba2;
+  border-color: #060620;
 }
 
 .navItem.isActive {
@@ -87,7 +87,7 @@ body {
 
 .navItem:focus-visible {
   outline: none;
-  border-color: #2f9dff;
+  border-color: #3b91fa;
   box-shadow: 0 0 0 2px rgba(47, 157, 255, 0.28);
 }
 
@@ -101,7 +101,7 @@ body {
   width: 36px;
   height: 42px;
   border-radius: 10px;
-  background: #1f1f1f;
+  background: #232574;
   color: #e7e7e7;
   border: 1px solid #2f2f2f;
   cursor: pointer;
@@ -116,8 +116,8 @@ body {
 
 .navRow:hover .navAddBtn {
   opacity: 1;
-  border-color: #3a3a3a;
-  background: #262626;
+  border-color: #212187;
+  background: #040410;
 }
 
 .navAddBtn:hover {
@@ -163,7 +163,7 @@ body {
 .quickAddItem {
   height: 40px;
   border-radius: 10px;
-  background: #1f1f1f;
+  background: #222222;
   color: #e7e7e7;
   border: 1px solid #333;
   cursor: pointer;
@@ -631,7 +631,7 @@ body {
 
 .modal {
   width: min(520px, 100%);
-  background: #2a2a2a;
+  background: #242424;
   border: 1px solid #3a3a3a;
   border-radius: 12px;
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
