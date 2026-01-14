@@ -1144,3 +1144,21 @@ body {
   opacity:0.75;
 }
 
+.iconSvg{
+  width:18px;
+  height:18px;
+  display:block;
+}
+.iconBtn{
+  background:none;
+  border:none;
+  padding:6px;
+  border-radius:8px;
+  cursor:pointer;
+}
+.iconBtn:hover{
+  background:rgba(255,255,255,.08);
+}
+.iconBtn:active{
+  transform:scale(.96);
+}
