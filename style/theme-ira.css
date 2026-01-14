@@ -571,7 +571,7 @@ body {
 
 .habitName:focus {
   outline: none;
-  border-color: #292828;
+  border-color: #232324;
 }
 
 .tdCell {
@@ -582,13 +582,13 @@ body {
   width: 22px;
   height: 22px;
   border-radius: 6px;
-  border: 1px solid #444;
+  border: 1px solid #2d2c48;
   background: transparent;
   cursor: pointer;
 }
 
 .cellBtn:hover {
-  border-color: #666;
+  border-color: #464570;
 }
 
 .cellDone {
