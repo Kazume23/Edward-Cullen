@@ -104,7 +104,7 @@ body {
   color: #e7e7e7;
   border: 1px solid #2f2f2f;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 15px;
   line-height: 1;
   display: inline-flex;
   align-items: center;
@@ -243,7 +243,7 @@ body {
 }
 .panelTitle {
   padding: 10px 12px 0 12px;
-  font-size: 14px;
+  font-size: 20px;
   opacity: 0.9;
 }
 
@@ -261,9 +261,8 @@ body {
 }
 
 .todoTitleSub {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 400;
-  opacity: 0.65;
 }
 
 .todoAddBtn {
@@ -272,8 +271,8 @@ body {
   border-radius: 10px;
   border: 1px solid #51577e;
   background: #2e377d;
-  color: #e7e7e7;
-  font-size: 18px;
+  color: #ffffff;
+  font-size: 15px;
   line-height: 1;
   cursor: pointer;
 }
@@ -398,7 +397,7 @@ body {
   background: transparent;
   border: none;
   border-radius: 0;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -470,7 +469,7 @@ body {
 }
 
 .habRange {
-  font-size: 12px;
+  font-size: 15px;
   opacity: 0.8;
 }
 
@@ -522,7 +521,7 @@ body {
   z-index: 2;
   border-bottom: 1px solid #5454d756;
   padding: 10px 8px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .thHabit {
@@ -645,7 +644,7 @@ body {
   border: 1px solid #0a0c2a;
   color: #e7e7e7;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 15px;
   line-height: 0;
 }
 
@@ -695,7 +694,7 @@ body {
 }
 
 .todoSelected {
-  font-size: 12px;
+  font-size: 14px;
   opacity: 0.85;
 }
 
@@ -707,7 +706,7 @@ body {
 .todoEmpty {
   padding: 12px;
   opacity: 0.7;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .todoGroupTitle {
@@ -816,7 +815,7 @@ body {
 }
 
 .expSummary {
-  font-size: 13px;
+  font-size: 12px;
   opacity: 0.9;
 }
 
@@ -882,7 +881,7 @@ body {
 }
 
 .expMeta {
-  font-size: 11px;
+  font-size: 12px;
   opacity: 0.65;
   margin-top: 2px;
 }
