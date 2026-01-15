@@ -37,6 +37,11 @@
           <button class="navItem" id="navExpenses" type="button">Wydatki</button>
           <button class="navAddBtn" id="navAddExpenses" type="button" title="Dodaj wydatek" aria-label="Dodaj wydatek">+</button>
         </div>
+
+        <div class="navRow">
+          <button class="navItem" id="navWishlist" type="button">Wishlist</button>
+          <button class="navAddBtn" id="navAddWishlist" type="button" title="Dodaj do wishlisty" aria-label="Dodaj do wishlisty">+</button>
+        </div>
       </div>
     </div>
 
@@ -360,6 +365,28 @@
         <div class="modalActions">
           <button class="calBtn" id="expCancel" type="button">Anuluj</button>
           <button class="habBtn" id="expSave" type="button">Dodaj</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modalOverlay" id="wishOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="wishModalTitle">
+      <div class="modalTop">
+        <div class="modalTitle" id="wishModalTitle">Dodaj do wishlisty</div>
+        <button class="modalClose" id="wishClose" type="button" aria-label="Zamknij">×</button>
+      </div>
+
+      <div class="modalBody">
+        <label class="modalLabel" for="wishModalName">Co chcesz kupić</label>
+        <input class="modalInput" id="wishModalName" type="text" autocomplete="off">
+
+        <label class="modalLabel" for="wishModalPrice">Cena</label>
+        <input class="modalInput" id="wishModalPrice" type="text" inputmode="numeric" autocomplete="off" placeholder="Np. 123,45">
+
+        <div class="modalActions">
+          <button class="calBtn" id="wishCancel" type="button">Anuluj</button>
+          <button class="habBtn" id="wishSave" type="button">Dodaj</button>
         </div>
       </div>
     </div>
@@ -1298,9 +1325,13 @@
     const navAddTodo = $("navAddTodo");
     const navAddExpenses = $("navAddExpenses");
 
+    const navWishlist = $("navWishlist");
+    const navAddWishlist = $("navAddWishlist");
+
     const boxTopA = document.querySelector(".box.topA");
     const tableBox = document.querySelector(".tableBox");
     const bottomBox = document.querySelector(".bottomBox");
+    const wishWrap = document.querySelector(".wishWrap");
 
     const todoBox = document.getElementById("todoBox");
     const todoPanel = document.querySelector(".box.todoBox");
@@ -1444,6 +1475,23 @@
     navTodo.addEventListener("click", () => { setNavActive(navTodo); scrollToEl(todoBox); });
     navExpenses.addEventListener("click", () => { setNavActive(navExpenses); scrollToEl(bottomBox); });
 
+    if (navWishlist) navWishlist.addEventListener("click", () => {
+      setNavActive(navWishlist);
+      scrollToEl(wishWrap || bottomBox);
+    });
+
+    if (navAddWishlist) navAddWishlist.addEventListener("click", (e) => {
+      e.stopPropagation();
+      setNavActive(navWishlist);
+      openWishModal();
+    });
+
+    if (navWishlist) navWishlist.addEventListener("dblclick", () => {
+      setNavActive(navWishlist);
+      openWishModal();
+    });
+
+
     function closeQuickAdd(){
       quickAddMenu.classList.remove("isOpen");
       quickAddMenu.setAttribute("aria-hidden", "true");
@@ -1500,6 +1548,71 @@
     const wishPrice = $("wishPrice");
     const wishAdd = $("wishAdd");
     const wishList = $("wishList");
+
+    const wishOverlay = $("wishOverlay");
+    const wishModalName = $("wishModalName");
+    const wishModalPrice = $("wishModalPrice");
+    const wishSaveBtn = $("wishSave");
+    const wishCloseBtn = $("wishClose");
+    const wishCancelBtn = $("wishCancel");
+
+    function openWishModal() {
+      if (!wishOverlay) return;
+      ensureWishlist();
+      wishModalName.value = "";
+      wishModalPrice.value = "";
+      wishOverlay.classList.add("isOpen");
+      wishOverlay.setAttribute("aria-hidden", "false");
+      setTimeout(() => wishModalName.focus(), 0);
+    }
+
+    function closeWishModal() {
+      if (!wishOverlay) return;
+      wishOverlay.classList.remove("isOpen");
+      wishOverlay.setAttribute("aria-hidden", "true");
+    }
+
+    function addWishFromModal() {
+      ensureWishlist();
+
+      const name = String(wishModalName.value || "").trim();
+      const priceRaw = String(wishModalPrice.value || "").trim();
+      if (!name) return;
+
+      let price = null;
+      if (priceRaw !== "") {
+        const n = Number(String(priceRaw).replace(",", "."));
+        if (!Number.isFinite(n) || n < 0) return;
+        price = n;
+      }
+
+      state.wishlist.push({
+        id: crypto.randomUUID(),
+        name,
+        price,
+        createdAt: Date.now()
+      });
+
+      saveState();
+      renderWishlist();
+      closeWishModal();
+    }
+
+    // Listenery modala wishlist tylko raz
+    if (wishSaveBtn) wishSaveBtn.addEventListener("click", addWishFromModal);
+    if (wishCloseBtn) wishCloseBtn.addEventListener("click", closeWishModal);
+    if (wishCancelBtn) wishCancelBtn.addEventListener("click", closeWishModal);
+
+    if (wishOverlay) wishOverlay.addEventListener("click", (e) => {
+      if (e.target === wishOverlay) closeWishModal();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (wishOverlay && wishOverlay.classList.contains("isOpen") && e.key === "Escape") closeWishModal();
+    });
+
+    if (wishModalPrice) wishModalPrice.addEventListener("keydown", (e) => { if (e.key === "Enter") addWishFromModal(); });
+    if (wishModalName) wishModalName.addEventListener("keydown", (e) => { if (e.key === "Enter") addWishFromModal(); });
 
     function addWish() {
       ensureWishlist();
@@ -1581,6 +1694,7 @@
         wishList.appendChild(row);
       }
     }
+
 
     if (wishAdd) wishAdd.addEventListener("click", addWish);
     if (wishPrice) wishPrice.addEventListener("keydown", (e) => { if (e.key === "Enter") addWish(); });

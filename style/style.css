@@ -359,6 +359,7 @@ body {
 }
 
 
+/* Kalendarz */
 .cal {
   height: 100%;
   display: flex;
@@ -469,6 +470,7 @@ body {
   box-shadow: 0 0 0 2px rgba(47, 157, 255, 0.25) inset;
 }
 
+/* Habit tracker */
 .habHeader {
   padding: 10px 12px;
   display: grid;
@@ -662,6 +664,8 @@ body {
 }
 
 
+
+/* Modal */
 .modalOverlay {
   position: fixed;
   inset: 0;
@@ -748,6 +752,7 @@ body {
   margin-top: 4px;
 }
 
+/* ToDo panel */
 .todoHeader {
   padding: 10px 12px 6px 12px;
   display: grid;
@@ -834,6 +839,7 @@ body {
   border-color: #4a4a4a;
 }
 
+/* Habit delete */
 .habitRow {
   display: flex;
   align-items: center;
@@ -1412,4 +1418,24 @@ a.iconBtn{
 .sideBox > .panelBody::-webkit-scrollbar{
   width: 0;
   height: 0;
+}
+
+.wishDel{
+  width:34px;
+  height:30px;
+  border-radius:8px;
+  background:#1f1f1f;
+  color:#e7e7e7;
+  border:1px solid #3a3a3a;
+  cursor:pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  line-height:1;
+  padding:0;
+}
+
+.wishDel:hover{
+  border-color:#ff2f5d;
 }
