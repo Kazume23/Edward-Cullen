@@ -158,71 +158,104 @@
           </div>
         </div>
 
-        <div class="sideBox">
-          <div class="panelTitle todoTitleRow">
-            <div class="todoTitleText">
-              <span data-i18n="todo.title">ToDo</span>
-              <span class="todoTitleSub" id="todoTitleSub"></span>
+          <div class="sideBox" id="todoBox">
+            <div class="box pomoBox">
+              <div class="panelTitle">Pomodoro</div>
+              <div class="panelBody pomoBody">
+                <div class="pomoMode">
+                  <button class="pomoTab isActive" id="pomoFocus" type="button">Focus</button>
+                  <button class="pomoTab" id="pomoBreak" type="button">Break</button>
+                  <button class="pomoTab" id="pomoLong" type="button">Long</button>
+                </div>
+
+                <div class="pomoTime" id="pomoTime">25:00</div>
+
+                <div class="pomoActions">
+                  <button class="habBtn" id="pomoStart" type="button">Start</button>
+                  <button class="habBtn" id="pomoReset" type="button">Reset</button>
+                </div>
+
+                <div class="pomoMeta">Sesja: <span id="pomoSession">0</span></div>
+              </div>
             </div>
+            <div class="box todoBox">
+              <div class="panelTitle todoTitleRow">
+                <div class="todoTitleText">
+                  <span data-i18n="todo.title">ToDo</span>
+                  <span class="todoTitleSub" id="todoTitleSub"></span>
+                </div>
 
-            <button type="button" class="todoAddBtn" id="todoAddBtn" aria-label="Dodaj ToDo">+</button>
-          </div>
+                <button type="button" class="todoAddBtn" id="todoAddBtn" aria-label="Dodaj ToDo">+</button>
+              </div>
 
-          <div class="panelBody">
-            <div id="todoEmpty" class="todoEmpty" data-i18n="todo.empty">Brak ToDo. Dwuklik w kalendarzu aby dodać.</div>
-            <div id="todoList" class="todoList"></div>
+              <div class="panelBody">
+                <div id="todoEmpty" class="todoEmpty" data-i18n="todo.empty">Brak ToDo. Dwuklik w kalendarzu aby dodać.</div>
+                <div id="todoList" class="todoList"></div>
+              </div>
+            </div>
           </div>
+            <div class="bottomBox">
+              <div class="expWrap">
+                <div class="panelTitle" data-i18n="exp.title">Dziennik wydatków</div>
+                <div class="panelBody">
+                  <div class="expHeader">
+                    <div class="expSummary" id="expSummary">Suma: 0,00 zł</div>
+                  </div>
+
+                  <div class="expForm">
+                    <input class="modalInput" id="expAmount" type="text" inputmode="numeric" placeholder="Kwota" data-i18n-placeholder="exp.amount" />
+                    <input class="modalInput" id="expWhat" type="text" placeholder="Co kupione" data-i18n-placeholder="exp.what">
+
+                    <select class="modalInput" id="expCategory">
+                      <option value="Jedzenie">Jedzenie</option>
+                      <option value="Transport">Transport</option>
+                      <option value="Rozrywka">Rozrywka</option>
+                      <option value="Zdrowie">Zdrowie</option>
+                      <option value="Edukacja">Edukacja</option>
+                      <option value="Sprzęt">Sprzęt</option>
+                      <option value="Subskrypcje">Subskrypcje</option>
+                      <option value="Inne">Inne</option>
+                    </select>
+
+                    <select class="modalInput" id="expScore">
+                      <option value="A">A — Wysoki priorytet</option>
+                      <option value="B">B — Konieczny</option>
+                      <option value="C">C — Opcjonalny</option>
+                      <option value="D">D — Zbędny</option>
+                    </select>
+
+                    <select class="modalInput" id="expPeriod">
+                      <option value="once">Jednorazowe</option>
+                      <option value="weekly">Tygodniowe</option>
+                      <option value="monthly">Miesięczne</option>
+                      <option value="yearly">Roczne</option>
+                    </select>
+
+                    <input class="modalInput" id="expDate" type="date">
+                    <button class="habBtn" id="expAdd" type="button" data-i18n="common.add">Dodaj</button>
+                  </div>
+
+                  <div class="expList" id="expList"></div>
+                </div>
+              </div>
+
+              <!-- WISHLIST -->
+              <div class="wishWrap">
+                <div class="panelTitle">Wishlist</div>
+                <div class="panelBody">
+                  <div class="wishForm">
+                    <input class="modalInput" id="wishName" type="text" placeholder="Co chcesz kupić" autocomplete="off">
+                    <input class="modalInput" id="wishPrice" type="text" inputmode="numeric" placeholder="Cena" autocomplete="off">
+                    <button class="habBtn" id="wishAdd" type="button">Dodaj</button>
+                  </div>
+
+                  <div class="wishList" id="wishList"></div>
+                </div>
+              </div>
+            </div>
         </div>
-
-        <div class="bottomBox">
-          <div class="panelTitle" data-i18n="exp.title">Dziennik wydatków</div>
-          <div class="panelBody">
-            <div class="expHeader">
-              <div class="expSummary" id="expSummary">Suma: 0,00 zł</div>
-
-            </div>
-
-            <div class="expForm">
-              <input class="modalInput" id="expAmount" type="text" inputmode="numeric" placeholder="Kwota" data-i18n-placeholder="exp.amount" />
-              <input class="modalInput" id="expWhat" type="text" placeholder="Co kupione" data-i18n-placeholder="exp.what">
-
-              <select class="modalInput" id="expCategory">
-                <option value="Jedzenie">Jedzenie</option>
-                <option value="Transport">Transport</option>
-                <option value="Rozrywka">Rozrywka</option>
-                <option value="Zdrowie">Zdrowie</option>
-                <option value="Edukacja">Edukacja</option>
-                <option value="Sprzęt">Sprzęt</option>
-                <option value="Subskrypcje">Subskrypcje</option>
-                <option value="Inne">Inne</option>
-              </select>
-
-              <select class="modalInput" id="expScore">
-                <option value="A">A — Wysoki priorytet</option>
-                <option value="B">B — Konieczny</option>
-                <option value="C">C — Opcjonalny</option>
-                <option value="D">D — Zbędny</option>
-              </select>
-
-              <select class="modalInput" id="expPeriod">
-                <option value="once">Jednorazowe</option>
-                <option value="weekly">Tygodniowe</option>
-                <option value="monthly">Miesięczne</option>
-                <option value="yearly">Roczne</option>
-              </select>
-
-              <input class="modalInput" id="expDate" type="date">
-
-              <button class="habBtn" id="expAdd" type="button" data-i18n="common.add">Dodaj</button>
-            </div>
-
-            <div class="expList" id="expList"></div>
-          </div>
-        </div>
-      </div>
       </div>
     </div>
-  </div>
   <div class="modalOverlay" id="todoOverlay" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="todoModalTitle">
       <div class="modalTop">
@@ -1267,10 +1300,13 @@
 
     const boxTopA = document.querySelector(".box.topA");
     const tableBox = document.querySelector(".tableBox");
-    const sideBox = document.querySelector(".sideBox");
     const bottomBox = document.querySelector(".bottomBox");
 
-    sideBox.addEventListener("dblclick", () => {
+    const todoBox = document.getElementById("todoBox");
+    const todoPanel = document.querySelector(".box.todoBox");
+
+    todoPanel?.addEventListener("dblclick", (e) => {
+      if (e.target.closest("button, input, textarea, select, .todoItem, .todoDel, .todoCheck")) return;
       openTodoModal(getSelectedDateObj());
     });
 
@@ -1405,7 +1441,7 @@
 
     navDash.addEventListener("click", () => { setNavActive(navDash); scrollToEl(boxTopA); });
     navHabits.addEventListener("click", () => { setNavActive(navHabits); scrollToEl(tableBox); });
-    navTodo.addEventListener("click", () => { setNavActive(navTodo); scrollToEl(sideBox); });
+    navTodo.addEventListener("click", () => { setNavActive(navTodo); scrollToEl(todoBox); });
     navExpenses.addEventListener("click", () => { setNavActive(navExpenses); scrollToEl(bottomBox); });
 
     function closeQuickAdd(){
@@ -1441,11 +1477,6 @@
       openTodoModal(getSelectedDateObj());
     });
 
-    navExpenses.addEventListener("dblclick", () => {
-      setNavActive(navExpenses);
-      openExpModal();
-    });
-
     navHabits.addEventListener("dblclick", () => {
       setNavActive(navHabits);
       openHabitModal();
@@ -1457,7 +1488,457 @@
       renderTodos();
       renderExpenses();
       renderChart();
+      renderWishlist();
+      pomoSyncUI();
     }
+
+    function ensureWishlist() {
+      if (!state.wishlist) state.wishlist = [];
+    }
+
+    const wishName = $("wishName");
+    const wishPrice = $("wishPrice");
+    const wishAdd = $("wishAdd");
+    const wishList = $("wishList");
+
+    function addWish() {
+      ensureWishlist();
+
+      const name = String(wishName.value || "").trim();
+      const priceRaw = String(wishPrice.value || "").trim();
+
+      if (!name) return;
+
+      let price = null;
+      if (priceRaw !== "") {
+        const n = Number(String(priceRaw).replace(",", "."));
+        if (!Number.isFinite(n) || n < 0) return;
+        price = n;
+      }
+
+      state.wishlist.push({
+        id: crypto.randomUUID(),
+        name,
+        price,
+        createdAt: Date.now()
+      });
+
+      wishName.value = "";
+      wishPrice.value = "";
+      saveState();
+      renderWishlist();
+    }
+
+    function deleteWish(id) {
+      ensureWishlist();
+      state.wishlist = state.wishlist.filter(x => x.id !== id);
+      saveState();
+      renderWishlist();
+    }
+
+    function renderWishlist() {
+      ensureWishlist();
+      wishList.innerHTML = "";
+
+      const items = [...state.wishlist].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+      if (!items.length) {
+        const empty = document.createElement("div");
+        empty.className = "todoEmpty";
+        empty.textContent = "Brak wishlisty.";
+        wishList.appendChild(empty);
+        return;
+      }
+
+      for (const it of items) {
+        const row = document.createElement("div");
+        row.className = "wishItem";
+
+        const left = document.createElement("div");
+        left.className = "wishLeft";
+
+        const nm = document.createElement("div");
+        nm.className = "wishName";
+        nm.textContent = it.name;
+
+        const pr = document.createElement("div");
+        pr.className = "wishPrice";
+        pr.textContent = it.price === null ? "Cena: brak" : ("Cena: " + moneyPL(it.price));
+
+        left.appendChild(nm);
+        left.appendChild(pr);
+
+        const del = document.createElement("button");
+        del.type = "button";
+        del.className = "wishDel";
+        del.textContent = "×";
+        del.title = "Usuń";
+        del.addEventListener("click", () => deleteWish(it.id));
+
+        row.appendChild(left);
+        row.appendChild(del);
+
+        wishList.appendChild(row);
+      }
+    }
+
+    if (wishAdd) wishAdd.addEventListener("click", addWish);
+    if (wishPrice) wishPrice.addEventListener("keydown", (e) => { if (e.key === "Enter") addWish(); });
+    if (wishName) wishName.addEventListener("keydown", (e) => { if (e.key === "Enter") addWish(); });
+
+
+    // ---------- Pomodoro ----------
+    
+    function ensurePomodoro() {
+      if (!state.pomodoro) {
+        state.pomodoro = {
+          mode: "focus",
+          durationsMin: { focus: 25, break: 5, long: 15 },
+          remainingByMode: { focus: 25 * 60, break: 5 * 60, long: 15 * 60 },
+          remainingSec: 25 * 60,
+          isRunning: false,
+          lastTick: 0,
+          session: 0
+        };
+        return;
+      }
+
+      const p = state.pomodoro;
+      if (!p.durationsMin) p.durationsMin = { focus: 25, break: 5, long: 15 };
+      if (!p.remainingByMode) {
+        p.remainingByMode = {
+          focus: (Number(p.durationsMin.focus) || 25) * 60,
+          break: (Number(p.durationsMin.break) || 5) * 60,
+          long: (Number(p.durationsMin.long) || 15) * 60
+        };
+      }
+      if (!p.mode) p.mode = "focus";
+
+      if (typeof p.remainingSec !== "number") {
+        p.remainingSec = p.remainingByMode[p.mode] ?? ((Number(p.durationsMin[p.mode]) || 25) * 60);
+      }
+      if (typeof p.isRunning !== "boolean") p.isRunning = false;
+      if (typeof p.lastTick !== "number") p.lastTick = 0;
+      if (typeof p.session !== "number") p.session = 0;
+
+      if (typeof p.remainingByMode.focus !== "number") p.remainingByMode.focus = (Number(p.durationsMin.focus) || 25) * 60;
+      if (typeof p.remainingByMode.break !== "number") p.remainingByMode.break = (Number(p.durationsMin.break) || 5) * 60;
+      if (typeof p.remainingByMode.long !== "number") p.remainingByMode.long = (Number(p.durationsMin.long) || 15) * 60;
+    }
+
+    const pomoFocusBtn = $("pomoFocus");
+    const pomoBreakBtn = $("pomoBreak");
+    const pomoLongBtn = $("pomoLong");
+    const pomoTimeEl = $("pomoTime");
+    const pomoStartBtn = $("pomoStart");
+    const pomoResetBtn = $("pomoReset");
+    const pomoSessionEl = $("pomoSession");
+
+    let pomoTimerId = null;
+    let pomoEditInput = null;
+
+    function pad2p(n) { return String(n).padStart(2, "0"); }
+
+    function fmtTime(sec) {
+      const s = Math.max(0, Math.floor(sec));
+      const mm = Math.floor(s / 60);
+      const ss = s % 60;
+      return `${pad2p(mm)}:${pad2p(ss)}`;
+    }
+
+    function pomoStopInterval() {
+      if (pomoTimerId) {
+        clearInterval(pomoTimerId);
+        pomoTimerId = null;
+      }
+    }
+
+    function pomoStartInterval() {
+      pomoStopInterval();
+      pomoTimerId = setInterval(pomoTick, 250);
+    }
+
+    function pomoSyncUI() {
+      ensurePomodoro();
+      const p = state.pomodoro;
+
+      if (pomoTimeEl) pomoTimeEl.textContent = fmtTime(p.remainingSec);
+      if (pomoSessionEl) pomoSessionEl.textContent = String(p.session);
+
+      if (pomoFocusBtn) pomoFocusBtn.classList.toggle("isActive", p.mode === "focus");
+      if (pomoBreakBtn) pomoBreakBtn.classList.toggle("isActive", p.mode === "break");
+      if (pomoLongBtn) pomoLongBtn.classList.toggle("isActive", p.mode === "long");
+
+      if (pomoStartBtn) pomoStartBtn.textContent = p.isRunning ? "Pause" : "Start";
+    }
+
+    function pomoSaveRemaining() {
+      ensurePomodoro();
+      const p = state.pomodoro;
+      p.remainingByMode[p.mode] = p.remainingSec;
+    }
+
+    function pomoSwitchMode(nextMode) {
+      ensurePomodoro();
+      const p = state.pomodoro;
+
+      if (pomoEditInput) return;
+
+      pomoSaveRemaining();
+
+      p.mode = nextMode;
+      p.remainingSec = p.remainingByMode[nextMode] ?? ((Number(p.durationsMin[nextMode]) || 1) * 60);
+
+      p.isRunning = false;
+      p.lastTick = 0;
+
+      saveState();
+      pomoStopInterval();
+      pomoSyncUI();
+    }
+
+    function pomoCompleteCycle() {
+      ensurePomodoro();
+      const p = state.pomodoro;
+
+      if (p.mode === "focus") {
+        p.session += 1;
+        const isLong = (p.session % 4 === 0);
+        p.mode = isLong ? "long" : "break";
+      } else {
+        p.mode = "focus";
+      }
+
+      const mins = Number(p.durationsMin[p.mode]) || 1;
+      p.remainingSec = Math.max(1, Math.round(mins * 60));
+      p.remainingByMode[p.mode] = p.remainingSec;
+
+      p.isRunning = false;
+      p.lastTick = 0;
+
+      saveState();
+      pomoStopInterval();
+      pomoSyncUI();
+    }
+
+    function pomoTick() {
+      ensurePomodoro();
+      const p = state.pomodoro;
+
+      if (!p.isRunning) return;
+
+      const now = Date.now();
+      if (!p.lastTick) p.lastTick = now;
+
+      const deltaMs = now - p.lastTick;
+      if (deltaMs < 200) return;
+
+      const deltaSec = Math.floor(deltaMs / 1000);
+      if (deltaSec <= 0) return;
+
+      p.lastTick += deltaSec * 1000;
+      p.remainingSec -= deltaSec;
+
+      if (p.remainingSec <= 0) {
+        p.remainingSec = 0;
+        p.remainingByMode[p.mode] = 0;
+        saveState();
+        pomoSyncUI();
+        pomoCompleteCycle();
+        return;
+      }
+
+      p.remainingByMode[p.mode] = p.remainingSec;
+      saveState();
+      pomoSyncUI();
+    }
+
+    function pomoToggleStart() {
+      ensurePomodoro();
+      const p = state.pomodoro;
+
+      if (pomoEditInput) return;
+
+      if (p.remainingSec <= 0) {
+        const mins = Number(p.durationsMin[p.mode]) || 1;
+        p.remainingSec = Math.max(1, Math.round(mins * 60));
+        p.remainingByMode[p.mode] = p.remainingSec;
+      }
+
+      p.isRunning = !p.isRunning;
+      p.lastTick = Date.now();
+
+      saveState();
+      pomoSyncUI();
+
+      if (p.isRunning) pomoStartInterval();
+      else pomoStopInterval();
+    }
+
+    function pomoReset() {
+      ensurePomodoro();
+      const p = state.pomodoro;
+
+      if (pomoEditInput) return;
+
+      const mins = Number(p.durationsMin[p.mode]) || 1;
+      p.isRunning = false;
+      p.lastTick = 0;
+      p.remainingSec = Math.max(1, Math.round(mins * 60));
+      p.remainingByMode[p.mode] = p.remainingSec;
+
+      saveState();
+      pomoStopInterval();
+      pomoSyncUI();
+    }
+
+      function pomoCanInlineEdit() {
+        ensurePomodoro();
+        const p = state.pomodoro;
+        return !p.isRunning && p.lastTick === 0;
+      }
+
+    function pomoParseInline(raw) {
+      const t = String(raw || "").trim();
+      if (!t) return null;
+
+      if (/^\d+$/.test(t)) {
+        const mins = Math.max(1, Math.min(240, Math.round(Number(t))));
+        return { remainingSec: mins * 60, mins };
+      }
+
+      const m = t.match(/^(\d{1,3})\s*:\s*(\d{1,2})$/);
+      if (m) {
+        const mm = Math.max(0, Math.min(240, Number(m[1])));
+        const ss = Math.max(0, Math.min(59, Number(m[2])));
+        const total = Math.max(1, (mm * 60) + ss);
+        const mins = Math.max(1, Math.min(240, Math.round(total / 60)));
+        return { remainingSec: total, mins };
+      }
+
+      return null;
+    }
+
+    function pomoBeginInlineEdit() {
+      if (!pomoTimeEl) return;
+      if (!pomoCanInlineEdit()) return;
+      if (pomoEditInput) return;
+
+      ensurePomodoro();
+      const p = state.pomodoro;
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.inputMode = "numeric";
+      input.autocomplete = "off";
+      input.className = "pomoEdit";
+      input.value = String(Math.max(1, Math.round((p.remainingSec || 60) / 60)));
+
+      pomoTimeEl.replaceWith(input);
+      pomoEditInput = input;
+
+      input.focus();
+      input.select();
+
+      const cancel = () => {
+        if (!pomoEditInput) return;
+        pomoEditInput.replaceWith(pomoTimeEl);
+        pomoEditInput = null;
+        pomoSyncUI();
+      };
+
+      const commit = () => {
+        if (!pomoEditInput) return;
+
+        const parsed = pomoParseInline(pomoEditInput.value);
+        if (parsed) {
+          p.durationsMin[p.mode] = parsed.mins;
+          p.remainingSec = parsed.remainingSec;
+          p.remainingByMode[p.mode] = parsed.remainingSec;
+          p.isRunning = false;
+          p.lastTick = 0;
+          saveState();
+        }
+
+        pomoEditInput.replaceWith(pomoTimeEl);
+        pomoEditInput = null;
+        pomoSyncUI();
+      };
+
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") { e.preventDefault(); commit(); }
+        if (e.key === "Escape") { e.preventDefault(); cancel(); }
+      });
+      input.addEventListener("blur", commit);
+    }
+
+    if (pomoFocusBtn) pomoFocusBtn.addEventListener("click", () => pomoSwitchMode("focus"));
+    if (pomoBreakBtn) pomoBreakBtn.addEventListener("click", () => pomoSwitchMode("break"));
+    if (pomoLongBtn) pomoLongBtn.addEventListener("click", () => pomoSwitchMode("long"));
+
+    if (pomoStartBtn) pomoStartBtn.addEventListener("click", pomoToggleStart);
+    if (pomoResetBtn) pomoResetBtn.addEventListener("click", pomoReset);
+
+    if (pomoTimeEl) pomoTimeEl.addEventListener("click", pomoBeginInlineEdit);
+
+    function pomoRestoreRunning() {
+      ensurePomodoro();
+      const p = state.pomodoro;
+
+      if (!p.isRunning) {
+        pomoSyncUI();
+        return;
+      }
+
+      const now = Date.now();
+      const last = p.lastTick || now;
+      const deltaSec = Math.floor((now - last) / 1000);
+
+      p.lastTick = now;
+      if (deltaSec > 0) p.remainingSec -= deltaSec;
+
+      if (p.remainingSec <= 0) {
+        p.remainingSec = 0;
+        p.remainingByMode[p.mode] = 0;
+        p.isRunning = false;
+        saveState();
+        pomoSyncUI();
+        pomoCompleteCycle();
+        return;
+      }
+
+      p.remainingByMode[p.mode] = p.remainingSec;
+      saveState();
+      pomoSyncUI();
+      pomoStartInterval();
+    }
+
+    // ---------- Navbar: szybkie dodanie Wishlist ----------
+    function focusWishlistQuickAdd() {
+      if (!bottomBox) return;
+      bottomBox.scrollIntoView({ behavior: "smooth", block: "start" });
+      setTimeout(() => { if (wishName) wishName.focus(); }, 250);
+    }
+
+    // Dwuklik na "Wydatki" w sidebarze: skacz do wishlisty i fokusuj input
+    if (navExpenses) navExpenses.addEventListener("dblclick", (e) => {
+      e.preventDefault();
+      setNavActive(navExpenses);
+      focusWishlistQuickAdd();
+    });
+
+    // Shift+klik na plusie przy "Wydatki": zamiast modala wydatków, szybkie dodanie do wishlisty
+    if (navAddExpenses) navAddExpenses.addEventListener("click", (e) => {
+      if (!e.shiftKey) return;
+      e.preventDefault();
+      e.stopPropagation();
+      setNavActive(navExpenses);
+      focusWishlistQuickAdd();
+    });
+
+    ensureWishlist();
+    ensurePomodoro();
+    pomoRestoreRunning();
 
     setNavActive(navDash);
     renderAll();

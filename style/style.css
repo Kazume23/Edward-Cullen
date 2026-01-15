@@ -212,18 +212,6 @@ body {
   border-radius: 6px;
 }
 
-.icons {
-  display: flex;
-  gap: 8px;
-}
-
-.icon {
-  width: 26px;
-  height: 26px;
-  background: #2d2d2d;
-  border-radius: 6px;
-}
-
 .content {
   padding: 12px;
   box-sizing: border-box;
@@ -234,12 +222,20 @@ body {
   display: grid;
   gap: 12px;
 
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
   grid-template-columns: 1fr 1fr 0.65fr;
 
   grid-template-rows: minmax(320px, 36vh) minmax(520px, 1fr) auto;
 
   align-items: stretch;
   align-content: start;
+}
+
+.content::-webkit-scrollbar{
+  width: 0;
+  height: 0;
 }
 
 .box,
@@ -251,13 +247,6 @@ body {
   min-height: 0;
 }
 
-.sideBox {
-  background: #26292e;
-  border: 1px solid #2f343b;
-  border-radius: 10px;
-  min-width: 0;
-  min-height: 0;
-}
 .panelTitle {
   padding: 10px 12px 0 12px;
   font-size: 14px;
@@ -339,22 +328,37 @@ body {
   grid-column: 3;
   grid-row: 1 / span 2;
 
-  background: #2a2a2a;    
-  border: none;            
-  border-radius: 10px;
+  background: transparent;
+  border: none;
 
   min-width: 0;
   min-height: 0;
-  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  overflow: visible;
 }
 
-.bottomBox {
+
+.bottomBox{
   grid-column: 1 / span 3;
   grid-row: 3;
-  height: 420px;
+
+  background: transparent;
+  border: none;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  height: auto;
+  min-height: 1028px;
+  overflow: visible;
 }
 
-/* Kalendarz */
+
 .cal {
   height: 100%;
   display: flex;
@@ -465,7 +469,6 @@ body {
   box-shadow: 0 0 0 2px rgba(47, 157, 255, 0.25) inset;
 }
 
-/* Habit tracker */
 .habHeader {
   padding: 10px 12px;
   display: grid;
@@ -617,7 +620,48 @@ body {
   min-width: 0;
 }
 
-/* Modal */
+.todoBox {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  flex: 1;
+}
+
+.todoBox .panelBody {
+  overflow: auto;
+  min-height: 0;
+  scrollbar-width: none;  
+}
+
+.todoBox .panelBody::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+}
+
+.pomoBox {
+  overflow: hidden;
+}
+
+.pomoEdit{
+  width:100%;
+  box-sizing:border-box;
+  background:rgba(255,255,255,0.04);
+  color:#e7e7e7;
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:10px;
+  padding:6px 10px;
+  font-size:28px;
+  font-weight:700;
+  text-align:center;
+  outline:none;
+}
+.pomoEdit:focus{
+  border-color:#2f9dff;
+  box-shadow:0 0 0 2px rgba(47, 157, 255, 0.22);
+}
+
+
 .modalOverlay {
   position: fixed;
   inset: 0;
@@ -704,7 +748,6 @@ body {
   margin-top: 4px;
 }
 
-/* ToDo panel */
 .todoHeader {
   padding: 10px 12px 6px 12px;
   display: grid;
@@ -780,13 +823,17 @@ body {
   color: #e7e7e7;
   border: 1px solid #3a3a3a;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
 }
 
 .todoDel:hover {
   border-color: #4a4a4a;
 }
 
-/* Habit delete */
 .habitRow {
   display: flex;
   align-items: center;
@@ -805,14 +852,6 @@ body {
 
 .habitDel:hover {
   border-color: #ff2f5d;
-}
-
-.todoDel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  padding: 0;
 }
 
 .todoText {
@@ -881,25 +920,6 @@ body {
   gap: 10px;
   align-items: center;
   margin-bottom: 12px;
-}
-
-.expItem {
-  margin: 0 0 8px 0;
-  padding: 10px 12px;
-  border-radius: 10px;
-  background: #1f1f1f;
-  border: 1px solid #333;
-
-  display: grid;
-  grid-template-columns:
-    110px      /* kwota */
-    1.5fr      /* opis */
-    130px      /* kategoria */
-    210px      /* A/B/C/D */
-    120px      /* okres */
-    34px;      /* delete */
-  gap: 10px;
-  align-items: center;
 }
 
 .expItem {
@@ -1204,4 +1224,192 @@ a.iconBtn{
   height:18px;
   display:block;
   opacity:.95;
+}
+
+.pomoBox{
+  background: #2a2a2a;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 10px 12px 12px 12px;
+  margin: 0;
+}
+
+.pomoBody{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.pomoMode{
+  display:flex;
+  gap:6px;
+  padding:4px;
+  border:1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  border-radius:10px;
+}
+
+.pomoTab{
+  flex:1;
+  height:30px;
+  border-radius:8px;
+  border:1px solid transparent;
+  background: transparent;
+  color:#e7e7e7;
+  cursor:pointer;
+  font-size:12px;
+  opacity:0.9;
+}
+
+.pomoTab:hover{
+  border-color: rgba(255,255,255,0.10);
+}
+
+.pomoTab.isActive{
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.10);
+  opacity:1;
+}
+
+.pomoTime{
+  font-size:32px;
+  font-weight:700;
+  text-align:center;
+  letter-spacing:1px;
+  padding:4px 0;
+}
+
+.pomoActions{
+  display:flex;
+  gap:10px;
+}
+
+.pomoActions > button{
+  flex:1;
+}
+
+.pomoMeta{
+  text-align:center;
+  opacity:0.65;
+  font-size:12px;
+}
+
+.expWrap,
+.wishWrap{
+  background: #2a2a2a;
+  border-radius: 10px;
+  min-width: 0;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+
+.expWrap{
+  min-height: 600px;
+}
+
+.expWrap > .panelBody{
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.expList{
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding-right: 6px;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.expList::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+}
+
+.wishWrap{
+  min-height: 220px;
+  margin-top: 0;    
+  padding-top: 0;   
+  border-top: none; 
+}
+
+.wishWrap .panelBody{
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wishForm{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.wishForm input{
+  flex:1;
+  min-width:0;
+}
+
+.wishList{
+  flex:1 1 auto;
+  min-height:0;
+  overflow:auto;
+  padding-right:6px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+}
+.wishList::-webkit-scrollbar{
+  width:0;
+  height:0;
+}
+
+.wishItem{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.06);
+}
+
+.wishLeft{
+  flex:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+
+.wishName,
+.wishPrice{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.sideBox > .panelBody{
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.sideBox > .panelBody::-webkit-scrollbar{
+  width: 0;
+  height: 0;
 }
