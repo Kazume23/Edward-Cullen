@@ -207,18 +207,6 @@ body {
   border-radius: 6px;
 }
 
-.icons {
-  display: flex;
-  gap: 8px;
-}
-
-.icon {
-  width: 26px;
-  height: 26px;
-  background: #060635;
-  border-radius: 6px;
-}
-
 .content {
   padding: 12px;
   box-sizing: border-box;
@@ -334,7 +322,7 @@ body {
   grid-column: 3;
   grid-row: 1 / span 2;
 
-  background: #171A2F;    
+  background: transparent;      
   border: none;            
   border-radius: 10px;
 
@@ -1141,3 +1129,137 @@ a.iconBtn{
   display:block;
   opacity:.95;
 }
+<<<<<<< HEAD
+=======
+
+/* Ira theme override: bottom expenses + wishlist */
+
+.bottomBox{
+  height: auto;
+  min-height: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: visible;
+  background: transparent;
+  border: none;
+}
+
+.expWrap,
+.wishWrap{
+  background: #141625;
+  border-radius: 10px;
+  border: 1px solid #25254b;
+  overflow: hidden;
+}
+
+.expWrap{
+  min-height: 460px;
+}
+
+.wishWrap{
+  min-height: 240px;
+}
+
+.expWrap .panelTitle,
+.wishWrap .panelTitle{
+  padding: 12px 14px 0 14px;
+  font-size: 14px;
+  opacity: 0.92;
+}
+
+.expWrap .panelBody,
+.wishWrap .panelBody{
+  padding: 10px 14px 14px 14px;
+}
+
+.expHeader{
+  padding: 2px 0 12px 0;
+}
+
+.expSummary{
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+/* Form layout stays but matches Ira colors */
+.expForm .modalInput,
+.wishForm .modalInput{
+  background: #212133;
+  border: 1px solid #4c4c81;
+  color: #e7e7e7;
+}
+
+.expForm .habBtn,
+.wishForm .habBtn{
+  background: #202061;
+  border: 1px solid #181825;
+  color: #e7e7e7;
+}
+
+.expForm .habBtn:hover,
+.wishForm .habBtn:hover{
+  border-color: #ffffff;
+}
+
+/* Expenses list scroll only here, hidden scrollbar */
+.expList{
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding-right: 6px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.expList::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+}
+
+/* Expense row matches Ira purple cards */
+.expItem{
+  background: #1A1D3A;
+  border: 1px solid #2b3165;
+  border-radius: 10px;
+}
+
+.expTag{
+  border: 1px solid #4846b6;
+  background: #39388e;
+  color: #e7e7e7;
+}
+
+.expDel{
+  background: #15182E;
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+.expDel:hover{
+  border-color: rgba(234,84,85,.45);
+}
+
+/* Wishlist list styling, spójne z Ira */
+.wishList{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wishItem{
+  background: #1A1D3A;
+  border: 1px solid #2b3165;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.wishDel{
+  background: #15182E;
+  border: 1px solid rgba(255,255,255,.12);
+  color: #e7e7e7;
+}
+
+.wishDel:hover{
+  border-color: rgba(234,84,85,.45);
+}
+>>>>>>> origin/main
