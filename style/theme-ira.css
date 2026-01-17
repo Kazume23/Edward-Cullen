@@ -330,11 +330,22 @@ body {
   overflow: hidden;
 }
 
-.bottomBox {
+.bottomBox{
   grid-column: 1 / span 3;
   grid-row: 3;
-  height: 420px;
+
+  background: transparent;
+  border: none;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  height: auto;
+  min-height: 1028px;
+  overflow: visible;
 }
+
 
 /* Kalendarz */
 .cal {
@@ -598,6 +609,46 @@ body {
   flex: 1;
   min-width: 0;
 }
+.todoBox {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  flex: 1;
+}
+
+.todoBox .panelBody {
+  overflow: auto;
+  min-height: 0;
+  scrollbar-width: none;  
+}
+
+.todoBox .panelBody::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+}
+
+.pomoBox {
+  overflow: hidden;
+}
+.pomoEdit{
+  width:100%;
+  box-sizing:border-box;
+  background:rgba(255,255,255,0.04);
+  color:#e7e7e7;
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:10px;
+  padding:6px 10px;
+  font-size:28px;
+  font-weight:700;
+  text-align:center;
+  outline:none;
+}
+.pomoEdit:focus{
+  border-color:#2f9dff;
+  box-shadow:0 0 0 2px rgba(47, 157, 255, 0.22);
+}
+
 
 /* Modal */
 .modalOverlay {
@@ -1103,13 +1154,49 @@ body {
   font-size:12px;
   opacity:0.75;
 }
+.icons{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:4px;
+  border:1px solid #2f2f2f;
+  background:#1a1a1a;
+  border-radius:12px;
+}
+
+.icon{
+  width:auto;
+  height:auto;
+  background:transparent;
+  border-radius:0;
+}
+
+.iconBtn{
+  width:36px;
+  height:36px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:10px;
+  border:1px solid transparent;
+
+  background:rgba(255,255,255,.04);
+  color:#e7e7e7;
+
+  padding:0;
+  cursor:pointer;
+
+  transition: background 120ms ease, border-color 120ms ease, transform 80ms ease;
+}
+
 a.iconBtn{
   text-decoration:none;
 }
 
 .iconBtn:hover{
-  background:#040410;
-  border-color:#171431;
+  background:rgba(255,255,255,.08);
+  border-color:#3a3a3a;
 }
 
 .iconBtn:focus-visible{
@@ -1128,7 +1215,85 @@ a.iconBtn{
   display:block;
   opacity:.95;
 }
+.pomoBox{
+  background: #2a2a2a;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 10px 12px 12px 12px;
+  margin: 0;
+}
 
+.pomoBody{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.pomoMode{
+  display:flex;
+  gap:6px;
+  padding:4px;
+  border:1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  border-radius:10px;
+}
+
+.pomoTab{
+  flex:1;
+  height:30px;
+  border-radius:8px;
+  border:1px solid transparent;
+  background: transparent;
+  color:#e7e7e7;
+  cursor:pointer;
+  font-size:12px;
+  opacity:0.9;
+}
+
+.pomoTab:hover{
+  border-color: rgba(255,255,255,0.10);
+}
+
+.pomoTab.isActive{
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.10);
+  opacity:1;
+}
+
+.pomoTime{
+  font-size:32px;
+  font-weight:700;
+  text-align:center;
+  letter-spacing:1px;
+  padding:4px 0;
+}
+
+.pomoActions{
+  display:flex;
+  gap:10px;
+}
+
+.pomoActions > button{
+  flex:1;
+}
+
+.pomoMeta{
+  text-align:center;
+  opacity:0.65;
+  font-size:12px;
+}
+
+.expWrap,
+.wishWrap{
+  background: #2a2a2a;
+  border-radius: 10px;
+  min-width: 0;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 
 .bottomBox{
   height: auto;

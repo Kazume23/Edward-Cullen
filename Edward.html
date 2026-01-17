@@ -7,6 +7,8 @@
   <title>Edward Tracker</title>
   <link rel="stylesheet" href="style/style.css" id="baseStyles">
   <link rel="stylesheet" href="style/theme-ira.css" id="themeStyles" disabled>
+  <link rel="stylesheet" href="style/styletrybjasny1.css" id="themelight" disabled>
+  <link rel="stylesheet" href="style/styletrybrozowy.css" id="themepink" disabled>
   <link rel="icon" type="image/png" href="favicon.png">
 </head>
 
@@ -55,12 +57,14 @@
                   d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2Zm7.93 9h-3.1a15.6 15.6 0 0 0-1.2-5.02A8.03 8.03 0 0 1 19.93 11ZM12 4c.88 1.22 1.57 3.07 1.9 5H10.1c.33-1.93 1.02-3.78 1.9-5Zm-1.9 7h3.8c.1.64.1 1.31.1 2s0 1.36-.1 2h-3.8c-.1-.64-.1-1.31-.1-2s0-1.36.1-2Zm-1.73-5.02A15.6 15.6 0 0 0 7.17 11H4.07a8.03 8.03 0 0 1 4.3-5.02ZM4.07 13h3.1c.19 1.74.62 3.44 1.2 5.02A8.03 8.03 0 0 1 4.07 13Zm7.93 7c-.88-1.22-1.57-3.07-1.9-5h3.8c-.33 1.93-1.02 3.78-1.9 5Zm3.63-1.98A15.6 15.6 0 0 0 16.83 13h3.1a8.03 8.03 0 0 1-4.3 5.02Z"/>
               </svg>
             </button>
-            <button class="icon iconBtn" id="themeBtn" type="button" title="Motyw">
+
+          <button class="icon iconBtn" id="themeBtn" type="button" title="Motyw">
               <svg class="iconSvg" viewBox="0 0 24 24" aria-hidden="true">
                 <path fill="currentColor"
                   d="M12 3a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V4a1 1 0 0 1 1-1Zm0 14a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm7-5a1 1 0 0 1 1-1h1a1 1 0 1 1 0 2h-1a1 1 0 0 1-1-1Zm-16 0a1 1 0 0 1 1-1H3a1 1 0 1 1 0 2h1a1 1 0 0 1-1-1Zm11.66 6.66a1 1 0 0 1 1.41 0l.7.7a1 1 0 0 1-1.41 1.41l-.7-.7a1 1 0 0 1 0-1.41ZM7.64 5.64a1 1 0 0 1 1.41 0l.7.7a1 1 0 0 1-1.41 1.41l-.7-.7a1 1 0 0 1 0-1.41Zm0 12.72a1 1 0 0 1 0-1.41l.7-.7a1 1 0 0 1 1.41 1.41l-.7.7a1 1 0 0 1-1.41 0Zm12.72-12.72a1 1 0 0 1 0 1.41l-.7.7a1 1 0 0 1-1.41-1.41l.7-.7a1 1 0 0 1 1.41 0Z"/>
               </svg>
-            </button>
+            </button> 
+
             <a class="icon iconBtn" id="ghBtn"
               href="https://github.com/Kazume23/Edward-Cullen"
               target="_blank" rel="noreferrer"
@@ -397,7 +401,7 @@
 
     const $ = (id) => document.getElementById(id);
 
-    const THEME_KEY = "edward_theme_v1";
+   /* const THEME_KEY = "edward_theme_v1";
     const themeLink = document.getElementById("themeStyles");
     const themeBtn = document.getElementById("themeBtn");
 
@@ -422,8 +426,43 @@
         saveTheme(next);
         applyTheme(next);
       });
-    }
+    }*/
 
+const THEME_KEY = "edward_theme_v1";
+
+const themes = [
+  "baseStyles",
+  "themeStyles",
+  "themelight",
+  "themepink"
+];
+
+function applyTheme(themeId) {
+  themes.forEach(id => {
+    const link = document.getElementById(id);
+    if (link) link.disabled = id !== themeId;
+  });
+}
+
+function getSavedTheme() {
+  return localStorage.getItem(THEME_KEY) || "baseStyles"; };
+
+function saveTheme(themeId) {
+  localStorage.setItem(THEME_KEY, themeId);}; 
+
+const themeBtn = document.getElementById("themeBtn");
+ applyTheme(getSavedTheme());
+
+if (themeBtn) {
+  themeBtn.addEventListener("click", () => {
+    const current = getSavedTheme();
+    const index = themes.indexOf(current);
+    const next = themes[(index + 1) % themes.length];
+
+    saveTheme(next);
+    applyTheme(next);
+  });
+}
 
     const calTitle = $("calTitle");
     const calGrid = $("calGrid");
@@ -2055,11 +2094,9 @@
     pomoRestoreRunning();
 
     setNavActive(navDash);
-    renderAll();
-  </script>
+    renderAll(); 
 
-
+</script>
 
 </body>
-
 </html>
