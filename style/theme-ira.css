@@ -2,7 +2,9 @@ body {
   margin: 0;
   font-family: Verdana, sans-serif;
   color: #E6E8EB;
-  background-color: #060620;}
+  background-color: #060620;
+  overflow-x: hidden;
+}
 
 .app {
   display: flex;
@@ -223,6 +225,9 @@ body {
 
   align-items: stretch;
   align-content: start;
+
+  scrollbar-width: none;
+  overflow-x: hidden;
 }
 
 .box,
@@ -234,16 +239,9 @@ body {
   min-height: 0;
 }
 
-.sideBox {
-  background: #222324;
-  border: 1px solid #2f343b;
-  border-radius: 10px;
-  min-width: 0;
-  min-height: 0;
-}
 .panelTitle {
   padding: 10px 12px 0 12px;
-  font-size: 20px;
+  font-size: 14px;
   opacity: 0.9;
 }
 
@@ -261,8 +259,9 @@ body {
 }
 
 .todoTitleSub {
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 400;
+  opacity: 0.65;
 }
 
 .todoAddBtn {
@@ -272,7 +271,7 @@ body {
   border: 1px solid #51577e;
   background: #2e377d;
   color: #ffffff;
-  font-size: 15px;
+  font-size: 18px;
   line-height: 1;
   cursor: pointer;
 }
@@ -321,13 +320,17 @@ body {
   grid-column: 3;
   grid-row: 1 / span 2;
 
-  background: transparent;      
-  border: none;            
-  border-radius: 10px;
+  background: transparent;
+  border: none;
 
   min-width: 0;
   min-height: 0;
-  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  overflow: visible;
 }
 
 .bottomBox{
@@ -1215,12 +1218,13 @@ a.iconBtn{
   display:block;
   opacity:.95;
 }
+
 .pomoBox{
-  background: #2a2a2a;
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 10px;
-  padding: 10px 12px 12px 12px;
-  margin: 0;
+  background:#141625;
+  border:1px solid #25254b;
+  border-radius:10px;
+  padding:10px 12px 12px 12px;
+  margin:0;
 }
 
 .pomoBody{
@@ -1233,8 +1237,8 @@ a.iconBtn{
   display:flex;
   gap:6px;
   padding:4px;
-  border:1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.03);
+  border:1px solid #303874;
+  background:#1C2040;
   border-radius:10px;
 }
 
@@ -1243,7 +1247,7 @@ a.iconBtn{
   height:30px;
   border-radius:8px;
   border:1px solid transparent;
-  background: transparent;
+  background:transparent;
   color:#e7e7e7;
   cursor:pointer;
   font-size:12px;
@@ -1251,12 +1255,12 @@ a.iconBtn{
 }
 
 .pomoTab:hover{
-  border-color: rgba(255,255,255,0.10);
+  border-color:#6d82f6;
 }
 
 .pomoTab.isActive{
-  background: rgba(255,255,255,0.06);
-  border-color: rgba(255,255,255,0.10);
+  background:#2e3e9d;
+  border-color:#6d82f6;
   opacity:1;
 }
 
@@ -1283,18 +1287,6 @@ a.iconBtn{
   font-size:12px;
 }
 
-.expWrap,
-.wishWrap{
-  background: #2a2a2a;
-  border-radius: 10px;
-  min-width: 0;
-  min-height: 0;
-
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
 .bottomBox{
   height: auto;
   min-height: 520px;
@@ -1311,15 +1303,22 @@ a.iconBtn{
   background: #141625;
   border-radius: 10px;
   border: 1px solid #25254b;
+  min-width: 0;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 
 .expWrap{
-  min-height: 460px;
+  min-height: 600px;
 }
 
-.wishWrap{
-  min-height: 240px;
+.expWrap > .panelBody{
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .expWrap .panelTitle,
@@ -1343,27 +1342,6 @@ a.iconBtn{
   opacity: 0.9;
 }
 
-/* Form layout stays but matches Ira colors */
-.expForm .modalInput,
-.wishForm .modalInput{
-  background: #212133;
-  border: 1px solid #4c4c81;
-  color: #e7e7e7;
-}
-
-.expForm .habBtn,
-.wishForm .habBtn{
-  background: #202061;
-  border: 1px solid #181825;
-  color: #e7e7e7;
-}
-
-.expForm .habBtn:hover,
-.wishForm .habBtn:hover{
-  border-color: #ffffff;
-}
-
-/* Expenses list scroll only here, hidden scrollbar */
 .expList{
   flex: 1 1 auto;
   min-height: 0;
@@ -1378,7 +1356,6 @@ a.iconBtn{
   height: 0;
 }
 
-/* Expense row matches Ira purple cards */
 .expItem{
   background: #1A1D3A;
   border: 1px solid #2b3165;
@@ -1400,24 +1377,111 @@ a.iconBtn{
   border-color: rgba(234,84,85,.45);
 }
 
-/* Wishlist list styling, spójne z Ira */
-.wishList{
+/* Wishlist 1:1 jak w main */
+.wishWrap{
+  min-height: 220px;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.wishWrap .panelBody{
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
+.wishForm{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.wishForm input{
+  flex: 1;
+  min-width: 0;
+}
+
+.expForm .modalInput,
+.wishForm .modalInput{
+  background: #212133;
+  border: 1px solid #4c4c81;
+  color: #e7e7e7;
+}
+
+.expForm .habBtn,
+.wishForm .habBtn{
+  background: #202061;
+  border: 1px solid #181825;
+  color: #e7e7e7;
+}
+
+.expForm .habBtn:hover,
+.wishForm .habBtn:hover{
+  border-color: #ffffff;
+}
+
+.wishList{
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding-right: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.wishList::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+}
+
 .wishItem{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
   background: #1A1D3A;
   border: 1px solid #2b3165;
-  border-radius: 10px;
-  padding: 10px 12px;
+}
+
+.wishLeft{
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wishName,
+.wishPrice{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .wishDel{
+  width: 34px;
+  height: 30px;
+  border-radius: 8px;
   background: #15182E;
   border: 1px solid rgba(255,255,255,.12);
   color: #e7e7e7;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
 }
 
 .wishDel:hover{
