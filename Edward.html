@@ -5,10 +5,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Edward Tracker</title>
-  <link rel="stylesheet" href="style/style.css" id="baseStyles">
-  <link rel="stylesheet" href="style/theme-ira.css" id="themeStyles" disabled>
-  <link rel="stylesheet" href="style/styletrybjasny1.css" id="themelight" disabled>
-  <link rel="stylesheet" href="style/styletrybrozowy.css" id="themepink" disabled>
+<link rel="stylesheet" href="style/style.css" id="baseStyles">
+<link rel="stylesheet" href="style/theme-ira.css" id="themeStyles" media="not all">
+<link rel="stylesheet" href="style/styletrybjasny1.css" id="themelight" media="not all">
+<link rel="stylesheet" href="style/styletrybrozowy.css" id="themepink" media="not all">
   <link rel="icon" type="image/png" href="favicon.png">
   
 </head>
@@ -431,28 +431,54 @@
 
 const THEME_KEY = "edward_theme_v1";
 
-const themes = [
-  "baseStyles",
-  "themeStyles",
-  "themelight",
-  "themepink"
-];
+const baseId = "baseStyles"; // TO NIGDY NIE MOZE BYC WYLACZONE
+const themeIds = ["themeStyles", "themelight", "themepink"]; // same nadpiski
 
 function applyTheme(themeId) {
-  themes.forEach(id => {
+  const base = document.getElementById(baseId);
+  if (base) {
+    base.disabled = false;
+    base.media = "all";
+  }
+
+  themeIds.forEach(id => {
     const link = document.getElementById(id);
-    if (link) link.disabled = id !== themeId;
+    if (!link) return;
+
+    // media: "not all" = zaladowane, ale nie stosowane, zero migania
+    link.disabled = false;
+    link.media = (id === themeId) ? "all" : "not all";
   });
 }
 
 function getSavedTheme() {
-  return localStorage.getItem(THEME_KEY) || "baseStyles"; };
+  const v = localStorage.getItem(THEME_KEY) || "base";
+  if (v === "base") return "base";
+  if (themeIds.includes(v)) return v;
+  return "base";
+}
 
-function saveTheme(themeId) {
-  localStorage.setItem(THEME_KEY, themeId);}; 
+function saveTheme(v) {
+  localStorage.setItem(THEME_KEY, v);
+}
 
-const themeBtn = document.getElementById("themeBtn");
- applyTheme(getSavedTheme());
+function cycleTheme() {
+  const order = ["base", ...themeIds];
+  const cur = getSavedTheme();
+  const idx = order.indexOf(cur);
+  const next = order[(idx + 1) % order.length];
+
+  saveTheme(next);
+  applyTheme(next === "base" ? null : next);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const saved = getSavedTheme();
+  applyTheme(saved === "base" ? null : saved);
+
+  const themeBtn = document.getElementById("themeBtn");
+  if (themeBtn) themeBtn.addEventListener("click", cycleTheme);
+});
 
 if (themeBtn) {
   themeBtn.addEventListener("click", () => {
