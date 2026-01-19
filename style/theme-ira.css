@@ -1272,6 +1272,12 @@ a.iconBtn{
   padding:4px 0;
 }
 
+.pomoTime,
+.pomoEdit{
+  font-family: Arial, sans-serif;
+  line-height: 1;
+}
+
 .pomoActions{
   display:flex;
   gap:10px;
