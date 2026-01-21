@@ -1037,6 +1037,32 @@ body {
   height:220px;
   display:block;
 }
+.chart-ring {
+  stroke: #2e377d;
+}
+
+.chart-inner {
+  fill: #2e377d;
+}
+
+/* Parts */
+.chart-part.empty {
+  stroke: #D1D6E4;
+}
+
+.chart-part.fail {
+  stroke: #ff2f5d;
+}
+
+.chart-part.done {
+  stroke: #2f9dff;
+}
+
+/* Text */
+.chart-text {
+  fill: #e7e7e7;
+  font-weight: 600;
+}
 
 .chartRange{
   font-weight:700;
