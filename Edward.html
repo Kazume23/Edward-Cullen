@@ -1275,16 +1275,6 @@ if (themeBtn) {
     return `M ${start.x} ${start.y} A ${r} ${r} 0 ${large} 0 ${end.x} ${end.y}`;
   }
   
-
-
-
-
-
-
-
-
-
-
   function renderDonut(done, fail, empty) {
     const total = done + fail + empty;
     const parts = [ { v: empty, cls: "empty" },
@@ -1317,11 +1307,6 @@ if (themeBtn) {
       chartSvg.appendChild(t);
       return;
     }
-  /*const parts = [ { v: empty, stroke: "#D1D6E4" },
-                  { v: fail, stroke: "#F06565" }, 
-                  { v: done, stroke: "#4ca7f7" } ].filter(p => p.v > 0);*/
-  
-
     let angle = 0;
   
     for (const p of parts) {
@@ -1357,17 +1342,6 @@ if (themeBtn) {
     chartSvg.appendChild(center);
   }
   
-
-
-
-
-
-
-
-
-
-
-
 
 
   function syncChartTabs() {

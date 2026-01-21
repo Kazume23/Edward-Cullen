@@ -12,7 +12,7 @@ body {
 
 .sidebar {
   width: 232px;
-  background: #EEF1FA;
+  background: #e3e8f8;
   padding: 12px;
   box-sizing: border-box;
   display: flex;
@@ -372,7 +372,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.2px;
   text-align: center;
-  color: #eaeaea;
+  color: #1E2330;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1234,7 +1234,7 @@ a.iconBtn{
 }
 
 .pomoBox{
-  background: #EEF1FA;
+  background: #e0e6fa;
   border: 1px solid #ffffff;
   border-radius: 10px;
   padding: 10px 12px 12px 12px;
@@ -1251,8 +1251,8 @@ a.iconBtn{
   display:flex;
   gap:6px;
   padding:4px;
-  border:1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.03);
+  border:1px solid rgba(255, 255, 255, 0.895);
+  background: rgba(255, 255, 255, 0.874);
   border-radius:10px;
 }
 

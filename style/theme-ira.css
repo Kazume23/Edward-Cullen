@@ -1047,7 +1047,7 @@ body {
 
 /* Parts */
 .chart-part.empty {
-  stroke: #D1D6E4;
+  stroke: #bdbdbd;
 }
 
 .chart-part.fail {
@@ -1093,7 +1093,7 @@ body {
 
 .legendDot.done{ background:#2f9dff; border-color:#2f9dff; }
 .legendDot.fail{ background:#ff2f5d; border-color:#ff2f5d; }
-.legendDot.empty{ background:#555; border-color:#555; }
+.legendDot.empty{ background:#bdbdbd; border-color:#bdbdbd; }
 
 .chartSmall{
   font-size:12px;
@@ -1188,8 +1188,8 @@ body {
   align-items:center;
   gap:10px;
   padding:4px;
-  border:1px solid #2f2f2f;
-  background:#1a1a1a;
+  border:1px solid #060620;
+  background:#060620;
   border-radius:12px;
 }
 
@@ -1210,7 +1210,7 @@ body {
   border-radius:10px;
   border:1px solid transparent;
 
-  background:rgba(255,255,255,.04);
+  background:rgba(255, 255, 255, 0.137);
   color:#e7e7e7;
 
   padding:0;
