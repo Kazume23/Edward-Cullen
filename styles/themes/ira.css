@@ -1,0 +1,31 @@
+:root {
+  --body-bg: #060620;
+  --text-color: #E6E8EB;
+  --font-family: Verdana, sans-serif;
+  --sidebar-bg: #060620;
+  --logo-bg: #040410;
+  --logo-border: #1c1c21;
+  --logoMark-bg: #3b3ba9;
+  /* logoMark-border remains #343434 */
+  /* logoText-color remains #f0f0f0 */
+  --navItem-bg: #040410;
+  --navItem-border: #25254b;
+  --navItem-hover-bg: #252ba2;
+  --navItem-hover-border: #060620;
+  --focus-border: #3b91fa;
+  --focus-shadow: rgba(59, 145, 250, 0.28);
+  /* active-line remains #2f9dff */
+  --navAddBtn-bg: #232574;
+  /* navAddBtn-border remains #2f2f2f */
+  --navAddRow-hover-bg: #040410;
+  --navAddRow-hover-border: #212187;
+  --topbar-bg: #202061;
+  --title-bg: #4837cd;
+  --modal-bg: #020220;
+  --modal-border: #303057;
+  --modalInput-bg: #212133;
+  --modalInput-border: #4c4c81;
+  --modalClose-hover-border: #553030;
+  --week-border: #2b3165;
+  --accent-text: #5590ff;
+}

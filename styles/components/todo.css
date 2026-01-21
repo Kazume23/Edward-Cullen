@@ -1,0 +1,161 @@
+.todoHeader {
+  padding: 10px 12px 6px;
+  display: grid;
+  gap: 4px;
+}
+.todoTitleSub {
+  font-size: 12px;
+  opacity: 0.85;
+}
+.todoHint {
+  font-size: 12px;
+  opacity: 0.6;
+}
+.todoEmpty {
+  padding: 12px;
+  opacity: 0.7;
+  font-size: 13px;
+}
+.todoGroupTitle {
+  margin: 10px 12px 6px;
+  font-size: 12px;
+  opacity: 0.75;
+}
+.todoGroupActive {
+  color: var(--active-line);
+  opacity: 0.95;
+}
+.todoList {
+  display: flex;
+  flex-direction: column;
+
+  flex: 1 1 auto;
+  min-height: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.todoList::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+.todoItem {
+  margin: 0 12px 8px;
+  padding: 10px;
+  border-radius: 10px;
+  background: #1f1f1f;
+  border: 1px solid #333;
+  display: grid;
+  grid-template-columns: 1fr 34px;
+  align-items: start;
+  gap: 10px;
+}
+.todoLeft {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  min-width: 0;
+}
+.todoLeft > div {
+  flex: 1;
+  min-width: 0;
+}
+.todoText {
+  font-size: 14px;
+  line-height: 1.35;
+
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+
+  overflow: visible;
+  text-overflow: unset;
+}
+.todoDone .todoText {
+  opacity: 0.65;
+  text-decoration: line-through;
+}
+.todoCheck {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--active-line);
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+.todoDel {
+  width: 34px;
+  height: 30px;
+  border-radius: 8px;
+  background: #1f1f1f;
+  color: var(--text-color);
+  border: 1px solid #3a3a3a;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+}
+.todoDel:hover {
+  border-color: #4a4a4a;
+}
+/* Layout for title row in ToDo panel */
+.todoTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* === FIX: ToDo panel height === */
+
+.todoBox {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.todoBox .panelBody {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ToDo add button in title row */
+.todoTitleRow button {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #1f1f1f;
+  color: var(--text-color);
+  border: 1px solid #3a3a3a;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0;
+  opacity: 0.9;
+  transition: background 120ms ease, border-color 120ms ease, transform 80ms ease, opacity 120ms ease;
+}
+
+.todoTitleRow button:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #4a4a4a;
+  opacity: 1;
+}
+
+.todoTitleRow button:active {
+  transform: scale(0.96);
+}
+
+.todoTitleRow button:focus-visible {
+  outline: none;
+  border-color: var(--focus-border);
+  box-shadow: 0 0 0 2px var(--focus-shadow);
+}

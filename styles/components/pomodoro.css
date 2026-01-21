@@ -1,0 +1,92 @@
+/* Pomodoro component styles (migrated from old style.css) */
+
+.pomoBox{
+  background: var(--panel-bg, #2a2a2a);
+  border: 1px solid var(--panel-border, #3a3a3a);
+  border-radius: 10px;
+  padding: 10px 12px 12px 12px;
+  margin: 0;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.pomoBody{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.pomoMode{
+  display:flex;
+  gap:6px;
+  padding:4px;
+  border:1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+  border-radius:10px;
+}
+
+.pomoTab{
+  flex:1;
+  height:30px;
+  border-radius:8px;
+  border:1px solid transparent;
+  background: transparent;
+  color: var(--text-color, #e7e7e7);
+  cursor:pointer;
+  font-size:12px;
+  opacity:0.9;
+}
+
+.pomoTab:hover{
+  border-color: rgba(255,255,255,0.10);
+}
+
+.pomoTab.isActive{
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.10);
+  opacity:1;
+}
+
+.pomoTime{
+  font-size:32px;
+  font-weight:700;
+  text-align:center;
+  letter-spacing:1px;
+  padding:4px 0;
+}
+
+.pomoActions{
+  display:flex;
+  gap:10px;
+}
+
+.pomoActions > button{
+  flex:1;
+}
+
+/* Optional editable timer input (if used by JS/HTML) */
+.pomoEdit{
+  width:100%;
+  box-sizing:border-box;
+  background: rgba(255,255,255,0.04);
+  color: var(--text-color, #e7e7e7);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:10px;
+  padding:6px 10px;
+  font-size:28px;
+  font-weight:700;
+  text-align:center;
+  outline:none;
+}
+
+.pomoEdit:focus{
+  border-color: var(--focus-border, #2f9dff);
+  box-shadow: 0 0 0 2px rgba(47, 157, 255, 0.22);
+}
+
+.pomoMeta{
+  text-align:center;
+  opacity:0.65;
+  font-size:12px;
+}

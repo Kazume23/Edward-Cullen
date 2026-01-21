@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Edward Tracker</title>
+  <link id="baseStyles" rel="stylesheet" href="styles/base.css" media="all">
+
+  <!-- COMPONENTS -->
+  <link rel="stylesheet" href="styles/components/calendar.css">
+  <link rel="stylesheet" href="styles/components/habits.css">
+  <link rel="stylesheet" href="styles/components/todo.css">
+  <link rel="stylesheet" href="styles/components/pomodoro.css">
+  <link rel="stylesheet" href="styles/components/expenses.css">
+  <link rel="stylesheet" href="styles/components/wishlist.css">
+
+  <!-- THEMES -->
+  <link id="themeDark" rel="stylesheet" href="styles/themes/dark.css" media="all">
+  <link id="themeIra" rel="stylesheet" href="styles/themes/ira.css" media="not all">
+  <link id="themePink" rel="stylesheet" href="styles/themes/pink.css" media="not all">
+  <link rel="icon" type="image/png" href="assets/icons/favicon.png">
+</head>
+<body>
+  <div class="app">
+    <div class="sidebar">
+      <div class="logo">
+        <span class="logoMark" aria-hidden="true"></span>
+        <span class="logoText">Edward</span>
+      </div>
+      <div class="nav">
+        <div class="navRow">
+          <button class="navItem" id="navDash" type="button">Dashboard</button>
+        </div>
+        <div class="navRow">
+          <button class="navItem" id="navTodo" type="button">ToDo</button>
+          <button class="navAddBtn" id="navAddTodo" type="button" title="Dodaj ToDo" aria-label="Dodaj ToDo">+</button>
+        </div>
+        <div class="navRow">
+          <button class="navItem" id="navHabits" type="button">Nawyki</button>
+          <button class="navAddBtn" id="navAddHabits" type="button" title="Dodaj nawyk" aria-label="Dodaj nawyk">+</button>
+        </div>
+        <div class="navRow">
+          <button class="navItem" id="navExpenses" type="button">Wydatki</button>
+          <button class="navAddBtn" id="navAddExpenses" type="button" title="Dodaj wydatek" aria-label="Dodaj wydatek">+</button>
+        </div>
+        <div class="navRow">
+          <button class="navItem" id="navWishlist" type="button">Wishlist</button>
+          <button class="navAddBtn" id="navAddWishlist" type="button" title="Dodaj do wishlisty" aria-label="Dodaj do wishlisty">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="main">
+      <div class="topbar">
+        <div class="title"></div>
+        <div class="icons">
+          <button class="icon iconBtn" id="themeBtn" type="button" title="Motyw">
+            <svg class="iconSvg" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V4a1 1 0 0 1 1-1Zm0 14a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm7-5a1 1 0 0 1 1-1h1a1 1 0 1 1 0 2h-1a1 1 0 0 1-1-1Zm-16 0a1 1 0 0 1 1-1H3a1 1 0 1 1 0 2h1a1 1 0 0 1-1-1Zm11.66 6.66a1 1 0 0 1 1.41 0l.7.7a1 1 0 0 1-1.41 1.41l-.7-.7a1 1 0 0 1 0-1.41ZM7.64 5.64a1 1 0 0 1 1.41 0l.7.7a1 1 0 0 1-1.41 1.41l-.7-.7a1 1 0 0 1 0-1.41Zm0 12.72a1 1 0 0 1 0-1.41l.7-.7a1 1 0 0 1 1.41 1.41l-.7.7a1 1 0 0 1-1.41 0Zm12.72-12.72a1 1 0 0 1 0 1.41l-.7.7a1 1 0 0 1-1.41-1.41l.7-.7a1 1 0 0 1 1.41 0Z"/>
+            </svg>
+          </button>
+          <a class="icon iconBtn" id="ghBtn" href="https://github.com/Kazume23/Edward-Cullen" target="_blank" rel="noreferrer" title="GitHub">
+            <svg class="iconSvg" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor" d="M12 .5C5.73 .5 .5 5.74 .5 12.02c0 5.11 3.29 9.43 7.86 10.96.58.11.79-.25.79-.56v-2.1c-3.2.7-3.87-1.38-3.87-1.38-.53-1.34-1.3-1.7-1.3-1.7-1.06-.73.08-.72.08-.72 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.1-.75.41-1.27.75-1.56-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.07 11.07 0 0 1 5.8 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.41-2.68 5.4-5.24 5.68.42.36.79 1.08.79 2.18v3.23c0 .31.21.68.8.56A10.02 10.02 0 0 0 12 .5Z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="content">
+        <div class="box topA">
+          <div class="chartHeader">
+            <div class="panelTitle">Bilans nawyków</div>
+            <div class="chartToggle" role="tablist" aria-label="Zakres wykresu">
+              <button class="chartTab isActive" id="chartWeek" type="button">Tydzień</button>
+              <button class="chartTab" id="chartMonth" type="button">Miesiąc</button>
+            </div>
+          </div>
+          <div class="panelBody">
+            <div class="chartWrap">
+              <svg id="chartSvg" class="chartSvg" viewBox="0 0 220 220" aria-label="Wykres bilansu"></svg>
+              <div class="chartMeta">
+                <div class="chartRange" id="chartRangeTxt"></div>
+                <div class="chartLegend">
+                  <div class="legendRow">
+                    <span class="legendDot done"></span>
+                    <span>Wykonane:</span>
+                    <b id="chartDone">0</b>
+                  </div>
+                  <div class="legendRow">
+                    <span class="legendDot fail"></span>
+                    <span>Zawalone:</span>
+                    <b id="chartFail">0</b>
+                  </div>
+                  <div class="legendRow">
+                    <span class="legendDot empty"></span>
+                    <span>Puste:</span>
+                    <b id="chartEmpty">0</b>
+                  </div>
+                </div>
+                <div class="chartActions">
+                  <button class="habBtn" id="chartDetailsBtn" type="button">Szczegóły</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="box topB">
+          <div class="cal">
+            <div class="calHeader">
+              <button class="calBtn" id="calPrev" type="button">‹</button>
+              <div class="calTitle" id="calTitle">Miesiąc 2026</div>
+              <div class="calRight">
+                <button class="calBtn" id="calToday" type="button">Dziś</button>
+                <button class="calBtn" id="calNext" type="button">›</button>
+              </div>
+            </div>
+            <div class="calWeekdays">
+              <div>PN</div><div>WT</div><div>ŚR</div><div>CZ</div><div>PT</div><div>SB</div><div>ND</div>
+            </div>
+            <div class="calGrid" id="calGrid"></div>
+          </div>
+        </div>
+        <div class="box tableBox">
+          <div class="habHeader">
+            <div class="habHeaderLeft">
+              <div class="habTitle">Habit tracker</div>
+              <div class="habRange" id="habRange"></div>
+            </div>
+            <div class="habAdd">
+              <input class="habInput" id="habitName" placeholder="Dodaj nawyk..." autocomplete="off">
+              <button class="habBtn" id="addHabit" type="button">Dodaj</button>
+            </div>
+          </div>
+          <div class="habTableWrap">
+            <table class="habTable" id="habTable">
+              <thead id="habThead"></thead>
+              <tbody id="habTbody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="sideBox">
+          <div class="box pomoBox">
+            <div class="panelTitle">Pomodoro</div>
+            <div class="panelBody pomoBody">
+              <div class="pomoMode">
+                <button class="pomoTab isActive" id="pomoFocus" type="button">Focus</button>
+                <button class="pomoTab" id="pomoBreak" type="button">Break</button>
+                <button class="pomoTab" id="pomoLong" type="button">Long</button>
+              </div>
+              <div class="pomoTime" id="pomoTime">25:00</div>
+              <div class="pomoActions">
+                <button class="habBtn" id="pomoStart" type="button">Start</button>
+                <button class="habBtn" id="pomoReset" type="button">Reset</button>
+              </div>
+              <div class="pomoMeta">Sesja: <span id="pomoSession">0</span></div>
+            </div>
+          </div>
+          <div class="box todoBox" id="todoBox">
+            <div class="panelTitle todoTitleRow">
+              <div class="todoTitleText">
+                <span>ToDo</span>
+                <span class="todoTitleSub" id="todoTitleSub"></span>
+              </div>
+              <button type="button" class="todoAddBtn" id="todoAddBtn" aria-label="Dodaj ToDo">+</button>
+            </div>
+            <div class="panelBody">
+              <div id="todoEmpty" class="todoEmpty">Brak ToDo. Dwuklik w kalendarzu aby dodać.</div>
+              <div id="todoList" class="todoList"></div>
+            </div>
+          </div>
+        </div>
+        <div class="bottomBox">
+          <div class="expWrap">
+            <div class="panelTitle">Dziennik wydatków</div>
+            <div class="panelBody">
+              <div class="expHeader">
+                <div class="expSummary" id="expSummary">Suma: 0,00 zł</div>
+              </div>
+              <div class="expForm">
+                <input class="modalInput" id="expAmount" type="text" inputmode="numeric" placeholder="Kwota"/>
+                <input class="modalInput" id="expWhat" type="text" placeholder="Co kupione"/>
+                <select class="modalInput" id="expCategory">
+                  <option value="Jedzenie">Jedzenie</option>
+                  <option value="Transport">Transport</option>
+                  <option value="Rozrywka">Rozrywka</option>
+                  <option value="Zdrowie">Zdrowie</option>
+                  <option value="Edukacja">Edukacja</option>
+                  <option value="Sprzęt">Sprzęt</option>
+                  <option value="Subskrypcje">Subskrypcje</option>
+                  <option value="Inne">Inne</option>
+                </select>
+                <select class="modalInput" id="expScore">
+                  <option value="A">A — Wysoki priorytet</option>
+                  <option value="B">B — Konieczny</option>
+                  <option value="C">C — Opcjonalny</option>
+                  <option value="D">D — Zbędny</option>
+                </select>
+                <select class="modalInput" id="expPeriod">
+                  <option value="once">Jednorazowe</option>
+                  <option value="weekly">Tygodniowe</option>
+                  <option value="monthly">Miesięczne</option>
+                  <option value="yearly">Roczne</option>
+                </select>
+                <input class="modalInput" id="expDate" type="date">
+                <button class="habBtn" id="expAdd" type="button">Dodaj</button>
+              </div>
+              <div class="expList" id="expList"></div>
+            </div>
+          </div>
+          <div class="wishWrap">
+            <div class="panelTitle">Wishlist</div>
+            <div class="panelBody">
+              <div class="wishForm">
+                <input class="modalInput" id="wishName" type="text" placeholder="Co chcesz kupić" autocomplete="off">
+                <input class="modalInput" id="wishPrice" type="text" inputmode="numeric" placeholder="Cena" autocomplete="off">
+                <button class="habBtn" id="wishAdd" type="button">Dodaj</button>
+              </div>
+              <div class="wishList" id="wishList"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modals -->
+  <div class="modalOverlay" id="todoOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="todoModalTitle">
+      <div class="modalTop">
+        <div class="modalTitle" id="todoModalTitle">Dodaj ToDo</div>
+        <button class="modalClose" id="todoClose" type="button" aria-label="Zamknij">×</button>
+      </div>
+      <div class="modalBody">
+        <label class="modalLabel" for="todoDate">Data</label>
+        <input class="modalInput" id="todoDate" type="date">
+        <label class="modalLabel" for="todoText">Treść</label>
+        <textarea class="modalTextarea" id="todoText" placeholder="Wpisz ToDo..." rows="4"></textarea>
+        <div class="modalActions">
+          <button class="calBtn" id="todoCancel" type="button">Anuluj</button>
+          <button class="habBtn" id="todoSave" type="button">Zapisz</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modalOverlay" id="chartOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="chartModalTitle">
+      <div class="modalTop">
+        <div class="modalTitle" id="chartModalTitle">Bilans nawyków</div>
+        <button class="modalClose" id="chartClose" type="button" aria-label="Zamknij">×</button>
+      </div>
+      <div class="modalBody chartModalBody">
+        <div class="chartModalRange" id="chartModalRange"></div>
+        <div class="chartModalSummary" id="chartModalSummary"></div>
+        <div class="chartModalList" id="chartModalList"></div>
+      </div>
+    </div>
+  </div>
+  <div class="modalOverlay" id="habitOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="habitModalTitle">
+      <div class="modalTop">
+        <div class="modalTitle" id="habitModalTitle">Dodaj nawyk</div>
+        <button class="modalClose" id="habitClose" type="button" aria-label="Zamknij">×</button>
+      </div>
+      <div class="modalBody">
+        <label class="modalLabel" for="habitModalName">Nazwa</label>
+        <input class="modalInput" id="habitModalName" type="text" placeholder="Np. Wstać o 6:00" autocomplete="off">
+        <div class="modalActions">
+          <button class="calBtn" id="habitCancel" type="button">Anuluj</button>
+          <button class="habBtn" id="habitSave" type="button">Dodaj</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modalOverlay" id="expOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="expModalTitle">
+      <div class="modalTop">
+        <div class="modalTitle" id="expModalTitle">Dodaj wydatek</div>
+        <button class="modalClose" id="expClose" type="button" aria-label="Zamknij">×</button>
+      </div>
+      <div class="modalBody">
+        <label class="modalLabel" for="expModalAmount">Kwota</label>
+        <input class="modalInput" id="expModalAmount" type="text" inputmode="numeric" placeholder="Np. 12,50">
+        <label class="modalLabel" for="expModalWhat">Co kupione</label>
+        <input class="modalInput" id="expModalWhat" type="text" placeholder="Np. Kawa">
+        <label class="modalLabel" for="expModalCategory">Kategoria</label>
+        <select class="modalInput" id="expModalCategory">
+          <option value="Jedzenie">Jedzenie</option>
+          <option value="Transport">Transport</option>
+          <option value="Rozrywka">Rozrywka</option>
+          <option value="Zdrowie">Zdrowie</option>
+          <option value="Edukacja">Edukacja</option>
+          <option value="Sprzęt">Sprzęt</option>
+          <option value="Subskrypcje">Subskrypcje</option>
+          <option value="Inne">Inne</option>
+        </select>
+        <label class="modalLabel" for="expModalScore">Ocena</label>
+        <select class="modalInput" id="expModalScore">
+          <option value="A">A — Wysoki priorytet</option>
+          <option value="B">B — Konieczny</option>
+          <option value="C">C — Opcjonalny</option>
+          <option value="D">D — Zbędny</option>
+        </select>
+        <label class="modalLabel" for="expModalPeriod">Okres</label>
+        <select class="modalInput" id="expModalPeriod">
+          <option value="once">Jednorazowe</option>
+          <option value="weekly">Tygodniowe</option>
+          <option value="monthly">Miesięczne</option>
+          <option value="yearly">Roczne</option>
+        </select>
+        <label class="modalLabel" for="expModalDate">Data</label>
+        <input class="modalInput" id="expModalDate" type="date">
+        <div class="modalActions">
+          <button class="calBtn" id="expCancel" type="button">Anuluj</button>
+          <button class="habBtn" id="expSave" type="button">Dodaj</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modalOverlay" id="wishOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="wishModalTitle">
+      <div class="modalTop">
+        <div class="modalTitle" id="wishModalTitle">Dodaj do wishlisty</div>
+        <button class="modalClose" id="wishClose" type="button" aria-label="Zamknij">×</button>
+      </div>
+      <div class="modalBody">
+        <label class="modalLabel" for="wishModalName">Co chcesz kupić</label>
+        <input class="modalInput" id="wishModalName" type="text" autocomplete="off">
+        <label class="modalLabel" for="wishModalPrice">Cena</label>
+        <input class="modalInput" id="wishModalPrice" type="text" inputmode="numeric" autocomplete="off" placeholder="Np. 123,45">
+        <div class="modalActions">
+          <button class="calBtn" id="wishCancel" type="button">Anuluj</button>
+          <button class="habBtn" id="wishSave" type="button">Dodaj</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Scripts -->
+  <script src="js/core/dom.js"></script>
+  <script src="js/core/state.js"></script>
+  <script src="js/core/storage.js"></script>
+
+  <script src="js/components/calendar.js"></script>
+  <script src="js/components/habits.js"></script>
+  <script src="js/components/todo.js"></script>
+  <script src="js/components/expenses.js"></script>
+  <script src="js/components/wishlist.js"></script>
+  <script src="js/components/pomodoro.js"></script>
+
+  <script src="js/core/events.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>

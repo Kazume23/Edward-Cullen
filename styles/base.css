@@ -1,0 +1,447 @@
+/* CSS Variables for theme colors */
+:root {
+  --body-bg: #111;
+  --text-color: #e7e7e7;
+  --font-family: Arial, sans-serif;
+  --sidebar-bg: #1e1e1e;
+  --logo-bg: #242424;
+  --logo-border: #2f2f2f;
+  --logoMark-bg: #2d2d2d;
+  --logoMark-border: #343434;
+  --logoText-color: #f0f0f0;
+  --navItem-bg: #232323;
+  --navItem-border: #2f2f2f;
+  --navItem-hover-bg: #262626;
+  --navItem-hover-border: #3a3a3a;
+  --focus-border: #2f9dff;
+  --focus-shadow: rgba(47, 157, 255, 0.28);
+  --active-line: #2f9dff;
+  --navAddBtn-bg: #1f1f1f;
+  --navAddBtn-border: #2f2f2f;
+  --navAddRow-hover-bg: #262626;
+  --navAddRow-hover-border: #3a3a3a;
+  --topbar-bg: #1e1e1e;
+  --title-bg: #2d2d2d;
+  --modal-bg: #2a2a2a;
+  --modal-border: #3a3a3a;
+  --modalInput-bg: #1f1f1f;
+  --modalInput-border: #3a3a3a;
+  --modalClose-hover-border: #4a4a4a;
+  --panel-bg: #2a2a2a;
+  --panel-border: #3a3a3a;
+
+}
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background: var(--body-bg);
+  color: var(--text-color);
+
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+  min-height: 0;
+}
+
+.sidebar {
+  width: 232px;
+  background: var(--sidebar-bg);
+  padding: 12px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.logo {
+  height: 48px;
+  background: var(--logo-bg);
+  border-radius: 12px;
+  border: 1px solid var(--logo-border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+.logoMark {
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  background: var(--logoMark-bg);
+  border: 1px solid var(--logoMark-border);
+  flex: 0 0 auto;
+}
+.logoText {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: var(--logoText-color);
+  line-height: 1;
+}
+.nav {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.navRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.navItem {
+  height: 42px;
+  width: 100%;
+  background: var(--navItem-bg);
+  border-radius: 10px;
+  border: 1px solid var(--navItem-border);
+  color: var(--text-color);
+  cursor: pointer;
+  text-align: left;
+  padding: 0 18px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  position: relative;
+  flex: 1;
+  transition: background 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+}
+.navItem:hover {
+  background: var(--navItem-hover-bg);
+  border-color: var(--navItem-hover-border);
+}
+.navItem:focus-visible {
+  outline: none;
+  border-color: var(--focus-border);
+  box-shadow: 0 0 0 2px var(--focus-shadow);
+}
+.navItem.isActive::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 99px;
+  background: var(--active-line);
+  opacity: 0.9;
+}
+.navAddBtn {
+  width: 36px;
+  height: 42px;
+  border-radius: 10px;
+  background: var(--navAddBtn-bg);
+  color: var(--text-color);
+  border: 1px solid var(--navAddBtn-border);
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+  transition: background 120ms ease, border-color 120ms ease, opacity 120ms ease;
+}
+.navRow:hover .navAddBtn {
+  opacity: 1;
+  border-color: var(--navAddRow-hover-border);
+  background: var(--navAddRow-hover-bg);
+}
+.navAddBtn:hover {
+  border-color: var(--focus-border);
+}
+.navAddBtn:focus-visible {
+  outline: none;
+  border-color: var(--focus-border);
+  box-shadow: 0 0 0 2px var(--focus-shadow);
+}
+.topbar {
+  height: 50px;
+  background: var(--topbar-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.title {
+  width: 140px;
+  height: 16px;
+  background: var(--title-bg);
+  border-radius: 6px;
+}
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px;
+  border: 1px solid #2f2f2f;
+  background: #1a1a1a;
+  border-radius: 12px;
+}
+.iconBtn {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-color);
+  padding: 0;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease, transform 80ms ease;
+}
+.iconBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: #3a3a3a;
+}
+.iconBtn:focus-visible {
+  outline: none;
+  border-color: var(--focus-border);
+  box-shadow: 0 0 0 2px var(--focus-shadow);
+}
+.iconBtn:active {
+  transform: scale(0.96);
+}
+.iconSvg {
+  width: 18px;
+  height: 18px;
+  display: block;
+  opacity: 0.95;
+}
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+
+  height: 100vh;
+}
+.content {
+  padding: 12px;
+  box-sizing: border-box;
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr 1fr 0.65fr;
+  grid-template-rows: minmax(320px, 36vh) minmax(520px, 1fr) auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.content {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.content::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+
+/* Panel titles and layout */
+.panelTitle {
+  padding: 10px 12px 0 12px;
+  font-size: 14px;
+  opacity: 0.9;
+}
+.topA .panelTitle {
+  padding: 0;
+}
+.panelBody {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sideBox > .panelBody {
+  flex: 1 1 auto;
+  min-height: 0;
+  scrollbar-width: thin;
+}
+.sideBox .todoBox {
+  flex: 1 1 auto;
+  min-height: 220px;
+}
+
+/* Common buttons */
+.habBtn, .calBtn {
+  background: #1f1f1f;
+  color: var(--text-color);
+  border: 1px solid #3a3a3a;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.habBtn:hover, .calBtn:hover {
+  border-color: #4a4a4a;
+}
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 9999;
+}
+.modalOverlay.isOpen {
+  display: flex;
+}
+.modal {
+  width: min(520px, 100%);
+  background: var(--modal-bg);
+  border: 1px solid var(--modal-border);
+  border-radius: 12px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+.modalTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border-bottom: 1px solid #333;
+}
+.modalTitle {
+  font-weight: 700;
+}
+.modalClose {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #1f1f1f;
+  border: 1px solid #3a3a3a;
+  color: var(--text-color);
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modalClose:hover {
+  border-color: var(--modalClose-hover-border);
+}
+.modalBody {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.modalLabel {
+  font-size: 12px;
+  opacity: 0.85;
+}
+.modalInput, .modalTextarea {
+  background: var(--modalInput-bg);
+  color: var(--text-color);
+  border: 1px solid var(--modalInput-border);
+  border-radius: 10px;
+  padding: 10px;
+  outline: none;
+  box-sizing: border-box;
+}
+.modalTextarea {
+  resize: vertical;
+  min-height: 90px;
+}
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+.todoEmpty {
+  padding: 12px;
+  opacity: 0.7;
+  font-size: 13px;
+}
+
+/* ---- REQUIRED LAYOUT + PANEL WRAPPERS (moved from old style.css) ---- */
+
+/* panel/card base */
+.box,
+.tableBox,
+.bottomBox {
+  background: var(--panel-bg, #2a2a2a);
+  border: 1px solid var(--panel-border, #3a3a3a);
+  border-radius: 10px;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* grid placement - MUST match HTML structure */
+.topA {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.topB {
+  grid-column: 2;
+  grid-row: 1;
+  overflow: visible;
+}
+
+.tableBox {
+  grid-column: 1 / span 2;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  min-height: 520px;
+}
+
+.sideBox {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+
+  background: transparent;
+  border: none;
+
+  min-width: 0;
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  overflow: visible;
+}
+
+.bottomBox {
+  grid-column: 1 / span 3;
+  grid-row: 3;
+
+  background: transparent;
+  border: none;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+}

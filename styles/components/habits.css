@@ -1,0 +1,277 @@
+.habHeader {
+  padding: 10px 12px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #333;
+}
+.habHeaderLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.habTitle {
+  font-weight: 700;
+}
+.habRange {
+  font-size: 12px;
+  opacity: 0.8;
+}
+.habAdd {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.habInput {
+  width: 240px;
+  background: #1f1f1f;
+  color: var(--text-color);
+  border: 1px solid #3a3a3a;
+  border-radius: 8px;
+  padding: 8px 10px;
+  outline: none;
+}
+.habTableWrap {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+.habTable {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+.habTable thead th {
+  position: sticky;
+  top: 0;
+  background: #2a2a2a;
+  border-bottom: 1px solid #333;
+  padding: 10px 8px;
+  font-size: 12px;
+}
+.thHabit {
+  text-align: left;
+  width: 280px;
+}
+.thDay {
+  text-align: center;
+}
+.thToday {
+  color: var(--accent-text);
+}
+.habTable tbody td {
+  border-bottom: 1px solid #303030;
+  padding: 10px 8px;
+  text-align: center;
+}
+.tdHabit {
+  text-align: left;
+  padding-left: 12px;
+}
+.habitName {
+  display: inline-block;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: #1f1f1f;
+  border: 1px solid transparent;
+  min-width: 200px;
+}
+.habitName:focus {
+  outline: none;
+  border-color: #3a3a3a;
+}
+.tdCell {
+  text-align: center;
+}
+.cellBtn {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 1px solid #444;
+  background: transparent;
+  cursor: pointer;
+}
+.cellBtn:hover {
+  border-color: #666;
+}
+.cellDone {
+  background: #2f9dff;
+  border-color: #2f9dff;
+}
+.cellFail {
+  background: #ff2f5d;
+  border-color: #ff2f5d;
+}
+.habitDel {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #1f1f1f;
+  color: var(--text-color);
+  border: 1px solid #3a3a3a;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-size: 18px;
+}
+.habitDel:hover {
+  border-color: #ff2f5d;
+}
+/* Chart details and legend */
+.chartHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px 0;
+  gap: 10px;
+}
+.chartToggle {
+  display: flex;
+  gap: 6px;
+  padding: 4px;
+  border: 1px solid #3a3a3a;
+  background: #1f1f1f;
+  border-radius: 10px;
+}
+.chartTab {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-color);
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  opacity: 0.9;
+}
+.chartTab:hover {
+  border-color: #4a4a4a;
+}
+.chartTab.isActive {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+  opacity: 1;
+}
+.chartWrap {
+  display: grid;
+  grid-template-columns: 200px minmax(260px, 1fr);
+  gap: 24px;
+  align-items: center;
+  min-height: 0;
+}
+.chartMeta {
+  align-self: center;
+  padding-left: 24px;
+}
+.chartRange {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.chartLegend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.legendRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+.legendDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid #333;
+}
+.legendDot.done {
+  background: #2f9dff;
+  border-color: #2f9dff;
+}
+.legendDot.fail {
+  background: #ff2f5d;
+  border-color: #ff2f5d;
+}
+.legendDot.empty {
+  background: #555;
+  border-color: #555;
+}
+.chartActions {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.chartModalBody {
+  max-height: 60vh;
+  overflow: auto;
+}
+.chartModalList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.chartModalSummary {
+  margin-bottom: 14px;
+  font-size: 13px;
+  color: #bdbdbd;
+  line-height: 1.4;
+}
+.chartRow {
+  display: grid;
+  grid-template-columns: 18px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  font-size: 13px;
+}
+.chartRowIdx {
+  opacity: 0.65;
+  text-align: right;
+}
+.chartRowName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  opacity: 0.95;
+}
+.chartRowBadges {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  white-space: nowrap;
+}
+.chartBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid #3a3a3a;
+  background: #1b1b1b;
+  font-size: 12px;
+  line-height: 1;
+}
+.chartBadge .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid #333;
+}
+.chartBadge.done .dot {
+  background: #2f9dff;
+  border-color: #2f9dff;
+}
+.chartBadge.fail .dot {
+  background: #ff2f5d;
+  border-color: #ff2f5d;
+}
+.chartModalRange {
+  font-size: 12px;
+  opacity: 0.75;
+}
