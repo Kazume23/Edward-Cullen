@@ -259,6 +259,18 @@
                     <button class="habBtn" id="wishAdd" type="button">Dodaj</button>
                   </div>
 
+                  <div class="wishHeader" style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                    <label class="modalLabel" for="wishSort" style="font-size: 12px; opacity: 0.85; margin: 0;">Sortuj:</label>
+                    <select class="modalInput" id="wishSort" style="flex: 0 0 auto; min-width: 180px; font-size: 12px; padding: 6px 10px;">
+                      <option value="date-desc">Data (najnowsze)</option>
+                      <option value="date-asc">Data (najstarsze)</option>
+                      <option value="price-asc">Cena (rosnąco)</option>
+                      <option value="price-desc">Cena (malejąco)</option>
+                      <option value="name-asc">Nazwa (A-Z)</option>
+                      <option value="name-desc">Nazwa (Z-A)</option>
+                    </select>
+                  </div>
+
                   <div class="wishList" id="wishList"></div>
                 </div>
               </div>
@@ -582,7 +594,8 @@ if (themeBtn) {
           selectedDate: toISO(today),
           viewMonth: today.getMonth(),
           viewYear: today.getFullYear(),
-          chartMode: "week"
+          chartMode: "week",
+          wishSortMode: "date-desc"
         };
       }
       try {
@@ -1645,6 +1658,7 @@ if (themeBtn) {
     const wishPrice = $("wishPrice");
     const wishAdd = $("wishAdd");
     const wishList = $("wishList");
+    const wishSort = $("wishSort");
 
     const wishOverlay = $("wishOverlay");
     const wishModalName = $("wishModalName");
@@ -1750,7 +1764,44 @@ if (themeBtn) {
       ensureWishlist();
       wishList.innerHTML = "";
 
-      const items = [...state.wishlist].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+      const sortMode = state.wishSortMode || "date-desc";
+      if (wishSort) wishSort.value = sortMode;
+
+      let items = [...state.wishlist];
+      
+      if (sortMode === "date-desc") {
+        items.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+      } else if (sortMode === "date-asc") {
+        items.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+      } else if (sortMode === "price-asc") {
+        items.sort((a, b) => {
+          const aPrice = a.price === null || a.price === undefined ? Infinity : Number(a.price);
+          const bPrice = b.price === null || b.price === undefined ? Infinity : Number(b.price);
+          if (aPrice !== bPrice) return aPrice - bPrice;
+          return (a.createdAt || 0) - (b.createdAt || 0);
+        });
+      } else if (sortMode === "price-desc") {
+        items.sort((a, b) => {
+          const aPrice = a.price === null || a.price === undefined ? -1 : Number(a.price);
+          const bPrice = b.price === null || b.price === undefined ? -1 : Number(b.price);
+          if (aPrice !== bPrice) return bPrice - aPrice;
+          return (b.createdAt || 0) - (a.createdAt || 0);
+        });
+      } else if (sortMode === "name-asc") {
+        items.sort((a, b) => {
+          const aName = String(a.name || "").toLowerCase();
+          const bName = String(b.name || "").toLowerCase();
+          if (aName !== bName) return aName.localeCompare(bName);
+          return (a.createdAt || 0) - (b.createdAt || 0);
+        });
+      } else if (sortMode === "name-desc") {
+        items.sort((a, b) => {
+          const aName = String(a.name || "").toLowerCase();
+          const bName = String(b.name || "").toLowerCase();
+          if (aName !== bName) return bName.localeCompare(aName);
+          return (b.createdAt || 0) - (a.createdAt || 0);
+        });
+      }
 
       if (!items.length) {
         const empty = document.createElement("div");
@@ -1796,6 +1847,14 @@ if (themeBtn) {
     if (wishAdd) wishAdd.addEventListener("click", addWish);
     if (wishPrice) wishPrice.addEventListener("keydown", (e) => { if (e.key === "Enter") addWish(); });
     if (wishName) wishName.addEventListener("keydown", (e) => { if (e.key === "Enter") addWish(); });
+    
+    if (wishSort) {
+      wishSort.addEventListener("change", () => {
+        state.wishSortMode = wishSort.value;
+        saveState();
+        renderWishlist();
+      });
+    }
 
 
     // ---------- Pomodoro ----------
