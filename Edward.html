@@ -280,6 +280,13 @@
         <label class="modalLabel" for="todoText">Treść</label>
         <textarea class="modalTextarea" id="todoText" placeholder="Wpisz ToDo..." rows="4"></textarea>
 
+        <label class="modalLabel" for="todoPriority">Priorytet</label>
+        <select class="modalInput" id="todoPriority">
+          <option value="high">Wysoki</option>
+          <option value="medium" selected>Średni</option>
+          <option value="low">Niski</option>
+        </select>
+
         <div class="modalActions">
           <button class="calBtn" id="todoCancel" type="button">Anuluj</button>
           <button class="habBtn" id="todoSave" type="button">Zapisz</button>
@@ -512,6 +519,7 @@ if (themeBtn) {
     const todoOverlay = $("todoOverlay");
     const todoDateInput = $("todoDate");
     const todoText = $("todoText");
+    const todoPriority = $("todoPriority");
     const todoSave = $("todoSave");
     const todoClose = $("todoClose");
     const todoCancel = $("todoCancel");
@@ -632,6 +640,7 @@ if (themeBtn) {
     function openTodoModal(dateObj) {
       todoDateInput.value = toISO(dateObj);
       todoText.value = "";
+      todoPriority.value = "medium";
       todoOverlay.classList.add("isOpen");
       todoOverlay.setAttribute("aria-hidden", "false");
       setTimeout(() => todoText.focus(), 0);
@@ -704,7 +713,7 @@ if (themeBtn) {
     }
 
 
-    function addTodo(dateISO, text) {
+    function addTodo(dateISO, text, priority) {
       const t = String(text || "").trim();
       if (!t) return;
 
@@ -712,12 +721,19 @@ if (themeBtn) {
         id: crypto.randomUUID(),
         dateISO,
         text: t,
+        priority: priority || "medium",
         done: false,
         createdAt: Date.now()
       });
 
       saveState();
       renderTodos();
+    }
+
+    function todoPriorityLabel(v) {
+      if (v === "high") return "Wysoki";
+      if (v === "low") return "Niski";
+      return "Średni";
     }
 
     function toggleTodo(id) {
@@ -740,8 +756,12 @@ if (themeBtn) {
     }
       todoList.innerHTML = "";
 
+      const priorityOrder = { high: 0, medium: 1, low: 2 };
       const items = [...state.todos].sort((a, b) => {
         if (a.dateISO !== b.dateISO) return a.dateISO.localeCompare(b.dateISO);
+        const aPriority = priorityOrder[a.priority || "medium"] ?? 1;
+        const bPriority = priorityOrder[b.priority || "medium"] ?? 1;
+        if (aPriority !== bPriority) return aPriority - bPriority;
         return (a.createdAt || 0) - (b.createdAt || 0);
       });
 
@@ -775,8 +795,19 @@ if (themeBtn) {
         meta.className = "todoMeta";
         meta.textContent = fmtPL(fromISO(it.dateISO));
 
+        const priorityTag = document.createElement("div");
+        priorityTag.className = "expTag";
+        priorityTag.textContent = todoPriorityLabel(it.priority || "medium");
+
         textBox.appendChild(txt);
         textBox.appendChild(meta);
+
+        const tagsBox = document.createElement("div");
+        tagsBox.style.display = "flex";
+        tagsBox.style.gap = "6px";
+        tagsBox.style.marginTop = "4px";
+        tagsBox.appendChild(priorityTag);
+        textBox.appendChild(tagsBox);
 
         left.appendChild(cb);
         left.appendChild(textBox);
@@ -991,7 +1022,7 @@ if (themeBtn) {
     });
 
     todoSave.addEventListener("click", () => {
-      addTodo(todoDateInput.value, todoText.value);
+      addTodo(todoDateInput.value, todoText.value, todoPriority.value);
       closeTodoModal();
     });
     chartDetailsBtn.addEventListener("click", () => {
