@@ -210,6 +210,20 @@
                 <div class="panelBody">
                   <div class="expHeader">
                     <div class="expSummary" id="expSummary">Suma: 0,00 zł</div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <label class="modalLabel" for="expFilterCategory" style="font-size: 12px; opacity: 0.85; margin: 0;">Filtruj:</label>
+                      <select class="modalInput" id="expFilterCategory" style="flex: 0 0 auto; min-width: 150px; font-size: 12px; padding: 6px 10px;">
+                        <option value="">Wszystkie</option>
+                        <option value="Jedzenie">Jedzenie</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Rozrywka">Rozrywka</option>
+                        <option value="Zdrowie">Zdrowie</option>
+                        <option value="Edukacja">Edukacja</option>
+                        <option value="Sprzęt">Sprzęt</option>
+                        <option value="Subskrypcje">Subskrypcje</option>
+                        <option value="Inne">Inne</option>
+                      </select>
+                    </div>
                   </div>
 
                   <div class="expForm">
@@ -595,7 +609,8 @@ if (themeBtn) {
           viewMonth: today.getMonth(),
           viewYear: today.getFullYear(),
           chartMode: "week",
-          wishSortMode: "date-desc"
+          wishSortMode: "date-desc",
+          expFilterCategory: ""
         };
       }
       try {
@@ -611,6 +626,7 @@ if (themeBtn) {
         if (s.chartMode !== "week" && s.chartMode !== "month") {
           s.chartMode = "week";
         }
+        if (s.expFilterCategory === undefined) s.expFilterCategory = "";
         return s;
       } catch {
         localStorage.removeItem(LS_KEY);
@@ -1064,6 +1080,7 @@ if (themeBtn) {
     const expAdd = $("expAdd");
     const expList = $("expList");
     const expSummary = $("expSummary");
+    const expFilterCategory = $("expFilterCategory");
 
     
     expAmount.addEventListener("input", () => {
@@ -1139,7 +1156,15 @@ if (themeBtn) {
       const filterISO = getExpenseFilterISO();
       expDate.value = filterISO;
 
-      const items = [...state.expenses];
+      const filterCategory = state.expFilterCategory || "";
+      if (expFilterCategory) expFilterCategory.value = filterCategory;
+
+      let items = [...state.expenses];
+
+      // Filtrowanie po kategorii
+      if (filterCategory) {
+        items = items.filter(item => item.category === filterCategory);
+      }
 
       items.sort((a, b) => {
         if (a.dateISO !== b.dateISO) return b.dateISO.localeCompare(a.dateISO);
@@ -1231,6 +1256,14 @@ if (themeBtn) {
     expWhat.addEventListener("keydown", (e) => {
       if (e.key === "Enter") addExpense();
     });
+
+    if (expFilterCategory) {
+      expFilterCategory.addEventListener("change", () => {
+        state.expFilterCategory = expFilterCategory.value;
+        saveState();
+        renderExpenses();
+      });
+    }
 
     function monthRangeForSelected() {
     const d = getSelectedDateObj();
