@@ -1653,6 +1653,10 @@ if (themeBtn) {
   
   function renderDonut(done, fail, empty) {
     const total = done + fail + empty;
+    const parts = [ { v: empty, cls: "empty" },
+                 { v: fail, cls: "fail" },
+                 { v: done, cls: "done" }
+                 ].filter(p => p.v > 0);
   
     chartSvg.innerHTML = "";
   
@@ -1665,7 +1669,6 @@ if (themeBtn) {
     ring.setAttribute("cy", cy);
     ring.setAttribute("r", r);
     ring.setAttribute("fill", "none");
-    ring.setAttribute("stroke", "#3a3a3a");
     ring.setAttribute("stroke-width", "18");
     chartSvg.appendChild(ring);
   
@@ -1675,18 +1678,11 @@ if (themeBtn) {
       t.setAttribute("y", cy + 6);
       t.setAttribute("text-anchor", "middle");
       t.setAttribute("font-size", "14");
-      t.setAttribute("fill", "#e7e7e7");
+      t.classList.add("chart-text");
       t.textContent = "Brak danych";
       chartSvg.appendChild(t);
       return;
     }
-  
-    const parts = [
-      { v: empty, stroke: "#555" },
-      { v: fail, stroke: "#ff2f5d" },
-      { v: done, stroke: "#2f9dff" }
-    ].filter(p => p.v > 0);
-  
     let angle = 0;
   
     for (const p of parts) {
@@ -1697,10 +1693,9 @@ if (themeBtn) {
       const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
       path.setAttribute("d", arcPath(cx, cy, r, startAngle, endAngle));
       path.setAttribute("fill", "none");
-      path.setAttribute("stroke", p.stroke);
       path.setAttribute("stroke-width", "18");
       path.setAttribute("stroke-linecap", "round");
-    
+      path.classList.add("chart-part", p.cls);
       chartSvg.appendChild(path);
     
       angle = endAngle;
@@ -1710,7 +1705,7 @@ if (themeBtn) {
     inner.setAttribute("cx", cx);
     inner.setAttribute("cy", cy);
     inner.setAttribute("r", 58);
-    inner.setAttribute("fill", "#2a2a2a");
+    inner.classList.add("chart-inner");
     chartSvg.appendChild(inner);
   
     const center = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -1718,7 +1713,7 @@ if (themeBtn) {
     center.setAttribute("y", cy + 6);
     center.setAttribute("text-anchor", "middle");
     center.setAttribute("font-size", "16");
-    center.setAttribute("fill", "#e7e7e7");
+    center.classList.add("chart-text");
     center.textContent = `${Math.round((done / total) * 100)}%`;
     chartSvg.appendChild(center);
   }
