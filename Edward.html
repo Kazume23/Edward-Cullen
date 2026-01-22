@@ -432,6 +432,181 @@
 
   <script>
     const LS_KEY = "habit_app_v1";
+    const API_STATE_URL = "./api/state.php";
+    const CLIENT_ID_KEY = "edward_client_id_v1";
+
+    function getClientId() {
+      let id = localStorage.getItem(CLIENT_ID_KEY);
+      if (!id) {
+        id = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + "_" + Math.random().toString(16).slice(2)).replace(/[^a-zA-Z0-9_]/g, "_");
+        localStorage.setItem(CLIENT_ID_KEY, id);
+      }
+      return id;
+    }
+
+    const clientId = getClientId();
+
+    function ensureMeta() {
+      if (!state._meta) state._meta = {};
+      state._meta.clientId = clientId;
+      if (typeof state._meta.updatedAtMs !== "number") state._meta.updatedAtMs = 0;
+    }
+
+    function touchMeta() {
+      ensureMeta();
+      state._meta.updatedAtMs = Date.now();
+    }
+
+    let syncTimer = null;
+    let syncPending = false;
+    let syncBackoffMs = 2000;
+
+    async function apiGetState() {
+      const url = API_STATE_URL + "?client_id=" + encodeURIComponent(clientId);
+      const res = await fetch(url, { method: "GET", credentials: "same-origin" });
+      const data = await res.json();
+      if (!data || !data.ok) throw new Error("apiGetState_failed");
+      return data;
+    }
+
+    async function apiPutState(reason) {
+      ensureMeta();
+      const payload = {
+        client_id: clientId,
+        updatedAtMs: state._meta.updatedAtMs || Date.now(),
+        state
+      };
+
+      const res = await fetch(API_STATE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "same-origin",
+        body: JSON.stringify(payload)
+      });
+
+      if (res.status === 409) {
+        const data = await res.json();
+        return { ok: false, conflict: true, data };
+      }
+
+      const data = await res.json();
+      if (!data || !data.ok) throw new Error("apiPutState_failed");
+      return { ok: true, data };
+    }
+
+    function queueServerSync(reason) {
+      syncPending = true;
+
+      if (syncTimer) clearTimeout(syncTimer);
+      syncTimer = setTimeout(() => {
+        flushServerSync(reason);
+      }, syncBackoffMs);
+    }
+
+    async function flushServerSync(reason) {
+      if (!syncPending) return;
+      syncPending = false;
+
+      try {
+        const r = await apiPutState(reason);
+        if (r.ok) {
+          syncBackoffMs = 2000;
+          return;
+        }
+
+        if (r.conflict && r.data && r.data.state) {
+          state = r.data.state;
+          if (!state._meta) state._meta = {};
+          state._meta.clientId = clientId;
+          if (typeof state._meta.updatedAtMs !== "number") state._meta.updatedAtMs = r.data.updatedAtMs || Date.now();
+          localStorage.setItem(LS_KEY, JSON.stringify(state));
+          syncBackoffMs = 2000;
+          renderAll();
+          return;
+        }
+
+        throw new Error("flush_unknown");
+      } catch (e) {
+        syncPending = true;
+        syncBackoffMs = Math.min(30000, syncBackoffMs * 2);
+        if (syncTimer) clearTimeout(syncTimer);
+        syncTimer = setTimeout(() => flushServerSync("retry"), syncBackoffMs);
+      }
+    }
+
+    async function bootstrapFromServer() {
+      ensureMeta();
+
+      let server;
+      try {
+        server = await apiGetState();
+      } catch (e) {
+        touchMeta();
+        localStorage.setItem(LS_KEY, JSON.stringify(state));
+        return;
+      }
+
+      const serverState = server.state;
+      const serverMs = Number(server.updatedAtMs || 0);
+      const localMs = Number(state._meta && state._meta.updatedAtMs ? state._meta.updatedAtMs : 0);
+
+      if (!serverState) {
+        if (localStorage.getItem(LS_KEY)) {
+          if (localMs <= 0) touchMeta();
+          await apiPutState("bootstrap_push_local");
+        }
+        return;
+      }
+
+      if (!localStorage.getItem(LS_KEY)) {
+        state = serverState;
+        if (!state._meta) state._meta = {};
+        state._meta.clientId = clientId;
+        state._meta.updatedAtMs = serverMs || Date.now();
+        localStorage.setItem(LS_KEY, JSON.stringify(state));
+        return;
+      }
+
+      if (serverMs > localMs) {
+        state = serverState;
+        if (!state._meta) state._meta = {};
+        state._meta.clientId = clientId;
+        state._meta.updatedAtMs = serverMs || Date.now();
+        localStorage.setItem(LS_KEY, JSON.stringify(state));
+        return;
+      }
+
+      if (localMs > serverMs) {
+        await apiPutState("bootstrap_push_local_newer");
+        return;
+      }
+    }
+
+    window.addEventListener("online", () => flushServerSync("online"));
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        flushServerSync("hidden");
+      }
+    });
+
+    window.addEventListener("beforeunload", () => {
+      try {
+        if (!syncPending) return;
+        if (!navigator.sendBeacon) return;
+
+        ensureMeta();
+        const payload = JSON.stringify({
+          client_id: clientId,
+          updatedAtMs: state._meta.updatedAtMs || Date.now(),
+          state
+        });
+
+        const blob = new Blob([payload], { type: "application/json" });
+        navigator.sendBeacon(API_STATE_URL, blob);
+      } catch (e) {}
+    });
+
 
     const $ = (id) => document.getElementById(id);
 
@@ -634,9 +809,15 @@ if (themeBtn) {
       }
     }
 
-    function saveState() {
+    function saveState(opts = {}) {
+      const sync = (opts && typeof opts.sync === "boolean") ? opts.sync : true;
+
+      touchMeta();
       localStorage.setItem(LS_KEY, JSON.stringify(state));
+
+      if (sync) queueServerSync("saveState");
     }
+
 
     let state = loadState();
 
@@ -2045,14 +2226,13 @@ if (themeBtn) {
       if (p.remainingSec <= 0) {
         p.remainingSec = 0;
         p.remainingByMode[p.mode] = 0;
-        saveState();
         pomoSyncUI();
         pomoCompleteCycle();
         return;
       }
 
       p.remainingByMode[p.mode] = p.remainingSec;
-      saveState();
+      saveState({ sync: false });
       pomoSyncUI();
     }
 
@@ -2071,7 +2251,7 @@ if (themeBtn) {
       p.isRunning = !p.isRunning;
       p.lastTick = Date.now();
 
-      saveState();
+      saveState({ sync: !p.isRunning });
       pomoSyncUI();
 
       if (p.isRunning) pomoStartInterval();
@@ -2239,12 +2419,17 @@ if (themeBtn) {
       focusWishlistQuickAdd();
     });
 
-    ensureWishlist();
-    ensurePomodoro();
-    pomoRestoreRunning();
+        (async () => {
+      await bootstrapFromServer();
 
-    setNavActive(navDash);
-    renderAll(); 
+      ensureWishlist();
+      ensurePomodoro();
+      pomoRestoreRunning();
+
+      setNavActive(navDash);
+      renderAll();
+      flushServerSync("boot");
+    })();
 
 </script>
 
