@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: Verdana, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   color: #E6E8EB;
   background-color: #060620;
   overflow-x: hidden;
@@ -106,7 +106,7 @@ body {
   color: #e7e7e7;
   border: 1px solid #2f2f2f;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 20px;
   line-height: 1;
   display: inline-flex;
   align-items: center;
@@ -411,7 +411,7 @@ body {
   background: transparent;
   border: none;
   border-radius: 0;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -468,7 +468,7 @@ body {
   grid-template-columns: 1fr auto;
   align-items: center;
   gap: 12px;
-  border-bottom: 1px solid #5454d7b0;
+  border-bottom: 1px solid #333;
 }
 
 .habHeaderLeft {
@@ -483,7 +483,7 @@ body {
 }
 
 .habRange {
-  font-size: 15px;
+  font-size: 12px;
   opacity: 0.8;
 }
 
@@ -535,7 +535,7 @@ body {
   z-index: 2;
   border-bottom: 1px solid #5454d756;
   padding: 10px 8px;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .thHabit {
@@ -748,7 +748,7 @@ body {
 }
 
 .todoSelected {
-  font-size: 14px;
+  font-size: 12px;
   opacity: 0.85;
 }
 
@@ -760,7 +760,7 @@ body {
 .todoEmpty {
   padding: 12px;
   opacity: 0.7;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .todoGroupTitle {
@@ -1296,12 +1296,6 @@ a.iconBtn{
   text-align:center;
   letter-spacing:1px;
   padding:4px 0;
-}
-
-.pomoTime,
-.pomoEdit{
-  font-family: Verdana, sans-serif;
-  line-height: 1;
 }
 
 .pomoActions{
