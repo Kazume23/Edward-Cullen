@@ -14,7 +14,7 @@ function json_response(array $data, int $status = 200): void {
   exit;
 }
 
-function db_no_db(): PDO {
+function pdo_no_db(): PDO {
   $dsn = 'mysql:host=' . DB_HOST . ';charset=' . DB_CHARSET;
   return new PDO($dsn, DB_USER, DB_PASS, [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -23,171 +23,55 @@ function db_no_db(): PDO {
   ]);
 }
 
-function ensure_database_exists(): void {
-  $pdo = db_no_db();
-  $sql = 'CREATE DATABASE IF NOT EXISTS `' . DB_NAME . '` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci';
-  $pdo->exec($sql);
-}
-
-function ensure_schema(PDO $pdo): void {
-  $pdo->exec("
-    CREATE TABLE IF NOT EXISTS clients (
-      client_id VARCHAR(64) NOT NULL,
-      created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      PRIMARY KEY (client_id)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  ");
-
-  $pdo->exec("
-    CREATE TABLE IF NOT EXISTS state_meta (
-      client_id VARCHAR(64) NOT NULL,
-      updated_at_ms BIGINT NOT NULL DEFAULT 0,
-      PRIMARY KEY (client_id),
-      CONSTRAINT fk_state_meta_client FOREIGN KEY (client_id) REFERENCES clients(client_id)
-        ON DELETE CASCADE ON UPDATE CASCADE
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  ");
-
-  $pdo->exec("
-    CREATE TABLE IF NOT EXISTS habits (
-      id VARCHAR(64) NOT NULL,
-      client_id VARCHAR(64) NOT NULL,
-      name VARCHAR(255) NOT NULL,
-      created_at_ms BIGINT NOT NULL DEFAULT 0,
-      updated_at_ms BIGINT NOT NULL DEFAULT 0,
-      PRIMARY KEY (id),
-      KEY idx_habits_client (client_id),
-      CONSTRAINT fk_habits_client FOREIGN KEY (client_id) REFERENCES clients(client_id)
-        ON DELETE CASCADE ON UPDATE CASCADE
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  ");
-
-  $pdo->exec("
-    CREATE TABLE IF NOT EXISTS habit_entries (
-      client_id VARCHAR(64) NOT NULL,
-      habit_id VARCHAR(64) NOT NULL,
-      date_iso DATE NOT NULL,
-      value TINYINT NOT NULL,
-      created_at_ms BIGINT NOT NULL DEFAULT 0,
-      updated_at_ms BIGINT NOT NULL DEFAULT 0,
-      PRIMARY KEY (client_id, habit_id, date_iso),
-      KEY idx_entries_habit (habit_id),
-      CONSTRAINT fk_entries_client FOREIGN KEY (client_id) REFERENCES clients(client_id)
-        ON DELETE CASCADE ON UPDATE CASCADE,
-      CONSTRAINT fk_entries_habit FOREIGN KEY (habit_id) REFERENCES habits(id)
-        ON DELETE CASCADE ON UPDATE CASCADE
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  ");
-
-  $pdo->exec("
-    CREATE TABLE IF NOT EXISTS todos (
-      id VARCHAR(64) NOT NULL,
-      client_id VARCHAR(64) NOT NULL,
-      date_iso DATE NOT NULL,
-      text VARCHAR(500) NOT NULL,
-      priority ENUM('high','medium','low') NOT NULL DEFAULT 'medium',
-      done TINYINT(1) NOT NULL DEFAULT 0,
-      created_at_ms BIGINT NOT NULL DEFAULT 0,
-      updated_at_ms BIGINT NOT NULL DEFAULT 0,
-      PRIMARY KEY (id),
-      KEY idx_todos_client_date (client_id, date_iso),
-      CONSTRAINT fk_todos_client FOREIGN KEY (client_id) REFERENCES clients(client_id)
-        ON DELETE CASCADE ON UPDATE CASCADE
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  ");
-
-  $pdo->exec("
-    CREATE TABLE IF NOT EXISTS expenses (
-      id VARCHAR(64) NOT NULL,
-      client_id VARCHAR(64) NOT NULL,
-      date_iso DATE NOT NULL,
-      amount DECIMAL(12,2) NOT NULL DEFAULT 0.00,
-      what VARCHAR(255) NOT NULL,
-      category VARCHAR(64) NOT NULL DEFAULT '',
-      score VARCHAR(8) NOT NULL DEFAULT '',
-      period ENUM('once','weekly','monthly','yearly') NOT NULL DEFAULT 'once',
-      created_at_ms BIGINT NOT NULL DEFAULT 0,
-      updated_at_ms BIGINT NOT NULL DEFAULT 0,
-      PRIMARY KEY (id),
-      KEY idx_expenses_client_date (client_id, date_iso),
-      CONSTRAINT fk_expenses_client FOREIGN KEY (client_id) REFERENCES clients(client_id)
-        ON DELETE CASCADE ON UPDATE CASCADE
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  ");
-
-  $pdo->exec("
-    CREATE TABLE IF NOT EXISTS wishlist (
-      id VARCHAR(64) NOT NULL,
-      client_id VARCHAR(64) NOT NULL,
-      name VARCHAR(255) NOT NULL,
-      price DECIMAL(12,2) NULL,
-      created_at_ms BIGINT NOT NULL DEFAULT 0,
-      updated_at_ms BIGINT NOT NULL DEFAULT 0,
-      PRIMARY KEY (id),
-      KEY idx_wishlist_client (client_id),
-      CONSTRAINT fk_wishlist_client FOREIGN KEY (client_id) REFERENCES clients(client_id)
-        ON DELETE CASCADE ON UPDATE CASCADE
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  ");
-
-  $pdo->exec("
-    CREATE TABLE IF NOT EXISTS pomodoro (
-      client_id VARCHAR(64) NOT NULL,
-      mode ENUM('focus','break','long') NOT NULL DEFAULT 'focus',
-      focus_min SMALLINT NOT NULL DEFAULT 25,
-      break_min SMALLINT NOT NULL DEFAULT 5,
-      long_min SMALLINT NOT NULL DEFAULT 15,
-      rem_focus_sec INT NOT NULL DEFAULT 1500,
-      rem_break_sec INT NOT NULL DEFAULT 300,
-      rem_long_sec INT NOT NULL DEFAULT 900,
-      remaining_sec INT NOT NULL DEFAULT 1500,
-      is_running TINYINT(1) NOT NULL DEFAULT 0,
-      last_tick_ms BIGINT NOT NULL DEFAULT 0,
-      session INT NOT NULL DEFAULT 0,
-      updated_at_ms BIGINT NOT NULL DEFAULT 0,
-      PRIMARY KEY (client_id),
-      CONSTRAINT fk_pomodoro_client FOREIGN KEY (client_id) REFERENCES clients(client_id)
-        ON DELETE CASCADE ON UPDATE CASCADE
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  ");
-
-  $pdo->exec("
-    CREATE TABLE IF NOT EXISTS ui_prefs (
-      client_id VARCHAR(64) NOT NULL,
-      selected_date DATE NULL,
-      view_month TINYINT NULL,
-      view_year SMALLINT NULL,
-      chart_mode ENUM('week','month') NOT NULL DEFAULT 'week',
-      wish_sort_mode VARCHAR(32) NOT NULL DEFAULT 'date-desc',
-      exp_filter_category VARCHAR(64) NOT NULL DEFAULT '',
-      updated_at_ms BIGINT NOT NULL DEFAULT 0,
-      PRIMARY KEY (client_id),
-      CONSTRAINT fk_ui_prefs_client FOREIGN KEY (client_id) REFERENCES clients(client_id)
-        ON DELETE CASCADE ON UPDATE CASCADE
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  ");
-}
-
-function db(): PDO {
-  static $pdo = null;
-  static $booted = false;
-
-  if ($pdo && $booted) return $pdo;
-
-  ensure_database_exists();
-
+function pdo_db(): PDO {
+  ensure_database();
   $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=' . DB_CHARSET;
   $pdo = new PDO($dsn, DB_USER, DB_PASS, [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     PDO::ATTR_EMULATE_PREPARES => false,
   ]);
-
-  if (!$booted) {
-    ensure_schema($pdo);
-    $booted = true;
-  }
-
+  ensure_schema($pdo);
+  ensure_admin($pdo);
   return $pdo;
+}
+
+function ensure_database(): void {
+  $pdo = pdo_no_db();
+  $sql = 'CREATE DATABASE IF NOT EXISTS `' . DB_NAME . '` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci';
+  $pdo->exec($sql);
+}
+
+function ensure_schema(PDO $pdo): void {
+  $pdo->exec("
+    CREATE TABLE IF NOT EXISTS users (
+      id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+      username VARCHAR(50) NOT NULL,
+      password_hash VARCHAR(255) NOT NULL,
+      created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY (id),
+      UNIQUE KEY uq_users_username (username)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  ");
+
+  $pdo->exec("
+    CREATE TABLE IF NOT EXISTS user_state (
+      user_id INT UNSIGNED NOT NULL,
+      state_json LONGTEXT NULL,
+      updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      PRIMARY KEY (user_id),
+      CONSTRAINT fk_user_state_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  ");
+}
+
+function ensure_admin(PDO $pdo): void {
+  $stmt = $pdo->prepare('SELECT id FROM users WHERE username = ? LIMIT 1');
+  $stmt->execute(['admin']);
+  $row = $stmt->fetch();
+  if ($row) return;
+
+  $hash = password_hash('admin', PASSWORD_DEFAULT);
+  $ins = $pdo->prepare('INSERT INTO users (username, password_hash) VALUES (?, ?)');
+  $ins->execute(['admin', $hash]);
 }

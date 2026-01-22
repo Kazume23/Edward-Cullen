@@ -1442,3 +1442,55 @@ a.iconBtn{
   color:#ffffff;
   border:1px solid #ffffff;
 }
+
+.sidebarFooter{
+  margin-top:auto;
+  padding-top:12px;
+}
+
+.authBox{
+  background:#ffffff;
+  border:1px solid rgba(90,120,255,0.22);
+  border-radius:12px;
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  box-shadow:0 10px 24px rgba(0,0,0,0.10);
+}
+
+.authTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.authTitle{
+  font-weight:700;
+  font-size:13px;
+  letter-spacing:0.2px;
+}
+
+.authStatus{
+  font-size:12px;
+  opacity:0.80;
+}
+
+.authActions{
+  display:flex;
+  gap:8px;
+}
+
+.authActions .habBtn,
+.authActions .calBtn{
+  flex:1;
+}
+
+.authError{
+  margin-top:6px;
+  font-size:12px;
+  padding:8px 10px;
+  border-radius:10px;
+  border:1px solid rgba(255,80,80,0.30);
+  background:rgba(255,80,80,0.08);
+}

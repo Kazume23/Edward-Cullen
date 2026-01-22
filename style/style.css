@@ -1460,3 +1460,54 @@ a.iconBtn{
 .wishDel:hover{
   border-color:#ff2f5d;
 }
+
+/* Sidebar login */
+.sidebarFooter{
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.authBox{
+  background: #242424;
+  border: 1px solid #2f2f2f;
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.authTop{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.authTitle{
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.authStatus{
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.authActions{
+  display: flex;
+  gap: 8px;
+}
+
+.authActions .habBtn,
+.authActions .calBtn{
+  flex: 1;
+}
+
+.authError{
+  margin-top: 6px;
+  font-size: 12px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 80, 80, 0.35);
+  background: rgba(255, 80, 80, 0.10);
+}

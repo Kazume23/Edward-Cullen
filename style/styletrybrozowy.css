@@ -1439,3 +1439,55 @@ a.iconBtn{
   border-color: #FF7AA8;
   color: #FF7AA8; 
 }
+
+.sidebarFooter{
+  margin-top:auto;
+  padding-top:12px;
+}
+
+.authBox{
+  background:#fff3f7;
+  border:1px solid rgba(255,90,150,0.22);
+  border-radius:12px;
+  padding:10px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  box-shadow:0 10px 24px rgba(0,0,0,0.08);
+}
+
+.authTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.authTitle{
+  font-weight:700;
+  font-size:13px;
+  letter-spacing:0.2px;
+}
+
+.authStatus{
+  font-size:12px;
+  opacity:0.82;
+}
+
+.authActions{
+  display:flex;
+  gap:8px;
+}
+
+.authActions .habBtn,
+.authActions .calBtn{
+  flex:1;
+}
+
+.authError{
+  margin-top:6px;
+  font-size:12px;
+  padding:8px 10px;
+  border-radius:10px;
+  border:1px solid rgba(255,80,140,0.28);
+  background:rgba(255,80,140,0.10);
+}
