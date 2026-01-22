@@ -712,20 +712,26 @@ body {
     color: #5B6CFF;
 }
 
-.modalBody {
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+#registerOverlay .formRow{
+  display:grid;
+  grid-template-columns: 120px 1fr;
+  align-items:center;
+  gap:10px;
 }
 
-.modalLabel {
+#registerOverlay .formRow input{
+  min-width:0;
+}
+
+.modalLabel,
+#registerOverlay .formRow label {
   font-size: 12px;
   opacity: 0.85;
 }
 
 .modalInput,
-.modalTextarea {
+.modalTextarea 
+#registerOverlay .formRow input {
   background: #E6E9F5;
   color: #ffffff;
   border: 1px solid #E1E5F0;

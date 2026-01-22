@@ -722,13 +722,27 @@ body {
   gap: 10px;
 }
 
-.modalLabel {
+#registerOverlay .formRow{
+  display:grid;
+  grid-template-columns: 120px 1fr;
+  align-items:center;
+  gap:10px;
+}
+
+#registerOverlay .formRow input{
+  min-width:0;
+}
+
+
+.modalLabel,
+#registerOverlay .formRow label {
   font-size: 12px;
   opacity: 0.85;
 }
 
 .modalInput,
-.modalTextarea {
+.modalTextarea,
+#registerOverlay .formRow input {
   background: #1f1f1f;
   color: #e7e7e7;
   border: 1px solid #3a3a3a;
@@ -1510,4 +1524,115 @@ a.iconBtn{
   border-radius: 10px;
   border: 1px solid rgba(255, 80, 80, 0.35);
   background: rgba(255, 80, 80, 0.10);
+}
+
+/* Modal (register/login overlays) */
+.modalOverlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 9999;
+}
+
+.modalOverlay.isOpen,
+.modalOverlay[aria-hidden="false"]{
+  display: flex;
+}
+
+.modal{
+  width: min(520px, 100%);
+  background: #2a2a2a;
+  border: 1px solid #3a3a3a;
+  border-radius: 12px;
+  box-shadow: 0 18px 50px rgba(0,0,0,0.55);
+  overflow: hidden;
+}
+
+.modalHead{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 12px;
+  border-bottom: 1px solid #333;
+}
+
+.modalTitle{
+  font-weight: 700;
+}
+
+.modalHead .miniBtn{
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #1f1f1f;
+  border: 1px solid #3a3a3a;
+  color: #e7e7e7;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalHead .miniBtn:hover{
+  border-color: #4a4a4a;
+}
+
+.modal form{
+  padding: 12px;
+}
+
+.modal .formRow{
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.modal .formRow label{
+  font-size: 12px;
+  opacity: 0.85;
+  font-weight: 700;
+}
+
+.modal .formRow input{
+  background: #1f1f1f;
+  color: #e7e7e7;
+  border: 1px solid #3a3a3a;
+  border-radius: 10px;
+  padding: 10px;
+  outline: none;
+}
+
+.modal .formRow input:focus{
+  border-color: #2f9dff;
+  box-shadow: 0 0 0 2px rgba(47,157,255,0.22);
+}
+
+.modalActions{
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.modal .authError{
+  margin-top: 10px;
+  font-size: 12px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 80, 80, 0.35);
+  background: rgba(255, 80, 80, 0.10);
+}
+
+@media (max-width: 520px){
+  .modal .formRow{
+    grid-template-columns: 1fr;
+  }
 }
