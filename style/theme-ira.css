@@ -868,11 +868,6 @@ body {
   padding: 2px 2px 12px 2px;
 }
 
-.expSummary {
-  font-size: 12px;
-  opacity: 0.9;
-}
-
 .expOnlyDay {
   display: flex;
   align-items: center;
