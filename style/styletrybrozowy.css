@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: arial, Helvetica, sans-serif;
   background: #FFF5F9;
   color: #3A2A33;
 }
@@ -200,7 +200,7 @@ body {
 .title {
   width: 140px;
   height: 16px;
-  background: #FDE1EC;
+  background: #ff6d9e;
   border-radius: 6px;
 }
 
@@ -496,7 +496,7 @@ body {
 
 .habInput {
   width: 240px;
-  background: #FDE1EC;
+  background: #ffc5dc;
   color: #ffffff;
   border: 1px solid #ffffff;
   border-radius: 8px;
@@ -532,7 +532,7 @@ body {
 .habTable thead th {
   position: sticky;
   top: 0;
-  background: #ffe9f2;
+  background: #ff6d9e;
   z-index: 2;
   border-bottom: 1px solid #FF4F8B;
   padding: 10px 8px;
