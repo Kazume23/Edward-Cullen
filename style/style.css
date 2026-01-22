@@ -1,10 +1,7 @@
-/* div {
-  outline: 1px solid red;
-} */
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   background: #111;
   color: #e7e7e7;
 }
@@ -1166,6 +1163,32 @@ body {
 .chartModalRange{
   font-size:12px;
   opacity:0.75;
+}
+.chart-ring {
+  stroke: #555;
+}
+
+.chart-inner {
+  fill: #3a3a3a;
+}
+
+/* Parts */
+.chart-part.empty {
+  stroke: #555;
+}
+
+.chart-part.fail {
+  stroke: #ff2f5d;
+}
+
+.chart-part.done {
+  stroke: #2f9dff;
+}
+
+/* Text */
+.chart-text {
+  fill: #e7e7e7;
+  font-weight: 600;
 }
 
 .icons{
