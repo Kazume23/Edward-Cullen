@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: Verdana, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   color: #E6E8EB;
   background-color: #060620;
   overflow-x: hidden;
@@ -106,7 +106,7 @@ body {
   color: #e7e7e7;
   border: 1px solid #2f2f2f;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 20px;
   line-height: 1;
   display: inline-flex;
   align-items: center;
@@ -411,7 +411,7 @@ body {
   background: transparent;
   border: none;
   border-radius: 0;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -468,7 +468,7 @@ body {
   grid-template-columns: 1fr auto;
   align-items: center;
   gap: 12px;
-  border-bottom: 1px solid #5454d7b0;
+  border-bottom: 1px solid #333;
 }
 
 .habHeaderLeft {
@@ -483,7 +483,7 @@ body {
 }
 
 .habRange {
-  font-size: 15px;
+  font-size: 12px;
   opacity: 0.8;
 }
 
@@ -535,7 +535,7 @@ body {
   z-index: 2;
   border-bottom: 1px solid #5454d756;
   padding: 10px 8px;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .thHabit {
@@ -748,7 +748,7 @@ body {
 }
 
 .todoSelected {
-  font-size: 14px;
+  font-size: 12px;
   opacity: 0.85;
 }
 
@@ -760,7 +760,7 @@ body {
 .todoEmpty {
   padding: 12px;
   opacity: 0.7;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .todoGroupTitle {
@@ -866,11 +866,6 @@ body {
   justify-content: space-between;
   gap: 12px;
   padding: 2px 2px 12px 2px;
-}
-
-.expSummary {
-  font-size: 12px;
-  opacity: 0.9;
 }
 
 .expOnlyDay {
@@ -1037,6 +1032,32 @@ body {
   height:220px;
   display:block;
 }
+.chart-ring {
+  stroke: #2e377d;
+}
+
+.chart-inner {
+  fill: #2e377d;
+}
+
+/* Parts */
+.chart-part.empty {
+  stroke: #bdbdbd;
+}
+
+.chart-part.fail {
+  stroke: #ff2f5d;
+}
+
+.chart-part.done {
+  stroke: #2f9dff;
+}
+
+/* Text */
+.chart-text {
+  fill: #e7e7e7;
+  font-weight: 600;
+}
 
 .chartRange{
   font-weight:700;
@@ -1067,7 +1088,7 @@ body {
 
 .legendDot.done{ background:#2f9dff; border-color:#2f9dff; }
 .legendDot.fail{ background:#ff2f5d; border-color:#ff2f5d; }
-.legendDot.empty{ background:#555; border-color:#555; }
+.legendDot.empty{ background:#bdbdbd; border-color:#bdbdbd; }
 
 .chartSmall{
   font-size:12px;
@@ -1162,8 +1183,8 @@ body {
   align-items:center;
   gap:10px;
   padding:4px;
-  border:1px solid #2f2f2f;
-  background:#1a1a1a;
+  border:1px solid #060620;
+  background:#060620;
   border-radius:12px;
 }
 
@@ -1184,7 +1205,7 @@ body {
   border-radius:10px;
   border:1px solid transparent;
 
-  background:rgba(255,255,255,.04);
+  background:rgba(255, 255, 255, 0.137);
   color:#e7e7e7;
 
   padding:0;
@@ -1270,12 +1291,6 @@ a.iconBtn{
   text-align:center;
   letter-spacing:1px;
   padding:4px 0;
-}
-
-.pomoTime,
-.pomoEdit{
-  font-family: Arial, sans-serif;
-  line-height: 1;
 }
 
 .pomoActions{
